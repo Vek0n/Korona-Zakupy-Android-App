@@ -1,0 +1,2 @@
+rootProject.name='Korona-Zakupy'
+include ':app'
