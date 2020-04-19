@@ -1,9 +1,9 @@
 package com.maskjs.korona_zakupy
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import com.maskjs.korona_zakupy.data.OrderDao
+import androidx.appcompat.app.AppCompatActivity
+import com.maskjs.korona_zakupy.data.orders.OrderDao
+import com.maskjs.korona_zakupy.data.orders.OrderRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -17,7 +17,10 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         val job: Job = CoroutineScope(Dispatchers.IO).launch {
-           Log.d("HTTP_JSON", OrderDao().acceptOrder(4,"7bc899f2-c91d-482b-9d4e-5faafb233f97"))
+          // Log.d("HTTP_JSON", OrderRepository().parseJsonToOrder())
+            val result = OrderRepository().parseJsonToOrder(
+                OrderDao().getActiveOrders())
+            val x = result[0].isActive
         }
         job.start()
 

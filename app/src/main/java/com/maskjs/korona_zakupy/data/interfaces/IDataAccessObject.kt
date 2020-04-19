@@ -49,4 +49,20 @@ interface IDataAccessObject {
             return response.body!!.string()
         }
     }
+
+
+    fun APIPostRequestAuth(postBody:String, urlString: String, headerAuth: String, headerToken: String , client: OkHttpClient):String {
+
+        val request = Request.Builder()
+            .url(urlString)
+            .addHeader("Content-Type","application/json")
+            .addHeader(headerAuth, "Bearer $headerToken")
+            .post(postBody.toRequestBody())
+            .build()
+
+        client.newCall(request).execute().use { response ->
+            if (!response.isSuccessful) throw IOException("Unexpected code $response")
+            return response.body!!.string()
+        }
+    }
 }
