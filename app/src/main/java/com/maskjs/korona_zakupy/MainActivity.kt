@@ -16,8 +16,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val resourceStream = resources.openRawResource(R.raw.chuj)
-
         val job: Job = CoroutineScope(Dispatchers.IO).launch {
            Log.d("HTTP_JSON", OrderDao().acceptOrder(4,"7bc899f2-c91d-482b-9d4e-5faafb233f97"))
         }
