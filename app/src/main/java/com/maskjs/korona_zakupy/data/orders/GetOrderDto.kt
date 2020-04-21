@@ -2,7 +2,7 @@ package com.maskjs.korona_zakupy.data.orders
 
 //import kotlin.collections.ArrayList
 
-data class OrderModel(
+data class GetOrderDto(
     val orderId: Long,
     val orderDate: String,
     val products: ArrayList<String>,
