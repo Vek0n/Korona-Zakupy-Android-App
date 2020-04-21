@@ -2,8 +2,7 @@ package com.maskjs.korona_zakupy.data.orders
 import com.maskjs.korona_zakupy.data.interfaces.IDataAccessObject
 import okhttp3.OkHttpClient
 
-class OrderDao : IDataAccessObject{
-    private val client = OkHttpClient()
+class OrderDao(private val client: OkHttpClient) : IDataAccessObject{
 
     fun getActiveOrders(): String {
         return APIGetRequest("http://10.0.2.2:5001/api/orders/active", client)

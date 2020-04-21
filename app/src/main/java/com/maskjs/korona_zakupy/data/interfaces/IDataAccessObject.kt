@@ -6,7 +6,7 @@ import java.io.IOException
 import java.net.URL
 import okhttp3.RequestBody.Companion.toRequestBody
 
-interface IDataAccessObject {
+interface IDataAccessObject{
 
     fun APIGetRequest(urlString: String, client: OkHttpClient):String {
         val url = URL(urlString)
@@ -21,10 +21,10 @@ interface IDataAccessObject {
     }
 
 
-    fun APIGetRequestAuth(urlString: String, headerAuth: String, headerToken: String, client: OkHttpClient):String {
+    fun APIGetRequestAuth(urlString: String, headerToken: String, client: OkHttpClient):String {
         val url = URL(urlString)
         val request = Request.Builder()
-            .addHeader(headerAuth, "Bearer $headerToken")
+            .addHeader("Authorization", "Bearer $headerToken")
             .url(url)
             .get()
             .build()
@@ -36,7 +36,6 @@ interface IDataAccessObject {
 
 
     fun APIPostRequest(postBody:String, urlString: String, client: OkHttpClient):String {
-        //val postBody = "{\"Email\":\"6999@gmail.com\",\"Password\":\"hkt8zd6vG?!\",\"ConfirmPassword\":\"hkt8zd6vG?!\",\"Address\":\"Adama mickiewicza 25\",\"FirstName\":\"Damian\",\"LastName\":\"Litkowski\"}"
 
         val request = Request.Builder()
             .url(urlString)
@@ -51,12 +50,12 @@ interface IDataAccessObject {
     }
 
 
-    fun APIPostRequestAuth(postBody:String, urlString: String, headerAuth: String, headerToken: String , client: OkHttpClient):String {
+    fun APIPostRequestAuth(postBody:String, urlString: String, headerToken: String , client: OkHttpClient):String {
 
         val request = Request.Builder()
             .url(urlString)
             .addHeader("Content-Type","application/json")
-            .addHeader(headerAuth, "Bearer $headerToken")
+            .addHeader("Authorization", "Bearer $headerToken")
             .post(postBody.toRequestBody())
             .build()
 

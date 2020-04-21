@@ -1,25 +1,25 @@
 package com.maskjs.korona_zakupy.data.orders
 
-import com.maskjs.korona_zakupy.data.interfaces.IOrderRepository
+import com.maskjs.korona_zakupy.data.interfaces.IRepository
 
-class OrderRepository(private val orderDao: OrderDao): IOrderRepository{
+class OrderRepository<T: Any>(private val orderDao: OrderDao): IRepository<T>{
 
-    fun getActiveOrders():List<GetOrderDto>
-            = parseJsonToOrder(
+    fun getActiveOrders(): List<T>
+            = parseJsonToObject(
             orderDao.getActiveOrders())
 
 
-    fun getAllActiveOrdersOfUser(userId:String):List<GetOrderDto>
-            = parseJsonToOrder(
+    fun getAllActiveOrdersOfUser(userId:String): List<T>
+            = parseJsonToObject(
             orderDao.getAllActiveOrdersOfUser(userId))
 
 
-    fun getAllOrdersOfUser(userId: String): List<GetOrderDto>
-            = parseJsonToOrder(orderDao.getAllOrdersOfUser(userId))
+    fun getAllOrdersOfUser(userId: String): List<T>
+            = parseJsonToObject(orderDao.getAllOrdersOfUser(userId))
 
 
-    fun placeOrder(orderDto: PlaceOrderDto): String
-            = orderDao.placeOrder(parseOrderToJson(orderDto))
+    fun placeOrder(orderDto: T): String
+            = orderDao.placeOrder(parseObjectToJson(orderDto))
 
 
     fun acceptOrder(userId: String, orderId: Long): String
