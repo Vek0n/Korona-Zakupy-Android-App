@@ -2,7 +2,7 @@ package com.maskjs.korona_zakupy.Dagger
 
 import com.maskjs.korona_zakupy.data.users.RegisterUserDto
 import com.maskjs.korona_zakupy.data.users.UserRepository
-import com.maskjs.korona_zakupy.viewmodels.Register.RegisterViewModel
+import com.maskjs.korona_zakupy.viewmodels.register.RegisterViewModel
 import dagger.Module
 import dagger.Provides
 

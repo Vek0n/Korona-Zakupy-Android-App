@@ -3,7 +3,7 @@ package com.maskjs.korona_zakupy
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import com.maskjs.korona_zakupy.viewmodels.Register.RegisterViewModel
+import com.maskjs.korona_zakupy.viewmodels.register.RegisterViewModel
 
 import kotlinx.android.synthetic.main.activity_register_part1.*
 
