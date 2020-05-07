@@ -1,12 +1,9 @@
 package com.maskjs.korona_zakupy
 
+import android.content.Intent
 import android.os.Bundle
+import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
-import com.maskjs.korona_zakupy.data.orders.GetOrderDto
-import com.maskjs.korona_zakupy.data.orders.OrderDao
-import com.maskjs.korona_zakupy.data.orders.OrderRepository
-import com.maskjs.korona_zakupy.data.orders.PlaceOrderDto
-import com.maskjs.korona_zakupy.data.users.LoginUserDto
 import com.maskjs.korona_zakupy.data.users.RegisterUserDto
 import com.maskjs.korona_zakupy.data.users.UserDao
 import com.maskjs.korona_zakupy.data.users.UserRepository
@@ -22,6 +19,12 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+       val Button = findViewById<Button>(R.id.button)
+        Button.setOnClickListener{
+            val intent = Intent(this, RegisterActivity::class.java)
+            startActivity(intent)
+        }
 
         val job: Job = CoroutineScope(Dispatchers.IO).launch {
 
@@ -44,5 +47,6 @@ class MainActivity : AppCompatActivity() {
         if (job.isCompleted){
             job.cancel()
         }
+
     }
 }

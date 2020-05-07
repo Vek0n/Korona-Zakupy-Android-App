@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout  xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="registerViewModel"
+            type="com.maskjs.korona_zakupy.viewmodels.register.RegisterViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:animationCache="false"
+        android:background="@drawable/gradient"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/reg1_hello"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="150dp"
+            android:text="@string/reg_hello"
+            android:textColor="@color/secondaryTextColor"
+            android:textSize="24sp" />
+
+        <EditText
+            android:id="@+id/reg1_userName_editText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:autofillHints=""
+            android:ems="10"
+            android:hint="@string/reg_username"
+            android:inputType="textPersonName"
+            android:text="@={registerViewModel.userNameEditTextContent}"
+            android:textColor="@color/secondaryTextColor"
+            android:textColorHint="@color/secondaryTextColor"
+            android:textSize="18sp" />
+
+        <EditText
+            android:id="@+id/reg1_password_editText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:autofillHints=""
+            android:ems="10"
+            android:hint="@string/reg_password"
+            android:inputType="textPassword"
+            android:text="@={registerViewModel.passwordEditTextContent}"
+            android:textColor="@color/secondaryTextColor"
+            android:textColorHint="@color/secondaryTextColor"
+            android:textSize="18sp" />
+
+        <EditText
+            android:id="@+id/reg1_confirmPassword_editText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:autofillHints=""
+            android:ems="10"
+            android:hint="@string/reg_confirmPassword"
+            android:inputType="textPassword"
+            android:text="@={registerViewModel.confirmPasswordEditTextContent}"
+            android:textColor="@color/secondaryTextColor"
+            android:textColorHint="@color/secondaryTextColor"
+            android:textSize="18sp" />
+
+        <EditText
+            android:id="@+id/reg1_email_editText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:autofillHints=""
+            android:ems="10"
+            android:hint="@string/reg_email"
+            android:inputType="textEmailAddress"
+            android:text="@={registerViewModel.emailEditTextContent}"
+            android:textColor="@color/secondaryTextColor"
+            android:textColorHint="@color/secondaryTextColor"
+            android:textSize="18sp" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fab_reg1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="30dp"
+                android:layout_marginEnd="42dp"
+                android:layout_marginBottom="42dp"
+                android:clickable="true"
+                android:contextClickable="true"
+                android:focusable="true"
+                android:rotation="180"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:srcCompat="@drawable/abc_vector_test" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
+</layout>

@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".RegisterPart1Activity"
+            android:name=".RegisterActivity"
             android:label="@string/title_activity_register_part1"
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity android:name=".MainActivity">
