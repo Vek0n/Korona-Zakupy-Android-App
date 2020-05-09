@@ -12,9 +12,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".VolunteerActivity"
+            android:label="@string/title_activity_volunteer"></activity>
+        <activity
             android:name=".RegisterActivity"
             android:label="@string/title_activity_register_part1"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
