@@ -6,9 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.ImageView
-import android.widget.ProgressBar
 import android.widget.TextView
-import androidx.recyclerview.widget.RecyclerView
 import com.maskjs.korona_zakupy.R
 import com.maskjs.korona_zakupy.data.orders.GetOrderDto
 import com.squareup.picasso.Picasso
@@ -78,6 +76,11 @@ class ActiveOrdersListAdapter(private val context: Context?,
 
 
         return view
+    }
+
+    fun getProducts(position: Int): ArrayList<String>{
+        val order = getItem(position) as GetOrderDto
+        return order.products
     }
 
 

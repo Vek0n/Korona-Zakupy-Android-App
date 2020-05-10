@@ -17,6 +17,9 @@
     <string name="title_available">Available</string>
     <string name="title_active">Active</string>
     <string name="title_history">History</string>
+    <string name="accept_order">Accept</string>
+    <string name="cancel">Cancel</string>
+    <string name="popup_text">Order</string>
 <!--    <string name="active_orders_list_name">History</string>-->
 
 </resources>
