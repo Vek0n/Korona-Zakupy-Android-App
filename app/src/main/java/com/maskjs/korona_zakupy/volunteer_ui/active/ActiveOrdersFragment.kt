@@ -42,7 +42,7 @@ class ActiveOrdersFragment : Fragment() {
             firstName = "Szymon",
             lastName = "Kaczmarek",
             rating = 4,
-            photoDirectory = "no"
+            photoDirectory = "https://i.imgur.com/KMH51Kr.png"
         )
         userInfo.add(user1)
         val order1 = GetOrderDto(

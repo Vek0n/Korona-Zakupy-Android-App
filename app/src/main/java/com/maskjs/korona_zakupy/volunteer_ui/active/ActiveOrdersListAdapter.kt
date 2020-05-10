@@ -5,18 +5,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
+import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.maskjs.korona_zakupy.R
 import com.maskjs.korona_zakupy.data.orders.GetOrderDto
+import com.squareup.picasso.Picasso
 
 
 internal class ViewHolder {
     var nameText: TextView? = null
     var dateText: TextView? = null
     var rating: TextView? = null
-    var imageThumbnailUrl: TextView? = null
+    var imageThumbnailUrl: ImageView? = null
 }
 class ActiveOrdersListAdapter(private val context: Context?,
                               private val dataSource: ArrayList<GetOrderDto>) : BaseAdapter() {
@@ -52,6 +54,7 @@ class ActiveOrdersListAdapter(private val context: Context?,
             holder.nameText = view.findViewById(R.id.nameTextView) as TextView
             holder.dateText = view.findViewById(R.id.dateTextView) as TextView
             holder.rating = view.findViewById(R.id.ratingTextView) as TextView
+            holder.imageThumbnailUrl = view.findViewById(R.id.avatarThumbnailImageView) as ImageView
             view.tag = holder
         } else {
             view = convertView
@@ -61,12 +64,18 @@ class ActiveOrdersListAdapter(private val context: Context?,
         val nameTextView = holder.nameText
         val dateTextView = holder.dateText
         val ratingTextView = holder.rating
+        val thumbnailImageView = holder.imageThumbnailUrl
 
         val order = getItem(position) as GetOrderDto
 
         nameTextView?.text = order.usersInfo[0].firstName
         dateTextView?.text = order.orderDate
         ratingTextView?.text = order.usersInfo[0].rating.toString()
+
+        Picasso.get()
+            .load(order.usersInfo[0].photoDirectory)
+            .into(thumbnailImageView)
+
 
         return view
     }
