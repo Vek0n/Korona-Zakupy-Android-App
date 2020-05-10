@@ -11,7 +11,7 @@ import okhttp3.OkHttpClient
 import javax.inject.Inject
 
 class RegisterViewModel () : ViewModel() {
-    private val userRepository = UserRepository<RegisterUserDto>(userDao = UserDao(client = OkHttpClient()))
+    private val userRepository = UserRepository<Any>(userDao = UserDao(client = OkHttpClient()))
 
     fun register(): RegisterResponseDto{
             return userRepository.registerUser(
@@ -23,7 +23,7 @@ class RegisterViewModel () : ViewModel() {
                     firstName = firstNameEditTextContent.value ?: "",
                     lastName = lastNameEditTextContent.value ?: "",
                     address = addressEditTextContent.value ?: "",
-                    roleName = ""
+                    roleName = "Volunteer"
                 )
             )!!
 

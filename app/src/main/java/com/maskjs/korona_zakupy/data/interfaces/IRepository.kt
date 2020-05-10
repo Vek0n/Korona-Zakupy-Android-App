@@ -20,9 +20,9 @@ interface IRepository<T:Any> {
         return Gson().toJson(dto)
     }
 //tfu
-    fun parseJsonToRegisterResponseDto(json: String): List<RegisterResponseDto>{
-        val collectionType: Type = object : TypeToken<List<RegisterResponseDto?>?>() {}.type
-        return Gson().fromJson(json, collectionType) as List<RegisterResponseDto>
+    fun parseJsonToRegisterResponseDto(json: String): RegisterResponseDto{
+        val collectionType: Type = object : TypeToken<RegisterResponseDto>() {}.type
+        return Gson().fromJson(json, collectionType) as RegisterResponseDto
     }
 
 }

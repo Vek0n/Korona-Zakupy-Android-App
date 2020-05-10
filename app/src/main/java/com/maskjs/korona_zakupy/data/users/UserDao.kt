@@ -11,11 +11,11 @@ class UserDao(private val client: OkHttpClient): IDataAccessObject {
 
 
     fun userLogin(userLoginJsonString: String): String{
-        return APIPostRequest(userLoginJsonString, "http://10.0.2.2:5001/api/user/login", client)
+        return APIPostRequest(userLoginJsonString, "http://10.0.2.2:43062/api/user/login", client)
     }
 
 
     fun getRole(userId: String, headerToken:String): String{
-        return APIGetRequestAuth("http://10.0.2.2:5001/api/user/role/$userId", headerToken, client)
+        return APIGetRequestAuth("http://10.0.2.2:43062/api/user/role/$userId", headerToken, client)
     }
 }

@@ -1,12 +1,12 @@
 package com.maskjs.korona_zakupy.data.users
 
 data class RegisterUserDto(
-    var username:String ,
-    var email: String ,
-    var password: String ,
-    var confirmPassword: String,
-    var address: String,
-    var firstName: String,
-    var lastName: String,
-    var roleName: String
+    val username:String ,
+    val email: String ,
+    val password: String ,
+    val confirmPassword: String,
+    val address: String,
+    val firstName: String,
+    val lastName: String,
+    val roleName: String
 ) {}

@@ -14,6 +14,10 @@ import androidx.lifecycle.Observer
 import com.maskjs.korona_zakupy.data.users.RegisterUserDto
 import com.maskjs.korona_zakupy.databinding.FragmentRegisterPart2Binding
 import com.maskjs.korona_zakupy.viewmodels.register.RegisterViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 
 class RegisterPart2Fragment : Fragment() {
 
@@ -47,7 +51,6 @@ class RegisterPart2Fragment : Fragment() {
         }
     }
 
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -60,7 +63,17 @@ class RegisterPart2Fragment : Fragment() {
         dataBinding.registerViewModel = registerViewModel
 
         dataBinding.floatingActionButton.setOnClickListener {
-            var xd = registerViewModel.register()}
+            val job: Job = CoroutineScope(Dispatchers.IO).launch {
+                val result = registerViewModel.register()
+                var xD = 5
+            }
+
+            job.start()
+
+            if (job.isCompleted){
+                job.cancel()
+            }
+        }
 
         return dataBinding.root
     }

@@ -10,7 +10,7 @@ class UserRepository<T: Any>(private  val userDao: UserDao): IRepository<T> {
                 = userDao.userRegister(
                 parseObjectToJson(registerUserDto))
 
-        return parseJsonToRegisterResponseDto(registerJsonResponse).firstOrNull()
+        return parseJsonToRegisterResponseDto(registerJsonResponse)
     }
 
     fun loginUser(loginUserDto: T): String
