@@ -8,13 +8,12 @@ import com.maskjs.korona_zakupy.data.users.RegisterResponseDto
 import java.lang.reflect.Type
 
 
-interface IRepository<T:Any> {
+interface IRepository<T> {
 
-    fun parseJsonToObject(json:String): List<T> {
-        val collectionType: Type = object : TypeToken<List<T?>?>() {}.type
-        return Gson().fromJson(json, collectionType) as List<T>
+    suspend fun parseJsonToObject(json:String): ArrayList<T> {
+        val collectionType: Type = object : TypeToken<ArrayList<T?>?>() {}.type
+        return Gson().fromJson(json, collectionType) as ArrayList<T>
     }
-
 
     fun parseObjectToJson(dto: T): String{
         return Gson().toJson(dto)

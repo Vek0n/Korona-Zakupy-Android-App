@@ -7,19 +7,16 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.lifecycle.LiveData
+import com.google.gson.internal.LinkedTreeMap
 import com.maskjs.korona_zakupy.R
 import com.maskjs.korona_zakupy.data.orders.GetOrderDto
 import com.squareup.picasso.Picasso
 
 
-internal class ViewHolder {
-    var nameText: TextView? = null
-    var dateText: TextView? = null
-    var rating: TextView? = null
-    var imageThumbnailUrl: ImageView? = null
-}
 class ActiveOrdersListAdapter(private val context: Context?,
-                              private val dataSource: ArrayList<GetOrderDto>) : BaseAdapter() {
+                              private val dataSource: ArrayList<GetOrderDto>
+) : BaseAdapter() {
 
 
     private val inflater: LayoutInflater
@@ -29,16 +26,18 @@ class ActiveOrdersListAdapter(private val context: Context?,
         return dataSource.size
     }
 
-
-    override fun getItem(position: Int): Any {
+    override fun getItem(position: Int): Any? {
         return dataSource[position]
     }
-
 
     override fun getItemId(position: Int): Long {
         return position.toLong()
     }
 
+    fun getProducts(position: Int): List<String> {
+        val order = getItem(position) as LinkedTreeMap<*, *>
+        return order["products"] as List<String>
+    }
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         val view: View
@@ -64,24 +63,24 @@ class ActiveOrdersListAdapter(private val context: Context?,
         val ratingTextView = holder.rating
         val thumbnailImageView = holder.imageThumbnailUrl
 
-        val order = getItem(position) as GetOrderDto
+        val order = getItem(position) as LinkedTreeMap<*, *>
+        val x = order["usersInfo"] as ArrayList<*>
+        val y = x[0] as LinkedTreeMap<*,*>
 
-        nameTextView?.text = order.usersInfo[0].firstName
-        dateTextView?.text = order.orderDate
-        ratingTextView?.text = order.usersInfo[0].rating.toString()
+        nameTextView?.text = y["firstName"] as String?
+        dateTextView?.text = order["orderDate"].toString()
+        ratingTextView?.text = (y["rating"] as Double?).toString()
 
         Picasso.get()
-            .load(order.usersInfo[0].photoDirectory)
+            .load(y["photoDirectory"] as String?)
             .into(thumbnailImageView)
-
 
         return view
     }
 
-    fun getProducts(position: Int): ArrayList<String>{
-        val order = getItem(position) as GetOrderDto
-        return order.products
-    }
-
-
-}
+internal class ViewHolder {
+    var nameText: TextView? = null
+    var dateText: TextView? = null
+    var rating: TextView? = null
+    var imageThumbnailUrl: ImageView? = null
+}}

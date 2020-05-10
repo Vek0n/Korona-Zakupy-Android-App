@@ -4,18 +4,19 @@ import okhttp3.OkHttpClient
 
 class OrderDao(private val client: OkHttpClient) : IDataAccessObject{
 
-    fun getActiveOrders(): String {
+    suspend fun getActiveOrders(): String {
         return APIGetRequest("http://10.0.2.2:5001/api/orders/active", client)
     }
 
 
-    fun getAllActiveOrdersOfUser(id:String):String{
+    suspend fun getAllActiveOrdersOfUser(id:String):String{
         return APIGetRequest("http://10.0.2.2:5001/api/orders/active/$id", client)
     }
 
 
-    fun getAllOrdersOfUser(id:String):String{
-        return "\"\"" + APIGetRequest("http://10.0.2.2:5001/api/orders/all/$id", client) + "\"\""
+    suspend fun getAllOrdersOfUser(id:String):String{
+        //return "\"\"" + APIGetRequest("http://korona-zakupy.hostingasp.pl/api/orders/all/$id", client) + "\"\""
+        return APIGetRequest("http://korona-zakupy.hostingasp.pl/api/orders/all/$id", client)
     }
 
 
@@ -34,17 +35,17 @@ class OrderDao(private val client: OkHttpClient) : IDataAccessObject{
     }
 
 
-    fun cancelConfirmOrder(orderId: Long, userId: String):String{
+    suspend fun cancelConfirmOrder(orderId: Long, userId: String):String{
         return APIGetRequest("http://10.0.2.2:5001/api/orders/confirm/cancel/$orderId/$userId", client)
     }
 
 
-    fun checkConfirmation(orderId: Long):String{
+    suspend fun checkConfirmation(orderId: Long):String{
         return APIGetRequest("http://10.0.2.2:5001/api/orders/confirm/check/$orderId", client)
     }
 
 
-    fun finishOrder(orderId: Long):String{
+    suspend fun finishOrder(orderId: Long):String{
         return APIGetRequest("http://10.0.2.2:5001/api/orders/finish/$orderId", client)
     }
 }

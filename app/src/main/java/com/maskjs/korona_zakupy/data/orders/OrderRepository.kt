@@ -4,17 +4,17 @@ import com.maskjs.korona_zakupy.data.interfaces.IRepository
 
 class OrderRepository<T: Any>(private val orderDao: OrderDao): IRepository<T>{
 
-    fun getActiveOrders(): List<T>
+    suspend fun getActiveOrders(): ArrayList<T>
             = parseJsonToObject(
             orderDao.getActiveOrders())
 
 
-    fun getAllActiveOrdersOfUser(userId:String): List<T>
+    suspend fun getAllActiveOrdersOfUser(userId:String): ArrayList<T>
             = parseJsonToObject(
             orderDao.getAllActiveOrdersOfUser(userId))
 
 
-    fun getAllOrdersOfUser(userId: String): List<T>
+    suspend fun getAllOrdersOfUser(userId: String): ArrayList<T>
             = parseJsonToObject(orderDao.getAllOrdersOfUser(userId))
 
 
@@ -30,14 +30,14 @@ class OrderRepository<T: Any>(private val orderDao: OrderDao): IRepository<T>{
             = orderDao.confirmOrder(orderId, userId)
 
 
-    fun cancelConfirmOrder(userId: String, orderId: Long): String
+    suspend fun cancelConfirmOrder(userId: String, orderId: Long): String
             = orderDao.cancelConfirmOrder(orderId, userId)
 
 
-    fun checkConfirmation(orderId: Long): Boolean
+   suspend fun checkConfirmation(orderId: Long): Boolean
             = orderDao.checkConfirmation(orderId)
                 .toBoolean()
 
-    fun finishOrder(orderId: Long): String
+    suspend fun finishOrder(orderId: Long): String
             = orderDao.finishOrder(orderId)
 }

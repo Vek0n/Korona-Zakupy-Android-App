@@ -8,7 +8,7 @@ import okhttp3.RequestBody.Companion.toRequestBody
 
 interface IDataAccessObject{
 
-    fun APIGetRequest(urlString: String, client: OkHttpClient):String {
+    suspend fun APIGetRequest(urlString: String, client: OkHttpClient):String {
         val url = URL(urlString)
         val request = Request.Builder()
             .url(url)
