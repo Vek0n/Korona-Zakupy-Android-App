@@ -12,6 +12,7 @@ android {
         enabled = true
     }
 
+    apply plugin: 'kotlin-android-extensions'
 
     defaultConfig {
         applicationId "com.maskjs.korona_zakupy"

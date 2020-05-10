@@ -22,10 +22,10 @@ class AvailableOrdersFragment : Fragment() {
         availableOrdersViewModel =
             ViewModelProviders.of(this).get(AvailableOrdersViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_available_orders, container, false)
-        val textView: TextView = root.findViewById(R.id.text_dashboard)
-        availableOrdersViewModel.text.observe(viewLifecycleOwner, Observer {
-            textView.text = it
-        })
+//        val textView: TextView = root.findViewById(R.id.text_dashboard)
+//        availableOrdersViewModel.text.observe(viewLifecycleOwner, Observer {
+//            textView.text = it
+//        })
         return root
     }
 }

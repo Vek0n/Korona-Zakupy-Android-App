@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel
 class AvailableOrdersViewModel : ViewModel() {
 
     private val _text = MutableLiveData<String>().apply {
-        value = "This is dashboard Fragment"
+        value = "This is available Fragment"
     }
     val text: LiveData<String> = _text
 }
