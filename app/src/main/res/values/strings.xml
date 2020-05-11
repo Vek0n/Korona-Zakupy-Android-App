@@ -29,5 +29,10 @@
     <string name="popup_text">Order details</string>
     <string name="global_empty_field_error">Field must not be empty</string>
     <!--    <string name="active_orders_list_name">History</string>-->
+=======
+    <string name="Ok">OK</string>
+    <string name="Address">Address:</string>
+<!--    <string name="active_orders_list_name">History</string>-->
+>>>>>>> 94726b52ce8efbfdd869fb7db4e2e9ceeb2a6fac
 
 </resources>
