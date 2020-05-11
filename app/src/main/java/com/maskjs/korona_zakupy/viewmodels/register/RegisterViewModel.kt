@@ -1,18 +1,18 @@
 package com.maskjs.korona_zakupy.viewmodels.register
 
-import androidx.databinding.Bindable
+import android.R.attr.password
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import com.maskjs.korona_zakupy.data.users.RegisterResponseDto
 import com.maskjs.korona_zakupy.data.users.RegisterUserDto
 import com.maskjs.korona_zakupy.data.users.UserDao
 import com.maskjs.korona_zakupy.data.users.UserRepository
 import okhttp3.OkHttpClient
-import javax.inject.Inject
 
 class RegisterViewModel () : ViewModel() {
+
     lateinit var userRegisterResponseDto: RegisterResponseDto
-    lateinit var toastText : String
     val userNameEditTextContent = MutableLiveData<String>()
     val passwordEditTextContent = MutableLiveData<String>()
     val confirmPasswordEditTextContent = MutableLiveData<String>()
@@ -21,7 +21,7 @@ class RegisterViewModel () : ViewModel() {
     val lastNameEditTextContent = MutableLiveData<String>()
     val addressEditTextContent = MutableLiveData<String>()
     private val userRepository = UserRepository<RegisterUserDto>(userDao = UserDao(client = OkHttpClient()))
-    private val passwordPattern = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#\$%^&+=])(?=\\\\S+\$).{4,}\$"
+    private val passwordPattern = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{4,}$"
 
     suspend fun register() {
             userRegisterResponseDto = userRepository.registerUser(
@@ -38,20 +38,29 @@ class RegisterViewModel () : ViewModel() {
             )!!
     }
 
+    fun isNotEmpty(validText: String): Boolean{
+        if(validText.isEmpty()|| validText == "null")
+            return false
+
+        return true
+    }
+
     fun  checkPassword(): Boolean{
+        passwordEditTextContent.value?.let {
+            if(it.length < 8)
+                return false
 
-        if( !confirmPasswordEditTextContent.value.toString().equals(passwordEditTextContent.value.toString())){
-            toastText = "Passwords not match"
+            val passwordMatcher = Regex(passwordPattern)
+
+            return passwordMatcher.find(it) != null
+        } ?: return false
+
+    }
+
+    fun checkConfirmPassword(): Boolean{
+        if(confirmPasswordEditTextContent.value.toString() != passwordEditTextContent.value.toString())
             return false
-        }
-        val regex = passwordPattern.toRegex()
-        val match = regex.find(confirmPasswordEditTextContent.value.toString())
 
-        if(match != null){
-            toastText = "Password must contain at least"
-            return false
-        }
-
-        return  true
+        return true
     }
 }

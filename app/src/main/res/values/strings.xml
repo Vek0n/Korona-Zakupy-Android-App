@@ -1,11 +1,12 @@
 <resources>
     <string name="app_name">Korona-Zakupy</string>
     <string name="title_activity_register_part1">Registration</string>
+    <string name="logo">Logo</string>
     <!-- Shared Preference -->
     <string name="user_id_key"></string>
     <string name="user_token_key"></string>
     <string name="user_role_key"></string>
-    <!-- Registration -->
+    <!-- RegistrationActivity -->
     <string name="reg_hello">Get on Board</string>
     <string name="reg_username">User Name</string>
     <string name="reg_password">Password</string>
@@ -15,6 +16,9 @@
     <string name="reg_lastName">Last Name</string>
     <string name="reg_address">Address</string>
     <string name="reg_image">Add Photo</string>
+    <string name="reg_password_match_error">Passwords not match</string>
+    <string name="reg_password_regex_error">Password must have at least 8 characters and contain at least one digit, a lower and upper case letter and special character</string>
+    <!--VolunteerAcitivy-->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_volunteer">VolunteerActivity</string>
     <string name="title_available">Available</string>
@@ -23,6 +27,7 @@
     <string name="accept_order">Accept</string>
     <string name="cancel">Cancel</string>
     <string name="popup_text">Order details</string>
-<!--    <string name="active_orders_list_name">History</string>-->
+    <string name="global_empty_field_error">Field must not be empty</string>
+    <!--    <string name="active_orders_list_name">History</string>-->
 
 </resources>

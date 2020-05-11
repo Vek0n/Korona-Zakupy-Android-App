@@ -18,70 +18,103 @@
         android:gravity="center_horizontal"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/reg1_hello"
-            android:layout_width="wrap_content"
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="150dp"
-            android:text="@string/reg_hello"
-            android:textColor="@color/secondaryTextColor"
-            android:textSize="24sp" />
+            app:srcCompat="@drawable/korona_zakupy_title2" />
 
-        <EditText
-            android:id="@+id/reg1_userName_editText"
-            android:layout_width="wrap_content"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/user_name_text_input_layout"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
-            android:autofillHints=""
-            android:ems="10"
-            android:hint="@string/reg_username"
-            android:inputType="textPersonName"
-            android:text="@={registerViewModel.userNameEditTextContent}"
-            android:textColor="@color/secondaryTextColor"
-            android:textColorHint="@color/secondaryTextColor"
-            android:textSize="18sp" />
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="40dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="40dp"
+            android:layout_marginBottom="5dp"
+            android:gravity="center"
+            android:textColorHint="@color/primaryTextColor"
+            app:errorEnabled="true"
+            app:errorTextColor="#F44336"
+            app:hintEnabled="true">
 
-        <EditText
-            android:id="@+id/reg1_password_editText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:autofillHints=""
-            android:ems="10"
-            android:hint="@string/reg_password"
-            android:inputType="textPassword"
-            android:text="@={registerViewModel.passwordEditTextContent}"
-            android:textColor="@color/secondaryTextColor"
-            android:textColorHint="@color/secondaryTextColor"
-            android:textSize="18sp" />
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/user_name_edit_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/reg_username"
+                android:text="@={registerViewModel.userNameEditTextContent}" />
 
-        <EditText
-            android:id="@+id/reg1_confirmPassword_editText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:autofillHints=""
-            android:ems="10"
-            android:hint="@string/reg_confirmPassword"
-            android:inputType="textPassword"
-            android:text="@={registerViewModel.confirmPasswordEditTextContent}"
-            android:textColor="@color/secondaryTextColor"
-            android:textColorHint="@color/secondaryTextColor"
-            android:textSize="18sp" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <EditText
-            android:id="@+id/reg1_email_editText"
-            android:layout_width="wrap_content"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/email_text_input_layout"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:autofillHints=""
-            android:ems="10"
-            android:hint="@string/reg_email"
-            android:inputType="textEmailAddress"
-            android:text="@={registerViewModel.emailEditTextContent}"
-            android:textColor="@color/secondaryTextColor"
-            android:textColorHint="@color/secondaryTextColor"
-            android:textSize="18sp" />
+            android:layout_marginLeft="40dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="40dp"
+            android:layout_marginBottom="5dp"
+            android:gravity="center"
+            android:textColorHint="@color/primaryTextColor"
+            app:errorEnabled="true"
+            app:errorTextColor="#F44336"
+            app:hintEnabled="true">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/email_edit_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/reg_email"
+                android:text="@={registerViewModel.emailEditTextContent}" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/password_input_text_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="40dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="40dp"
+            android:layout_marginBottom="5dp"
+            android:gravity="center"
+            android:textColorHint="@color/primaryTextColor"
+            app:errorEnabled="true"
+            app:errorTextColor="#F44336"
+            app:hintEnabled="true">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/password_edit_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/reg_password"
+                android:inputType="textPassword"
+                android:text="@={registerViewModel.passwordEditTextContent}" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/confirm_password_text_input_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="40dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="40dp"
+            android:layout_marginBottom="5dp"
+            android:gravity="center"
+            android:textColorHint="@color/primaryTextColor"
+            app:errorEnabled="true"
+            app:errorTextColor="#F44336"
+            app:hintEnabled="true">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/confirm_password_edit_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/reg_confirmPassword"
+                android:inputType="textPassword"
+                android:text="@={registerViewModel.confirmPasswordEditTextContent}" />
+        </com.google.android.material.textfield.TextInputLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -102,5 +135,6 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:srcCompat="@drawable/abc_vector_test" />
         </androidx.constraintlayout.widget.ConstraintLayout>
+
     </LinearLayout>
 </layout>
