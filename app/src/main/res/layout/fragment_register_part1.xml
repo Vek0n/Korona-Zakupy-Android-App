@@ -22,6 +22,8 @@
             android:id="@+id/imageView3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
             app:srcCompat="@drawable/korona_zakupy_title2" />
 
         <com.google.android.material.textfield.TextInputLayout
@@ -35,8 +37,8 @@
             android:layout_marginBottom="5dp"
             android:gravity="center"
             android:textColorHint="@color/primaryTextColor"
-            app:errorEnabled="true"
             app:errorTextColor="#F44336"
+            app:errorEnabled="true"
             app:hintEnabled="true">
 
             <com.google.android.material.textfield.TextInputEditText

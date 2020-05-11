@@ -17,47 +17,76 @@
         android:gravity="center_horizontal"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/reg1_hello"
-            android:layout_width="wrap_content"
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="150dp"
-            android:text="@string/reg_hello"
-            android:textColor="@color/secondaryTextColor"
-            android:textSize="24sp" />
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            app:srcCompat="@drawable/korona_zakupy_title2" />
 
-        <EditText
-            android:id="@+id/reg2_firstName_editText"
-            android:layout_width="wrap_content"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/first_name_text_input_layout"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
-            android:ems="10"
-            android:hint="@string/reg_firstName"
-            android:text="@={registerViewModel.firstNameEditTextContent}"
-            android:inputType="textPersonName"
-            android:autofillHints="" />
+            android:layout_marginLeft="40dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="40dp"
+            android:layout_marginBottom="5dp"
+            android:textColorHint="@color/primaryTextColor"
+            app:errorTextColor="#F44336"
+            app:errorEnabled="true"
+            app:hintEnabled="true">
 
-        <EditText
-            android:id="@+id/reg2_lastName_editText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:ems="10"
-            android:hint="@string/reg_lastName"
-            android:text="@={registerViewModel.lastNameEditTextContent}"
-            android:inputType="textPersonName"
-            android:autofillHints="" />
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/first_name_edit_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/reg_firstName"
+                android:text="@={registerViewModel.firstNameEditTextContent}"/>
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <EditText
-            android:id="@+id/reg2_address_editText"
-            android:layout_width="wrap_content"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/last_name_text_input_layout"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:ems="10"
-            android:hint="@string/reg_address"
-            android:text="@={registerViewModel.addressEditTextContent}"
-            android:inputType="textPostalAddress"
-            android:autofillHints="" />
+            android:layout_marginLeft="40dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="40dp"
+            android:layout_marginBottom="5dp"
+            android:textColorHint="@color/primaryTextColor"
+            app:errorTextColor="#F44336"
+            app:errorEnabled="true"
+            app:hintEnabled="true">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/last_name_edit_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/reg_lastName"
+                android:text="@={registerViewModel.lastNameEditTextContent}"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/address_text_input_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="40dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="40dp"
+            android:layout_marginBottom="5dp"
+            android:textColorHint="@color/primaryTextColor"
+            app:errorTextColor="#F44336"
+            app:errorEnabled="true"
+            app:hintEnabled="true">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/address_edit_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/reg_address"
+                android:text="@={registerViewModel.addressEditTextContent}"/>
+        </com.google.android.material.textfield.TextInputLayout>
 
         <Button
             android:id="@+id/button2"
@@ -65,7 +94,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
             android:background="@color/primaryDarkColor"
-            android:text="@string/reg_image" />
+            android:text="@string/reg_image"
+            android:textColor="@color/primaryTextColor" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
