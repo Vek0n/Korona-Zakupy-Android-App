@@ -18,15 +18,15 @@ class OrderRepository<T: Any>(private val orderDao: OrderDao): IRepository<T>{
             = parseJsonToObject(orderDao.getAllOrdersOfUser(userId))
 
 
-    fun placeOrder(orderDto: T): String
+    suspend fun placeOrder(orderDto: T): String
             = orderDao.placeOrder(parseObjectToJson(orderDto))
 
 
-    fun acceptOrder(userId: String, orderId: Long): String
+    suspend fun acceptOrder(userId: String, orderId: Long): String
             = orderDao.acceptOrder(orderId, userId)
 
 
-    fun confirmOrder(userId: String, orderId: Long): String
+    suspend fun confirmOrder(userId: String, orderId: Long): String
             = orderDao.confirmOrder(orderId, userId)
 
 

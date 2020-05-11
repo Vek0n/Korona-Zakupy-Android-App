@@ -1,6 +1,10 @@
 <resources>
     <string name="app_name">Korona-Zakupy</string>
     <string name="title_activity_register_part1">Registration</string>
+    <!-- Shared Preference -->
+    <string name="user_id_key"></string>
+    <string name="user_token_key"></string>
+    <string name="user_role_key"></string>
     <!-- Registration -->
     <string name="reg_hello">Get on Board</string>
     <string name="reg_username">User Name</string>
@@ -11,7 +15,6 @@
     <string name="reg_lastName">Last Name</string>
     <string name="reg_address">Address</string>
     <string name="reg_image">Add Photo</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_volunteer">VolunteerActivity</string>
     <string name="title_available">Available</string>

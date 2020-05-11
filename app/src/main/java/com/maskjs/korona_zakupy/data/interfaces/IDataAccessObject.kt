@@ -21,7 +21,7 @@ interface IDataAccessObject{
     }
 
 
-    fun APIGetRequestAuth(urlString: String, headerToken: String, client: OkHttpClient):String {
+   suspend fun APIGetRequestAuth(urlString: String, headerToken: String, client: OkHttpClient):String {
         val url = URL(urlString)
         val request = Request.Builder()
             .addHeader("Authorization", "Bearer $headerToken")
@@ -35,7 +35,7 @@ interface IDataAccessObject{
     }
 
 
-    fun APIPostRequest(postBody:String, urlString: String, client: OkHttpClient):String {
+    suspend fun APIPostRequest(postBody:String, urlString: String, client: OkHttpClient):String {
 
         val request = Request.Builder()
             .url(urlString)
@@ -50,7 +50,7 @@ interface IDataAccessObject{
     }
 
 
-    fun APIPostRequestAuth(postBody:String, urlString: String, headerToken: String , client: OkHttpClient):String {
+    suspend fun APIPostRequestAuth(postBody:String, urlString: String, headerToken: String , client: OkHttpClient):String {
 
         val request = Request.Builder()
             .url(urlString)
