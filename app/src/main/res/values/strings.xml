@@ -23,6 +23,8 @@
     <string name="accept_order">Accept</string>
     <string name="cancel">Cancel</string>
     <string name="popup_text">Order details</string>
+    <string name="Ok">OK</string>
+    <string name="Address">Address:</string>
 <!--    <string name="active_orders_list_name">History</string>-->
 
 </resources>

@@ -1,4 +1,4 @@
-package com.maskjs.korona_zakupy.volunteer_ui.active
+package com.maskjs.korona_zakupy.volunteer_ui
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -7,15 +7,14 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.lifecycle.LiveData
 import com.google.gson.internal.LinkedTreeMap
 import com.maskjs.korona_zakupy.R
 import com.maskjs.korona_zakupy.data.orders.GetOrderDto
 import com.squareup.picasso.Picasso
 
 
-class ActiveOrdersListAdapter(private val context: Context?,
-                              private val dataSource: ArrayList<GetOrderDto>
+class OrdersListAdapter(private val context: Context?,
+                        private val dataSource: ArrayList<GetOrderDto>
 ) : BaseAdapter() {
 
 
@@ -34,9 +33,35 @@ class ActiveOrdersListAdapter(private val context: Context?,
         return position.toLong()
     }
 
+    private fun getUserInfo(order: LinkedTreeMap<*, *>): LinkedTreeMap<*,*>{
+        val x = order["usersInfo"] as ArrayList<*>
+        return x[0] as LinkedTreeMap<*,*>
+    }
+
     fun getProducts(position: Int): List<String> {
         val order = getItem(position) as LinkedTreeMap<*, *>
         return order["products"] as List<String>
+    }
+
+    fun getAddress(position: Int): String?{
+        val order = getItem(position) as LinkedTreeMap<*, *>
+        return getUserInfo(order)["address"] as String?
+    }
+
+    private fun getFirstName(order: LinkedTreeMap<*, *>): String?{
+        return getUserInfo(order)["firstName"] as String?
+    }
+
+    private fun getRating(order: LinkedTreeMap<*, *>): Double?{
+        return getUserInfo(order)["rating"] as Double?
+    }
+
+    private fun getOrderDate(order: LinkedTreeMap<*, *>): String?{
+        return order["orderDate"] as String?
+    }
+
+    private fun getPhotoDirectory(order: LinkedTreeMap<*, *>): String?{
+        return getUserInfo(order)["photoDirectory"] as String?
     }
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
@@ -49,8 +74,9 @@ class ActiveOrdersListAdapter(private val context: Context?,
 
             holder = ViewHolder()
             holder.nameText = view.findViewById(R.id.nameTextView) as TextView
-            holder.dateText = view.findViewById(R.id.dateTextView) as TextView
+            //holder.dateText = view.findViewById(R.id.addressTextView) as TextView
             holder.rating = view.findViewById(R.id.ratingTextView) as TextView
+            holder.address = view.findViewById(R.id.addressTextView) as TextView
             holder.imageThumbnailUrl = view.findViewById(R.id.avatarThumbnailImageView) as ImageView
             view.tag = holder
         } else {
@@ -59,28 +85,29 @@ class ActiveOrdersListAdapter(private val context: Context?,
         }
 
         val nameTextView = holder.nameText
-        val dateTextView = holder.dateText
+        //val dateTextView = holder.dateText
         val ratingTextView = holder.rating
+        val addressTextView = holder.address
         val thumbnailImageView = holder.imageThumbnailUrl
 
         val order = getItem(position) as LinkedTreeMap<*, *>
-        val x = order["usersInfo"] as ArrayList<*>
-        val y = x[0] as LinkedTreeMap<*,*>
 
-        nameTextView?.text = y["firstName"] as String?
-        dateTextView?.text = order["orderDate"].toString()
-        ratingTextView?.text = (y["rating"] as Double?).toString()
+        nameTextView?.text = getFirstName(order)
+        //dateTextView?.text = getOrderDate(order)
+        ratingTextView?.text = getRating(order).toString()
+        addressTextView?.text = getAddress(position)
 
         Picasso.get()
-            .load(y["photoDirectory"] as String?)
+            .load(getPhotoDirectory(order))
             .into(thumbnailImageView)
 
         return view
     }
 
-internal class ViewHolder {
-    var nameText: TextView? = null
-    var dateText: TextView? = null
-    var rating: TextView? = null
-    var imageThumbnailUrl: ImageView? = null
-}}
+    internal class ViewHolder {
+        var nameText: TextView? = null
+        var dateText: TextView? = null
+        var rating: TextView? = null
+        var address: TextView? = null
+        var imageThumbnailUrl: ImageView? = null
+    }}

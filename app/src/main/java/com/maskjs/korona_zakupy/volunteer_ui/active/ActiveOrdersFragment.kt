@@ -14,17 +14,19 @@ import com.maskjs.korona_zakupy.R
 import com.maskjs.korona_zakupy.data.orders.GetOrderDto
 import com.maskjs.korona_zakupy.data.orders.OrderDao
 import com.maskjs.korona_zakupy.data.orders.OrderRepository
+import com.maskjs.korona_zakupy.volunteer_ui.OrdersListAdapter
 import kotlinx.android.synthetic.main.fragment_active_orders.*
 import kotlinx.coroutines.*
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
 import okhttp3.OkHttpClient
 
+
 class ActiveOrdersFragment : Fragment() {
 
     private lateinit var activeOrdersViewModel: ActiveOrdersViewModel
     private  lateinit var listView: ListView
-    private lateinit var adapter: ActiveOrdersListAdapter
+    private lateinit var adapterOrders: OrdersListAdapter
 
 
     override fun onCreateView(
@@ -44,16 +46,14 @@ class ActiveOrdersFragment : Fragment() {
             loadActiveOrders()
         }
 
-        //TODO ViewModel
-
-////////////////////////////////// POPUP ////////////////////////////////////////////////////
         listView.setOnItemClickListener { _, _, position, _ ->
 
             val inflater: LayoutInflater = layoutInflater
-            val view = inflater.inflate(R.layout.order_details_popup, null)
+            val view = inflater.inflate(R.layout.active_order_details_popup, null)
 
-            val cancelButton = view.findViewById<Button>(R.id.cancel_button)
+            val cancelButton = view.findViewById<Button>(R.id.Ok_button)
             val productsListView = view.findViewById<ListView>(R.id.products_list_view)
+            val addressTextView = view.findViewById<TextView>(R.id.address_text_view)
 
             val popupWindow = PopupWindow(
                 view, // Custom view to show in popup window
@@ -72,11 +72,13 @@ class ActiveOrdersFragment : Fragment() {
             slideOut.slideEdge = Gravity.TOP
             popupWindow.exitTransition = slideOut
 
+            addressTextView.text = adapterOrders
+                .getAddress(position)
 
             val productsAdapter = ArrayAdapter(
                 context,
                 android.R.layout.simple_list_item_1,
-                adapter
+                adapterOrders
                     .getProducts(position)
             )
 
@@ -99,6 +101,7 @@ class ActiveOrdersFragment : Fragment() {
                 0 // Y offset
             )
         }
+
         return root
     }
 
@@ -110,12 +113,12 @@ class ActiveOrdersFragment : Fragment() {
     private suspend fun getDataFromRepository(): ArrayList<GetOrderDto>{
         return OrderRepository<GetOrderDto>(OrderDao(OkHttpClient()))
             .getAllOrdersOfUser("dc4d373d-f329-4b4d-afd9-0903520d86d6")
-    }   //TODO ActiveOrders
+    }
 
     private suspend fun setListViewAdapterOnMainThread(input: ArrayList<GetOrderDto>){
         withContext(Main){
-            adapter = ActiveOrdersListAdapter(activity, input)
-            listView.adapter = adapter
+            adapterOrders = OrdersListAdapter(activity, input)
+            listView.adapter = adapterOrders
         }
     }
 
