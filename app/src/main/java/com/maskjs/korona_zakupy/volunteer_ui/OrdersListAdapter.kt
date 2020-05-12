@@ -57,6 +57,15 @@ class OrdersListAdapter(private val context: Context?,
         return getUserInfo(order)["rating"] as Double?
     }
 
+    private fun getStatus(order: LinkedTreeMap<*, *>): String?{
+        return order["status"] as String?
+    }
+
+    fun getOrderId(position: Int): Double{
+        val order = getItem(position) as LinkedTreeMap<*, *>
+        return order["orderId"] as Double
+    }
+
     fun getOrderDate(position: Int): String?{
         val order = getItem(position) as LinkedTreeMap<*, *>
         val date = order["orderDate"] as String?
@@ -82,6 +91,7 @@ class OrdersListAdapter(private val context: Context?,
             //holder.dateText = view.findViewById(R.id.addressTextView) as TextView
             holder.rating = view.findViewById(R.id.ratingTextView) as TextView
             holder.address = view.findViewById(R.id.addressTextView) as TextView
+            holder.status = view.findViewById(R.id.statusTextView) as TextView
             holder.imageThumbnailUrl = view.findViewById(R.id.avatarThumbnailImageView) as ImageView
             view.tag = holder
         } else {
@@ -90,17 +100,17 @@ class OrdersListAdapter(private val context: Context?,
         }
 
         val nameTextView = holder.nameText
-        val dateTextView = holder.dateText
         val ratingTextView = holder.rating
         val addressTextView = holder.address
+        val statusTextView = holder.status
         val thumbnailImageView = holder.imageThumbnailUrl
 
         val order = getItem(position) as LinkedTreeMap<*, *>
 
         nameTextView?.text = getFirstName(order)
-        //dateTextView?.text = getOrderDate(position)
         ratingTextView?.text = getRating(order).toString()
         addressTextView?.text = getAddress(position)
+        statusTextView?.text = getStatus(order)
 
         Picasso.get()
             .load(getPhotoDirectory(order))
@@ -114,5 +124,6 @@ class OrdersListAdapter(private val context: Context?,
         var dateText: TextView? = null
         var rating: TextView? = null
         var address: TextView? = null
+        var status: TextView? = null
         var imageThumbnailUrl: ImageView? = null
     }}

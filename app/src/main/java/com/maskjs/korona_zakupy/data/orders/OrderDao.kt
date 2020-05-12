@@ -22,7 +22,7 @@ class OrderDao(private val client: OkHttpClient) : IDataAccessObject{
     }
 
    suspend fun acceptOrder(orderId:Long, userId:String):String{
-        return APIPostRequest("","http://10.0.2.2:5001/api/orders/accept/$orderId/$userId", client)
+        return APIPostRequest("","http://korona-zakupy.hostingasp.pl/api/orders/accept/$orderId/$userId", client)
     }
 
    suspend fun confirmOrder(orderId: Long, userId: String):String{

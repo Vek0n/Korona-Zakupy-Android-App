@@ -76,13 +76,12 @@ class ActiveOrdersFragment : Fragment() {
             )
             productsListView.adapter = productsAdapter
 
-            dialogView.cancel_button.setOnClickListener {
+            dialogView.cancel_order.setOnClickListener {
                 alertDialog.dismiss()
             }
 
-            dialogView.Ok_button.setOnClickListener {
+            dialogView.finish_order.setOnClickListener {
                 alertDialog.dismiss()
-                //TODO
             }
         }
 

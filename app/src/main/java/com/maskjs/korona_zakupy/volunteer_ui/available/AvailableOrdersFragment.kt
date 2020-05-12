@@ -78,8 +78,13 @@ class AvailableOrdersFragment : Fragment() {
             }
 
             dialogView.accept_button.setOnClickListener {
+                val orderId = adapterOrders.getOrderId(position).toLong()
+                val userId = "01fb01ca-526d-4b7a-866b-9c07a792cc9a"
+                //TODO Shared preferences
+                CoroutineScope(Dispatchers.IO).launch {
+                    availableOrdersViewModel.acceptOrder(userId, orderId)
+                }
                 alertDialog.dismiss()
-                //TODO
             }
         }
         return root

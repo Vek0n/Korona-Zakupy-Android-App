@@ -97,7 +97,7 @@
 <!--                android:text="Right Button" />-->
 
             <Button
-                android:id="@+id/cancel_button"
+                android:id="@+id/cancel_order"
                 android:layout_width="7dp"
                 android:layout_height="60dp"
                 android:layout_weight="1"
@@ -112,7 +112,7 @@
 <!--                android:text="Right Button" />-->
 
             <Button
-                android:id="@+id/Ok_button"
+                android:id="@+id/finish_order"
                 android:layout_width="7dp"
                 android:layout_height="60dp"
                 android:layout_weight="1"
