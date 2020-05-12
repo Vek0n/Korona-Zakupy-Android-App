@@ -1,11 +1,7 @@
 package com.maskjs.korona_zakupy.volunteer_ui.available
 
 import android.app.AlertDialog
-import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
-import android.transition.Slide
-import android.transition.TransitionManager
-import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,21 +11,17 @@ import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModelProviders
 import com.maskjs.korona_zakupy.R
 import com.maskjs.korona_zakupy.data.orders.GetOrderDto
-import com.maskjs.korona_zakupy.data.orders.OrderDao
-import com.maskjs.korona_zakupy.data.orders.OrderRepository
+import com.maskjs.korona_zakupy.viewmodels.volunteer.AvailableOrdersViewModel
 import com.maskjs.korona_zakupy.volunteer_ui.OrdersListAdapter
-import kotlinx.android.synthetic.main.active_order_details_popup.view.*
 import kotlinx.android.synthetic.main.available_order_details_popup.view.*
 import kotlinx.android.synthetic.main.available_order_details_popup.view.address_text_view
 import kotlinx.android.synthetic.main.available_order_details_popup.view.cancel_button
 import kotlinx.android.synthetic.main.available_order_details_popup.view.date_text_view
 import kotlinx.android.synthetic.main.available_order_details_popup.view.products_list_view
-import kotlinx.android.synthetic.main.fragment_available_orders.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import okhttp3.OkHttpClient
 
 class AvailableOrdersFragment : Fragment() {
 

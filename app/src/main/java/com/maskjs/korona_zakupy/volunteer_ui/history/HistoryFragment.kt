@@ -12,6 +12,7 @@ import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModelProviders
 import com.maskjs.korona_zakupy.R
 import com.maskjs.korona_zakupy.data.orders.GetOrderDto
+import com.maskjs.korona_zakupy.viewmodels.volunteer.HistoryViewModel
 import com.maskjs.korona_zakupy.volunteer_ui.OrdersListAdapter
 import kotlinx.android.synthetic.main.available_order_details_popup.view.address_text_view
 import kotlinx.android.synthetic.main.available_order_details_popup.view.date_text_view

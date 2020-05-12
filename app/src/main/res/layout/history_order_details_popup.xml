@@ -70,10 +70,22 @@
         </LinearLayout>
 
 
-        <ListView
-            android:id="@+id/products_list_view"
+
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ListView
+                    android:id="@+id/products_list_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="160dp" />
+
+            </LinearLayout>
+        </ScrollView>
+
 
         <LinearLayout
             android:layout_width="match_parent"

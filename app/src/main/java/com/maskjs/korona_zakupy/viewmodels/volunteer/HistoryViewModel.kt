@@ -1,4 +1,4 @@
-package com.maskjs.korona_zakupy.volunteer_ui.history
+package com.maskjs.korona_zakupy.viewmodels.volunteer
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

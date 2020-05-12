@@ -1,4 +1,4 @@
-package com.maskjs.korona_zakupy.volunteer_ui.active
+package com.maskjs.korona_zakupy.viewmodels.volunteer
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
