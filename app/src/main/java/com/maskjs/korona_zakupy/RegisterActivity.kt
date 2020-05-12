@@ -1,8 +1,11 @@
 package com.maskjs.korona_zakupy
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import com.maskjs.korona_zakupy.register_ui.RegisterPart1Fragment
+import com.maskjs.korona_zakupy.register_ui.RegisterPart2Fragment
 import com.maskjs.korona_zakupy.viewmodels.register.RegisterViewModel
 
 import kotlinx.android.synthetic.main.activity_register_part1.*
@@ -36,5 +39,10 @@ RegisterPart2Fragment.OnReg2BackButtonPressed{
         val fragmentTransaction = fragmentManager.beginTransaction()
         fragmentTransaction.replace(R.id.reg_fragments, regFragment2)
         fragmentTransaction.commit()
+    }
+
+    override fun goToLoginActivity() {
+        val intent = Intent(this,LoginActivity::class.java)
+        startActivity(intent)
     }
 }

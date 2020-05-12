@@ -45,7 +45,7 @@
                 android:id="@+id/user_name_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/reg_username"
+                android:hint="@string/reg_hint_username"
                 android:text="@={registerViewModel.userNameEditTextContent}" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -68,7 +68,7 @@
                 android:id="@+id/email_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/reg_email"
+                android:hint="@string/reg_hint_email"
                 android:text="@={registerViewModel.emailEditTextContent}" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -90,7 +90,7 @@
                 android:id="@+id/password_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/reg_password"
+                android:hint="@string/reg_hint_password"
                 android:inputType="textPassword"
                 android:text="@={registerViewModel.passwordEditTextContent}" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -113,7 +113,7 @@
                 android:id="@+id/confirm_password_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/reg_confirmPassword"
+                android:hint="@string/reg_hint_confirmPassword"
                 android:inputType="textPassword"
                 android:text="@={registerViewModel.confirmPasswordEditTextContent}" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -136,6 +136,39 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:srcCompat="@drawable/abc_vector_test" />
+
+            <LinearLayout
+                android:id="@+id/linear_layout_to_login"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="56dp"
+                android:layout_marginEnd="42dp"
+                android:layout_marginBottom="42dp"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/fab_reg1"
+                app:layout_constraintStart_toStartOf="parent">
+
+                <TextView
+                    android:id="@+id/text_view_ask_have_account"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="5dp"
+                    android:layout_weight="1"
+                    android:text="@string/reg_text_view_ask_have_account"
+                    android:textColor="@color/primaryTextColor" />
+
+                <TextView
+                    android:id="@+id/text_view_to_login"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_weight="1"
+                    android:clickable="true"
+                    android:text="@string/reg_text_view_to_login"
+                    android:textColor="@color/primaryTextColor"
+                    android:textStyle="bold" />
+            </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </LinearLayout>
