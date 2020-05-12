@@ -7,17 +7,21 @@
     <string name="user_token_key"></string>
     <string name="user_role_key"></string>
     <!-- RegistrationActivity -->
-    <string name="reg_hello">Get on Board</string>
-    <string name="reg_username">User Name</string>
-    <string name="reg_password">Password</string>
-    <string name="reg_confirmPassword">Confirm Password</string>
-    <string name="reg_email">Email</string>
-    <string name="reg_firstName">First Name</string>
-    <string name="reg_lastName">Last Name</string>
-    <string name="reg_address">Address</string>
-    <string name="reg_image">Add Photo</string>
-    <string name="reg_password_match_error">Passwords not match</string>
-    <string name="reg_password_regex_error">Password must have at least 8 characters and contain at least one digit, a lower and upper case letter and special character</string>
+    <string name="reg_hint_username">User Name</string>
+    <string name="reg_hint_password">Password</string>
+    <string name="reg_hint_confirmPassword">Confirm Password</string>
+    <string name="reg_hint_email">Email</string>
+    <string name="reg_hint_first_name">First Name</string>
+    <string name="reg_hint_last_name">Last Name</string>
+    <string name="reg_hint_address">Address</string>
+    <string name="reg_btn_text_add_photo">Add Photo</string>
+    <string name="reg_error_password_match">Passwords not match</string>
+    <string name="reg_error_password_regex">Password must have at least 8 characters and contain at least one digit, a lower and upper case letter and special character</string>
+    <string name="reg_text_view_ask_have_account">Already have an account?</string>
+    <string name="reg_text_view_to_login"><u>SIGN UP!</u></string>
+    <!--LoginActivity-->
+    <string name="log_text_view_to_ask_have_account">Don\'t have an account?</string>
+    <string name="log_text_view_to_register"><u>REGISTER NOW!</u></string>
     <!--VolunteerAcitivy-->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_volunteer">VolunteerActivity</string>
@@ -28,13 +32,22 @@
     <string name="cancel">Cancel</string>
     <string name="popup_text">Order details</string>
     <string name="global_empty_field_error">Field must not be empty</string>
-<!--    <string name="active_orders_list_name">History</string>-->
+    <!--    <string name="active_orders_list_name">History</string>-->
     <string name="Ok">OK</string>
     <string name="Address">Address:</string>
     <string name="Date">Placing date:</string>
     <string name="confirm">Finish order</string>
     <string name="cancel_order">Cancel order</string>
     <string name="order_details">Order details</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="title_activity_login">Login</string>
 
 
 </resources>
