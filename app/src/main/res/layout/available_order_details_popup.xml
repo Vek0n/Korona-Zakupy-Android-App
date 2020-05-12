@@ -88,8 +88,8 @@
 
             <Button
                 android:id="@+id/cancel_button"
-                android:layout_width="7pt"
-                android:layout_height="30pt"
+                android:layout_width="7dp"
+                android:layout_height="60dp"
                 android:layout_weight="1"
                 android:background="#FF8585"
                 android:text="@string/cancel"
@@ -103,8 +103,8 @@
 
             <Button
                 android:id="@+id/accept_button"
-                android:layout_width="7pt"
-                android:layout_height="30pt"
+                android:layout_width="7dp"
+                android:layout_height="60dp"
                 android:layout_weight="1"
                 android:background="#58C031"
                 android:text="@string/accept_order"
