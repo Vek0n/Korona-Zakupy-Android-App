@@ -26,6 +26,10 @@ class OrderRepository<T: Any>(private val orderDao: OrderDao): IRepository<T>{
             = orderDao.acceptOrder(orderId, userId)
 
 
+    suspend fun unAcceptOrder(userId: String, orderId: Long): String
+            = orderDao.unAcceptOrder(orderId, userId)
+
+
     suspend fun confirmOrder(userId: String, orderId: Long): String
             = orderDao.confirmOrder(orderId, userId)
 

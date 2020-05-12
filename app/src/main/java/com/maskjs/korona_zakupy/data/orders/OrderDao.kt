@@ -25,8 +25,12 @@ class OrderDao(private val client: OkHttpClient) : IDataAccessObject{
         return APIPostRequest("","http://korona-zakupy.hostingasp.pl/api/orders/accept/$orderId/$userId", client)
     }
 
+    suspend fun unAcceptOrder(orderId: Long, userId: String): String{
+        return APIPostRequest("","http://korona-zakupy.hostingasp.pl/api/orders/accept/cancel/$orderId/$userId", client)
+    }
+
    suspend fun confirmOrder(orderId: Long, userId: String):String{
-        return APIPostRequest("","http://10.0.2.2:5001/api/orders/confirm/$orderId/$userId", client)
+        return APIPostRequest("","http://korona-zakupy.hostingasp.pl/api/orders/confirm/$orderId/$userId", client)
     }
 
     suspend fun cancelConfirmOrder(orderId: Long, userId: String):String{

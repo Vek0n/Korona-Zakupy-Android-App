@@ -17,6 +17,7 @@ import kotlinx.android.synthetic.main.available_order_details_popup.view.cancel_
 import kotlinx.android.synthetic.main.available_order_details_popup.view.date_text_view
 import kotlinx.android.synthetic.main.available_order_details_popup.view.products_list_view
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.launch
@@ -76,11 +77,22 @@ class ActiveOrdersFragment : Fragment() {
             )
             productsListView.adapter = productsAdapter
 
+            val orderId = adapterOrders.getOrderId(position).toLong()
+            val userId = "608eee77-6807-421f-ab0b-e8a73952bef5"
+            //TODO Shared preferences
+
+
             dialogView.cancel_order.setOnClickListener {
+                CoroutineScope(IO).launch {
+                    activeOrdersViewModel.unAcceptOrder(userId, orderId)
+                }
                 alertDialog.dismiss()
             }
 
             dialogView.finish_order.setOnClickListener {
+                CoroutineScope(IO).launch {
+                    activeOrdersViewModel.completeOrder(userId, orderId)
+                }
                 alertDialog.dismiss()
             }
         }

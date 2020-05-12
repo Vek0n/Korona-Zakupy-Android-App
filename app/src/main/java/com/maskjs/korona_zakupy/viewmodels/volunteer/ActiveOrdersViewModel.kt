@@ -16,4 +16,14 @@ class ActiveOrdersViewModel : ViewModel() {
             .getAllOrdersOfUser("dc4d373d-f329-4b4d-afd9-0903520d86d6")
     }
 
+    suspend fun unAcceptOrder(userId: String, orderId: Long): String{
+        return OrderRepository<Any>(OrderDao(OkHttpClient()))
+            .unAcceptOrder(userId, orderId)
+    }
+
+    suspend fun completeOrder(userId: String, orderId: Long): String{
+        return OrderRepository<Any>(OrderDao(OkHttpClient()))
+            .confirmOrder(userId, orderId)
+    }
+
 }
