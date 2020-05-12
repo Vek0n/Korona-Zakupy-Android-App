@@ -11,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModelProviders
 import com.maskjs.korona_zakupy.R
 import com.maskjs.korona_zakupy.data.orders.GetOrderDto
@@ -49,7 +50,8 @@ class AvailableOrdersFragment : Fragment() {
         listView = root.findViewById(R.id.listViewAvailableOrders) as ListView
 
         CoroutineScope(Dispatchers.IO).launch {
-            loadActiveOrders()
+            val data = availableOrdersViewModel.getAvailableOrdersFromRepository()
+            setListViewAdapterOnMainThread(context, data)
         }
 
         listView.setOnItemClickListener { _, _, position, _ ->
@@ -57,7 +59,7 @@ class AvailableOrdersFragment : Fragment() {
             val dialogView = LayoutInflater.from(context).inflate(R.layout.available_order_details_popup, null)
             val builder = AlertDialog.Builder(context)
                 .setView(dialogView)
-                .setTitle("Order details")
+                .setTitle(R.string.order_details)
 
             val alertDialog = builder.show()
 
@@ -87,27 +89,14 @@ class AvailableOrdersFragment : Fragment() {
                 alertDialog.dismiss()
                 //TODO
             }
-
         }
-
         return root
     }
 
 
-    private suspend fun loadActiveOrders() {
-        setListViewAdapterOnMainThread(
-            getDataFromRepository()
-        )
-    }
-
-    private suspend fun getDataFromRepository(): ArrayList<GetOrderDto> {
-        return OrderRepository<GetOrderDto>(OrderDao(OkHttpClient()))
-            .getAllOrdersOfUser("dc4d373d-f329-4b4d-afd9-0903520d86d6")
-    }
-
-    private suspend fun setListViewAdapterOnMainThread(input: ArrayList<GetOrderDto>) {
+    private suspend fun setListViewAdapterOnMainThread(context: FragmentActivity?, input: ArrayList<GetOrderDto>) {
         withContext(Dispatchers.Main) {
-            adapterOrders = OrdersListAdapter(activity, input)
+            adapterOrders = OrdersListAdapter(context, input)
             listView.adapter = adapterOrders
         }
     }

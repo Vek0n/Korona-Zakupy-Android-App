@@ -1,36 +1,25 @@
 package com.maskjs.korona_zakupy.volunteer_ui.active
 
 import android.app.AlertDialog
-import android.content.Context
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
-import android.os.Build.VERSION
-import android.os.Build.VERSION_CODES
 import android.os.Bundle
-import android.transition.Slide
-import android.transition.TransitionManager
 import android.view.*
 import android.widget.*
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModelProviders
 import com.maskjs.korona_zakupy.R
 import com.maskjs.korona_zakupy.data.orders.GetOrderDto
-import com.maskjs.korona_zakupy.data.orders.OrderDao
-import com.maskjs.korona_zakupy.data.orders.OrderRepository
 import com.maskjs.korona_zakupy.volunteer_ui.OrdersListAdapter
 import kotlinx.android.synthetic.main.active_order_details_popup.view.*
-import kotlinx.android.synthetic.main.available_order_details_popup.view.*
 import kotlinx.android.synthetic.main.available_order_details_popup.view.address_text_view
 import kotlinx.android.synthetic.main.available_order_details_popup.view.cancel_button
 import kotlinx.android.synthetic.main.available_order_details_popup.view.date_text_view
 import kotlinx.android.synthetic.main.available_order_details_popup.view.products_list_view
-import kotlinx.android.synthetic.main.fragment_active_orders.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import okhttp3.OkHttpClient
 
 
 class ActiveOrdersFragment : Fragment() {
@@ -54,15 +43,17 @@ class ActiveOrdersFragment : Fragment() {
         listView = root.findViewById(R.id.listViewActiveOrders) as ListView
 
         CoroutineScope(IO).launch {
-            loadActiveOrders()
+            val data = activeOrdersViewModel.getActiveOrdersFromRepository()
+            setListViewAdapterOnMainThread(data, context)
         }
+
 
         listView.setOnItemClickListener { _, _, position, _ ->
 
             val dialogView = LayoutInflater.from(context).inflate(R.layout.active_order_details_popup, null)
             val builder = AlertDialog.Builder(context)
                 .setView(dialogView)
-                .setTitle("Order details")
+                .setTitle(R.string.order_details)
 
             val alertDialog = builder.show()
 
@@ -97,19 +88,9 @@ class ActiveOrdersFragment : Fragment() {
         return root
     }
 
-    private suspend fun loadActiveOrders(){
-        setListViewAdapterOnMainThread(
-            getDataFromRepository())
-    }
-
-    private suspend fun getDataFromRepository(): ArrayList<GetOrderDto>{
-        return OrderRepository<GetOrderDto>(OrderDao(OkHttpClient()))
-            .getAllOrdersOfUser("dc4d373d-f329-4b4d-afd9-0903520d86d6")
-    }
-
-    private suspend fun setListViewAdapterOnMainThread(input: ArrayList<GetOrderDto>){
+    private suspend fun setListViewAdapterOnMainThread(input: ArrayList<GetOrderDto>, context: FragmentActivity?){
         withContext(Main){
-            adapterOrders = OrdersListAdapter(activity, input)
+            adapterOrders = OrdersListAdapter(context, input)
             listView.adapter = adapterOrders
         }
     }

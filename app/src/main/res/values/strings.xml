@@ -34,6 +34,7 @@
     <string name="Date">Placing date:</string>
     <string name="confirm">Finish order</string>
     <string name="cancel_order">Cancel order</string>
+    <string name="order_details">Order details</string>
 
 
 </resources>
