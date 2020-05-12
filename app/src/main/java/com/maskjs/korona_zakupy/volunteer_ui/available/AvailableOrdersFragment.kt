@@ -1,5 +1,7 @@
 package com.maskjs.korona_zakupy.volunteer_ui.available
 
+import android.app.AlertDialog
+import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
 import android.transition.Slide
 import android.transition.TransitionManager
@@ -15,6 +17,12 @@ import com.maskjs.korona_zakupy.data.orders.GetOrderDto
 import com.maskjs.korona_zakupy.data.orders.OrderDao
 import com.maskjs.korona_zakupy.data.orders.OrderRepository
 import com.maskjs.korona_zakupy.volunteer_ui.OrdersListAdapter
+import kotlinx.android.synthetic.main.active_order_details_popup.view.*
+import kotlinx.android.synthetic.main.available_order_details_popup.view.*
+import kotlinx.android.synthetic.main.available_order_details_popup.view.address_text_view
+import kotlinx.android.synthetic.main.available_order_details_popup.view.cancel_button
+import kotlinx.android.synthetic.main.available_order_details_popup.view.date_text_view
+import kotlinx.android.synthetic.main.available_order_details_popup.view.products_list_view
 import kotlinx.android.synthetic.main.fragment_available_orders.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -46,29 +54,22 @@ class AvailableOrdersFragment : Fragment() {
 
         listView.setOnItemClickListener { _, _, position, _ ->
 
-            val inflater: LayoutInflater = layoutInflater
-            val view = inflater.inflate(R.layout.available_order_details_popup, null)
+            val dialogView = LayoutInflater.from(context).inflate(R.layout.available_order_details_popup, null)
+            val builder = AlertDialog.Builder(context)
+                .setView(dialogView)
+                .setTitle("Order details")
 
-            val cancelButton = view.findViewById<Button>(R.id.cancel_button)
-            val productsListView = view.findViewById<ListView>(R.id.products_list_view)
+            val alertDialog = builder.show()
 
-            val popupWindow = PopupWindow(
-                view, // Custom view to show in popup window
-                LinearLayout.LayoutParams.WRAP_CONTENT, // Width of popup window
-                LinearLayout.LayoutParams.WRAP_CONTENT // Window height
-            )
+            val productsListView = dialogView.products_list_view
+            val addressTextView = dialogView.address_text_view
+            val dateTextView = dialogView.date_text_view
 
-            popupWindow.elevation = 10.0F
+            addressTextView.text = adapterOrders
+                .getAddress(position)
 
-            val slideIn = Slide()
-            slideIn.slideEdge = Gravity.TOP
-            popupWindow.enterTransition = slideIn
-
-
-            val slideOut = Slide()
-            slideOut.slideEdge = Gravity.TOP
-            popupWindow.exitTransition = slideOut
-
+            dateTextView.text = adapterOrders
+                .getOrderDate(position)
 
             val productsAdapter = ArrayAdapter(
                 context,
@@ -76,26 +77,18 @@ class AvailableOrdersFragment : Fragment() {
                 adapterOrders
                     .getProducts(position)
             )
-
             productsListView.adapter = productsAdapter
 
-            cancelButton.setOnClickListener {
-                popupWindow.dismiss()
+            dialogView.cancel_button.setOnClickListener {
+                alertDialog.dismiss()
             }
 
-            popupWindow.setOnDismissListener {
-                Toast.makeText(context, "Popup closed", Toast.LENGTH_SHORT).show()
+            dialogView.accept_button.setOnClickListener {
+                alertDialog.dismiss()
+                //TODO
             }
 
-            TransitionManager.beginDelayedTransition(listViewAvailableOrders)
-            popupWindow.showAtLocation(
-                listViewAvailableOrders, // Location to display popup window
-                Gravity.CENTER, // Exact position of layout to display popup
-                0, // X offset
-                0 // Y offset
-            )
         }
-
 
         return root
     }

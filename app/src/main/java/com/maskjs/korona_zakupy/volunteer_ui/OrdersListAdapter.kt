@@ -11,6 +11,7 @@ import com.google.gson.internal.LinkedTreeMap
 import com.maskjs.korona_zakupy.R
 import com.maskjs.korona_zakupy.data.orders.GetOrderDto
 import com.squareup.picasso.Picasso
+import java.text.SimpleDateFormat
 
 
 class OrdersListAdapter(private val context: Context?,
@@ -56,8 +57,12 @@ class OrdersListAdapter(private val context: Context?,
         return getUserInfo(order)["rating"] as Double?
     }
 
-    private fun getOrderDate(order: LinkedTreeMap<*, *>): String?{
-        return order["orderDate"] as String?
+    fun getOrderDate(position: Int): String?{
+        val order = getItem(position) as LinkedTreeMap<*, *>
+        val date = order["orderDate"] as String?
+        val parser =  SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss")
+        val formatter = SimpleDateFormat("dd.MM.yyyy HH:mm")
+        return formatter.format(parser.parse(date))
     }
 
     private fun getPhotoDirectory(order: LinkedTreeMap<*, *>): String?{
@@ -85,7 +90,7 @@ class OrdersListAdapter(private val context: Context?,
         }
 
         val nameTextView = holder.nameText
-        //val dateTextView = holder.dateText
+        val dateTextView = holder.dateText
         val ratingTextView = holder.rating
         val addressTextView = holder.address
         val thumbnailImageView = holder.imageThumbnailUrl
@@ -93,7 +98,7 @@ class OrdersListAdapter(private val context: Context?,
         val order = getItem(position) as LinkedTreeMap<*, *>
 
         nameTextView?.text = getFirstName(order)
-        //dateTextView?.text = getOrderDate(order)
+        //dateTextView?.text = getOrderDate(position)
         ratingTextView?.text = getRating(order).toString()
         addressTextView?.text = getAddress(position)
 

@@ -10,21 +10,65 @@
         android:id="@+id/linear_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/primaryLightColor"
+        android:background="#FFFFFF"
         android:orientation="vertical"
         android:padding="20dp"
         tools:layout_editor_absoluteX="28dp"
         tools:layout_editor_absoluteY="0dp">
 
-        <TextView
-            android:id="@+id/text_view"
-            android:layout_width="match_parent"
+        <LinearLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="38dp"
-            android:text="@string/popup_text"
-            android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
-            android:textSize="30sp" />
+            android:layout_marginBottom="20dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/address_title_text_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/Address"
+                android:textColor="@color/secondaryTextColor"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/address_text_view"
+                android:layout_width="126dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="40dp"
+                android:layout_weight="0"
+                android:text="ADDRESS"
+                android:textColor="@color/secondaryTextColor"
+                android:textSize="22sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/date_title_text_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/Date"
+                android:textColor="@color/secondaryTextColor"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/date_text_view"
+                android:layout_width="127dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="40dp"
+                android:layout_weight="0"
+                android:text="DATE"
+                android:textColor="@color/secondaryTextColor"
+                android:textSize="21sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
 
         <ListView
             android:id="@+id/products_list_view"
@@ -44,10 +88,12 @@
 
             <Button
                 android:id="@+id/cancel_button"
-                android:layout_width="30dp"
-                android:layout_height="70dp"
+                android:layout_width="7pt"
+                android:layout_height="30pt"
                 android:layout_weight="1"
-                android:text="@string/cancel" />
+                android:background="#FF8585"
+                android:text="@string/cancel"
+                android:textColor="#FFFFFF" />
 
             <View
                 android:layout_width="0dp"
@@ -57,10 +103,12 @@
 
             <Button
                 android:id="@+id/accept_button"
-                android:layout_width="30dp"
-                android:layout_height="70dp"
+                android:layout_width="7pt"
+                android:layout_height="30pt"
                 android:layout_weight="1"
-                android:text="@string/accept_order" />
+                android:background="#58C031"
+                android:text="@string/accept_order"
+                android:textColor="#FFFCFC" />
 
             <View
                 android:layout_width="0dp"
