@@ -7,7 +7,6 @@ data class UsersInfoModel(
     val firstName:String,
     val lastName:String,
     val rating: Double,
-    val photoDirectory:String?
-//    val role: String
-) {
-}
+    val photoDirectory:String?,
+    val userRole: String
+) {}

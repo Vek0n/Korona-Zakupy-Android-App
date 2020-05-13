@@ -41,8 +41,8 @@ class AvailableOrdersFragment : Fragment() {
         val context = activity
 
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
-        val userId = sharedPreferences.getString(R.string.user_id_key.toString(),"")
-
+//        val userId = sharedPreferences.getString(R.string.user_id_key.toString(),"")
+        val userId = "85b68f59-02ff-456b-b502-cf9830f10b1f"
         listView = root.findViewById(R.id.listViewAvailableOrders) as ListView
 
         CoroutineScope(Dispatchers.IO).launch {

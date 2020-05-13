@@ -42,7 +42,7 @@ class HistoryFragment : Fragment() {
 
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
 //        val userId = sharedPreferences.getString(R.string.user_id_key.toString(),"")
-        val userId = "dc4d373d-f329-4b4d-afd9-0903520d86d6"
+        val userId = "85b68f59-02ff-456b-b502-cf9830f10b1f"
 
         listView = root.findViewById(R.id.listViewHistory) as ListView
 

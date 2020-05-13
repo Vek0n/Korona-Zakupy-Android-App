@@ -36,7 +36,13 @@ class OrdersListAdapter(private val context: Context?,
 
     private fun getUserInfo(order: LinkedTreeMap<*, *>): LinkedTreeMap<*,*>{
         val x = order["usersInfo"] as ArrayList<*>
-        return x[0] as LinkedTreeMap<*,*>
+        return if (x.size == 1)
+            x[0] as LinkedTreeMap<*,*>
+        else{
+            val user = x[0] as LinkedTreeMap<*,*>
+            if(user["userRole"] == "PersonInQuarantine") user
+            else x[1] as LinkedTreeMap<*, *>
+        }
         //TODO FIND USER BY ROLE
     }
 

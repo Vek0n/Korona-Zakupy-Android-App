@@ -14,4 +14,9 @@ class ActiveOrdersViewModel : ViewModel() {
         return OrderRepository<GetOrderDto>(OrderDao(OkHttpClient()))
             .getAllOrdersOfUser(userId)
     }
+
+    suspend fun completeOrder(userId: String, orderId: Long): String{
+        return OrderRepository<Any>(OrderDao(OkHttpClient()))
+            .confirmOrder(userId, orderId)
+    }
 }

@@ -42,8 +42,8 @@ class ActiveOrdersFragment : Fragment() {
         val root = inflater.inflate(R.layout.fragment_active_orders, container, false)
 
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
-        //val userId = sharedPreferences.getString(R.string.user_id_key.toString(),"")
-        val userId = "dc4d373d-f329-4b4d-afd9-0903520d86d6"
+//        val userId = sharedPreferences.getString(R.string.user_id_key.toString(),"")
+        val userId = "85b68f59-02ff-456b-b502-cf9830f10b1f"
 
         listView = root.findViewById(R.id.listViewActiveOrders) as ListView
 
