@@ -2,6 +2,7 @@ package com.maskjs.korona_zakupy.volunteer_ui.available
 
 import android.app.AlertDialog
 import android.os.Bundle
+import android.preference.PreferenceManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -39,6 +40,9 @@ class AvailableOrdersFragment : Fragment() {
         val root = inflater.inflate(R.layout.fragment_available_orders, container, false)
         val context = activity
 
+        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
+        availableOrdersViewModel.userId = sharedPreferences.getString(R.string.user_id_key.toString(),"")
+
         listView = root.findViewById(R.id.listViewAvailableOrders) as ListView
 
         CoroutineScope(Dispatchers.IO).launch {
@@ -73,7 +77,8 @@ class AvailableOrdersFragment : Fragment() {
             )
             productsListView.adapter = productsAdapter
             val orderId = adapterOrders.getOrderId(position).toLong()
-            val userId = "01fb01ca-526d-4b7a-866b-9c07a792cc9a"
+            val userId = availableOrdersViewModel.userId
+                //"01fb01ca-526d-4b7a-866b-9c07a792cc9a"
 
             dialogView.cancel_button.setOnClickListener {
                 alertDialog.dismiss()

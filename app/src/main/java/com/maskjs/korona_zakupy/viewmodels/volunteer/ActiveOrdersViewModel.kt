@@ -9,7 +9,10 @@ import kotlinx.coroutines.*
 import okhttp3.OkHttpClient
 
 
-class ActiveOrdersViewModel : ViewModel() {
+class ActiveOrdersViewModel(userId: String) : ViewModel() {
+
+    var userId: String = ""
+
 
     suspend fun getActiveOrdersFromRepository(): ArrayList<GetOrderDto>{
         return OrderRepository<GetOrderDto>(OrderDao(OkHttpClient()))
