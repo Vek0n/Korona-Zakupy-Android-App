@@ -10,7 +10,6 @@ import okhttp3.OkHttpClient
 
 class AvailableOrdersViewModel : ViewModel() {
 
-    var userId: String = ""
 
     suspend fun getAvailableOrdersFromRepository(): ArrayList<GetOrderDto>{
         return OrderRepository<GetOrderDto>(OrderDao(OkHttpClient()))

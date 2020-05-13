@@ -42,12 +42,13 @@ class ActiveOrdersFragment : Fragment() {
         val root = inflater.inflate(R.layout.fragment_active_orders, container, false)
 
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
-        activeOrdersViewModel.userId = sharedPreferences.getString(R.string.user_id_key.toString(),"")
+        //val userId = sharedPreferences.getString(R.string.user_id_key.toString(),"")
+        val userId = "dc4d373d-f329-4b4d-afd9-0903520d86d6"
 
         listView = root.findViewById(R.id.listViewActiveOrders) as ListView
 
         CoroutineScope(IO).launch {
-            val data = activeOrdersViewModel.getActiveOrdersFromRepository()
+            val data = activeOrdersViewModel.getActiveOrdersFromRepository(userId)
             setListViewAdapterOnMainThread(data, context)
         }
 
@@ -79,11 +80,7 @@ class ActiveOrdersFragment : Fragment() {
             )
             productsListView.adapter = productsAdapter
 
-
             val orderId = adapterOrders.getOrderId(position).toLong()
-            val userId = activeOrdersViewModel.userId
-            //"608eee77-6807-421f-ab0b-e8a73952bef5"
-
 
             dialogView.cancel_order.setOnClickListener {
                 CoroutineScope(IO).launch {

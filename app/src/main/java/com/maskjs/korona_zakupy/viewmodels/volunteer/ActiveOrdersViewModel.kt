@@ -11,12 +11,9 @@ import okhttp3.OkHttpClient
 
 class ActiveOrdersViewModel : ViewModel() {
 
-    var userId: String = ""
-
-
-    suspend fun getActiveOrdersFromRepository(): ArrayList<GetOrderDto>{
+    suspend fun getActiveOrdersFromRepository(userId: String): ArrayList<GetOrderDto>{
         return OrderRepository<GetOrderDto>(OrderDao(OkHttpClient()))
-            .getAllOrdersOfUser("dc4d373d-f329-4b4d-afd9-0903520d86d6")
+            .getAllOrdersOfUser(userId)
     }
 
     suspend fun unAcceptOrder(userId: String, orderId: Long): String{

@@ -2,6 +2,7 @@ package com.maskjs.korona_zakupy.volunteer_ui.history
 
 import android.app.AlertDialog
 import android.os.Bundle
+import android.preference.PreferenceManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -37,13 +38,16 @@ class HistoryFragment : Fragment() {
         historyViewModel =
             ViewModelProviders.of(this).get(HistoryViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_history, container, false)
-
         val context = activity
+
+        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
+//        val userId = sharedPreferences.getString(R.string.user_id_key.toString(),"")
+        val userId = "dc4d373d-f329-4b4d-afd9-0903520d86d6"
 
         listView = root.findViewById(R.id.listViewHistory) as ListView
 
         CoroutineScope(Dispatchers.IO).launch {
-            val data = historyViewModel.getHistoryOrdersFromRepository()
+            val data = historyViewModel.getHistoryOrdersFromRepository(userId)
             setListViewAdapterOnMainThread(context, data)
         }
 

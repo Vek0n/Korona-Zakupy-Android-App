@@ -41,7 +41,7 @@ class AvailableOrdersFragment : Fragment() {
         val context = activity
 
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
-        availableOrdersViewModel.userId = sharedPreferences.getString(R.string.user_id_key.toString(),"")
+        val userId = sharedPreferences.getString(R.string.user_id_key.toString(),"")
 
         listView = root.findViewById(R.id.listViewAvailableOrders) as ListView
 
@@ -75,10 +75,10 @@ class AvailableOrdersFragment : Fragment() {
                 adapterOrders
                     .getProducts(position)
             )
+
             productsListView.adapter = productsAdapter
+
             val orderId = adapterOrders.getOrderId(position).toLong()
-            val userId = availableOrdersViewModel.userId
-                //"01fb01ca-526d-4b7a-866b-9c07a792cc9a"
 
             dialogView.cancel_button.setOnClickListener {
                 alertDialog.dismiss()

@@ -37,7 +37,9 @@ class OrdersListAdapter(private val context: Context?,
     private fun getUserInfo(order: LinkedTreeMap<*, *>): LinkedTreeMap<*,*>{
         val x = order["usersInfo"] as ArrayList<*>
         return x[0] as LinkedTreeMap<*,*>
+        //TODO FIND USER BY ROLE
     }
+
 
     fun getProducts(position: Int): List<String> {
         val order = getItem(position) as LinkedTreeMap<*, *>
@@ -58,7 +60,7 @@ class OrdersListAdapter(private val context: Context?,
     }
 
     private fun getStatus(order: LinkedTreeMap<*, *>): String?{
-        return order["status"] as String?
+        return order["orderStatus"] as String?
     }
 
     fun getOrderId(position: Int): Double{

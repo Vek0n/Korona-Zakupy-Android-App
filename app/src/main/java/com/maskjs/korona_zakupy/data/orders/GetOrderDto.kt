@@ -8,6 +8,6 @@ data class GetOrderDto(
     val products: ArrayList<String>,
     val isFinished:Boolean,
     val isActive:Boolean,
-//    val status: String,
+//    val orderStatus: String,
     val usersInfo: ArrayList<UsersInfoModel>
 ) {}

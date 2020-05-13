@@ -34,14 +34,10 @@ class OrderDao(private val client: OkHttpClient) : IDataAccessObject{
     }
 
     suspend fun cancelConfirmOrder(orderId: Long, userId: String):String{
-        return APIGetRequest("http://10.0.2.2:5001/api/orders/confirm/cancel/$orderId/$userId", client)
+        return APIPostRequest("","http://10.0.2.2:5001/api/orders/confirm/cancel/$orderId/$userId", client)
     }
 
     suspend fun checkConfirmation(orderId: Long):String{
         return APIGetRequest("http://10.0.2.2:5001/api/orders/confirm/check/$orderId", client)
-    }
-
-    suspend fun finishOrder(orderId: Long):String{
-        return APIGetRequest("http://10.0.2.2:5001/api/orders/finish/$orderId", client)
     }
 }

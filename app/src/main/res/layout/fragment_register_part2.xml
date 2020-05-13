@@ -141,10 +141,10 @@
                 android:layout_marginEnd="40dp"
                 android:layout_marginBottom="40dp"
                 android:clickable="true"
+                android:focusable="true"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:srcCompat="@android:drawable/checkbox_on_background"
-                android:focusable="true" />
+                app:srcCompat="@drawable/tick_white" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </LinearLayout>
