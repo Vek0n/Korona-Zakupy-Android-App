@@ -9,7 +9,7 @@ import kotlinx.coroutines.*
 import okhttp3.OkHttpClient
 
 
-class ActiveOrdersViewModel(userId: String) : ViewModel() {
+class ActiveOrdersViewModel : ViewModel() {
 
     var userId: String = ""
 

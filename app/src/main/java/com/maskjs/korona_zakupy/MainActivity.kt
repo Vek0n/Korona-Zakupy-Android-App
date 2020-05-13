@@ -39,5 +39,11 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        val button4 = findViewById<Button>(R.id.quarantineButton)
+        button4.setOnClickListener {
+            val intent = Intent(this, PersonInQuarantineActivity::class.java)
+            startActivity(intent)
+        }
+
     }
 }

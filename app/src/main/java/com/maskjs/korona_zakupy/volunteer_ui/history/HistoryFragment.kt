@@ -13,7 +13,7 @@ import androidx.lifecycle.ViewModelProviders
 import com.maskjs.korona_zakupy.R
 import com.maskjs.korona_zakupy.data.orders.GetOrderDto
 import com.maskjs.korona_zakupy.viewmodels.volunteer.HistoryViewModel
-import com.maskjs.korona_zakupy.volunteer_ui.OrdersListAdapter
+import com.maskjs.korona_zakupy.helpers.OrdersListAdapter
 import kotlinx.android.synthetic.main.available_order_details_popup.view.address_text_view
 import kotlinx.android.synthetic.main.available_order_details_popup.view.date_text_view
 import kotlinx.android.synthetic.main.available_order_details_popup.view.products_list_view
@@ -84,7 +84,10 @@ class HistoryFragment : Fragment() {
 
     private suspend fun setListViewAdapterOnMainThread(context: FragmentActivity?, input: ArrayList<GetOrderDto>) {
         withContext(Dispatchers.Main) {
-            adapterOrders = OrdersListAdapter(context, input)
+            adapterOrders = OrdersListAdapter(
+                context,
+                input
+            )
             listView.adapter = adapterOrders
         }
     }

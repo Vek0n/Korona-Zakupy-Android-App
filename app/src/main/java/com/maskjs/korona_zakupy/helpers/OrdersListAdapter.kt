@@ -1,4 +1,4 @@
-package com.maskjs.korona_zakupy.volunteer_ui
+package com.maskjs.korona_zakupy.helpers
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -86,7 +86,8 @@ class OrdersListAdapter(private val context: Context?,
 
             view = inflater.inflate(R.layout.list_active_orders, parent, false)
 
-            holder = ViewHolder()
+            holder =
+                ViewHolder()
             holder.nameText = view.findViewById(R.id.nameTextView) as TextView
             //holder.dateText = view.findViewById(R.id.addressTextView) as TextView
             holder.rating = view.findViewById(R.id.ratingTextView) as TextView

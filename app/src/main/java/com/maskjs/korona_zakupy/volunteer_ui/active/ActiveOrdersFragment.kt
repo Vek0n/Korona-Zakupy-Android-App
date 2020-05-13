@@ -11,14 +11,12 @@ import androidx.lifecycle.ViewModelProviders
 import com.maskjs.korona_zakupy.R
 import com.maskjs.korona_zakupy.data.orders.GetOrderDto
 import com.maskjs.korona_zakupy.viewmodels.volunteer.ActiveOrdersViewModel
-import com.maskjs.korona_zakupy.volunteer_ui.OrdersListAdapter
+import com.maskjs.korona_zakupy.helpers.OrdersListAdapter
 import kotlinx.android.synthetic.main.active_order_details_popup.view.*
 import kotlinx.android.synthetic.main.available_order_details_popup.view.address_text_view
-import kotlinx.android.synthetic.main.available_order_details_popup.view.cancel_button
 import kotlinx.android.synthetic.main.available_order_details_popup.view.date_text_view
 import kotlinx.android.synthetic.main.available_order_details_popup.view.products_list_view
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.launch
@@ -107,7 +105,10 @@ class ActiveOrdersFragment : Fragment() {
 
     private suspend fun setListViewAdapterOnMainThread(input: ArrayList<GetOrderDto>, context: FragmentActivity?){
         withContext(Main){
-            adapterOrders = OrdersListAdapter(context, input)
+            adapterOrders = OrdersListAdapter(
+                context,
+                input
+            )
             listView.adapter = adapterOrders
         }
     }

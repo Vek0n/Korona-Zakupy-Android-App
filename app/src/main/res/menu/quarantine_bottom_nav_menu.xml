@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_active_quarantine"
+        android:icon="@drawable/ic_active_black"
+        android:title="@string/title_active" />
+
+    <item
+        android:id="@+id/navigation_history_quarantine"
+        android:icon="@drawable/ic_history_black"
+        android:title="@string/title_history" />
+
+</menu>

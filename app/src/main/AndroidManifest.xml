@@ -13,9 +13,12 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".PersonInQuarantineActivity"
+            android:label="@string/title_activity_person_in_quarantine"></activity>
+        <activity
             android:name=".LoginActivity"
             android:label="@string/title_activity_login"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".VolunteerActivity"
             android:label="@string/title_activity_volunteer" />
