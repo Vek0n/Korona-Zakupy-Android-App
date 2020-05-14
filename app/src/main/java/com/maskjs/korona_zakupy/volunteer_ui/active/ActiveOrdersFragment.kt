@@ -83,10 +83,15 @@ class ActiveOrdersFragment : Fragment() {
 
             val orderId = adapterOrders.getOrderId(position).toLong()
 
+            alertDialog.setOnDismissListener {
+                refreshFragment()
+            }
+
             dialogView.cancel_order.setOnClickListener {
                 CoroutineScope(IO).launch {
                     activeOrdersViewModel.unAcceptOrder(userId, orderId)
                 }
+                refreshFragment()
                 alertDialog.dismiss()
             }
 
@@ -94,6 +99,7 @@ class ActiveOrdersFragment : Fragment() {
                 CoroutineScope(IO).launch {
                     activeOrdersViewModel.completeOrder(userId, orderId)
                 }
+                refreshFragment()
                 alertDialog.dismiss()
             }
         }
@@ -109,5 +115,12 @@ class ActiveOrdersFragment : Fragment() {
             )
             listView.adapter = adapterOrders
         }
+    }
+
+    private fun refreshFragment(){
+        val f : androidx.fragment.app.FragmentTransaction? = this.fragmentManager?.beginTransaction()
+        f?.detach(this)
+        f?.attach(this)
+        f?.commit()
     }
 }

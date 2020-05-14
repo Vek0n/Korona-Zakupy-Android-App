@@ -41,14 +41,14 @@ class AvailableOrdersFragment : Fragment() {
         val root = inflater.inflate(R.layout.fragment_available_orders, container, false)
         val context = requireContext()
 
-        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity)
+        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
        // val userId = sharedPreferences.getString(R.string.user_id_key.toString(),"")
         val userId = "85b68f59-02ff-456b-b502-cf9830f10b1f"
         listView = root.findViewById(R.id.listViewAvailableOrders) as ListView
 
         CoroutineScope(Dispatchers.IO).launch {
             val data = availableOrdersViewModel.getAvailableOrdersFromRepository()
-            setListViewAdapterOnMainThread(activity, data)
+            setListViewAdapterOnMainThread(context, data)
         }
 
         listView.setOnItemClickListener { _, _, position, _ ->
@@ -81,7 +81,13 @@ class AvailableOrdersFragment : Fragment() {
 
             val orderId = adapterOrders.getOrderId(position).toLong()
 
+            alertDialog.setOnDismissListener {
+                refreshFragment()
+            }
+
+
             dialogView.cancel_button.setOnClickListener {
+                refreshFragment()
                 alertDialog.dismiss()
             }
 
@@ -89,8 +95,10 @@ class AvailableOrdersFragment : Fragment() {
                 CoroutineScope(Dispatchers.IO).launch {
                     availableOrdersViewModel.acceptOrder(userId, orderId)
                 }
+                refreshFragment()
                 alertDialog.dismiss()
             }
+
         }
         return root
     }
@@ -104,6 +112,13 @@ class AvailableOrdersFragment : Fragment() {
             )
             listView.adapter = adapterOrders
         }
+    }
+
+    private fun refreshFragment(){
+        val f : androidx.fragment.app.FragmentTransaction? = this.fragmentManager?.beginTransaction()
+        f?.detach(this)
+        f?.attach(this)
+        f?.commit()
     }
 
 }

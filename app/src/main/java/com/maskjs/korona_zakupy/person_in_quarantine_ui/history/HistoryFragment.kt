@@ -82,7 +82,12 @@ class HistoryFragment : Fragment() {
 
             productsListView.adapter = productsAdapter
 
+            alertDialog.setOnDismissListener {
+                refreshFragment()
+            }
+
             dialogView.dismiss_button.setOnClickListener {
+                refreshFragment()
                 alertDialog.dismiss()
             }
         }
@@ -98,6 +103,13 @@ class HistoryFragment : Fragment() {
             )
             listView.adapter = adapterOrders
         }
+    }
+
+    private fun refreshFragment(){
+        val f : androidx.fragment.app.FragmentTransaction? = this.fragmentManager?.beginTransaction()
+        f?.detach(this)
+        f?.attach(this)
+        f?.commit()
     }
 
 }

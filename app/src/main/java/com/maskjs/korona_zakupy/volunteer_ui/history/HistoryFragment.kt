@@ -10,12 +10,13 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.ListView
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentActivity
+import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.ViewModelProviders
 import com.maskjs.korona_zakupy.R
 import com.maskjs.korona_zakupy.data.orders.GetOrderDto
-import com.maskjs.korona_zakupy.viewmodels.volunteer.HistoryViewModel
 import com.maskjs.korona_zakupy.helpers.OrdersListAdapter
+import com.maskjs.korona_zakupy.viewmodels.volunteer.HistoryViewModel
+import kotlinx.android.synthetic.main.activity_volunteer.*
 import kotlinx.android.synthetic.main.available_order_details_popup.view.address_text_view
 import kotlinx.android.synthetic.main.available_order_details_popup.view.date_text_view
 import kotlinx.android.synthetic.main.available_order_details_popup.view.products_list_view
@@ -30,6 +31,7 @@ class HistoryFragment : Fragment() {
     private lateinit var historyViewModel: HistoryViewModel
     private lateinit var listView: ListView
     private lateinit var adapterOrders: OrdersListAdapter
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -79,7 +81,12 @@ class HistoryFragment : Fragment() {
             )
             productsListView.adapter = productsAdapter
 
+            alertDialog.setOnDismissListener {
+                refreshFragment()
+            }
+
             dialogView.dismiss_button.setOnClickListener {
+                refreshFragment()
                 alertDialog.dismiss()
             }
         }
@@ -95,6 +102,13 @@ class HistoryFragment : Fragment() {
             )
             listView.adapter = adapterOrders
         }
+    }
+
+    private fun refreshFragment(){
+        val f : androidx.fragment.app.FragmentTransaction? = this.fragmentManager?.beginTransaction()
+        f?.detach(this)
+        f?.attach(this)
+        f?.commit()
     }
 
 }
