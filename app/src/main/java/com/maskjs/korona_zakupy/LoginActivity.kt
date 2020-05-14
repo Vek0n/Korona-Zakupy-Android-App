@@ -19,6 +19,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import org.jetbrains.anko.share
 import kotlin.math.log
 
 class LoginActivity : AppCompatActivity() {
@@ -29,6 +30,8 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
         setSupportActionBar(toolbar)
+
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
 
         initializeUiDataBinding()
         observeUiElements()
@@ -42,33 +45,28 @@ class LoginActivity : AppCompatActivity() {
                 CoroutineScope(Dispatchers.IO).launch {
                     login()
                 }
-
+                handleRegisterResponse()
             }
         }
     }
 
     private suspend fun login(){
         loginViewModel.login()
-        withContext(Dispatchers.Main){
-            handleRegisterResponse()
-        }
     }
 
-    private suspend fun handleRegisterResponse(){
+    private fun handleRegisterResponse(){
         saveResponse()
         goToUserActivity()
     }
 
-    private suspend fun saveResponse(){
-        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
-        sharedPreferences.edit(){
-            putString(getString(R.string.user_id_key), loginViewModel.loginResponseDto.id)
-            putString(getString(R.string.user_token_key),loginViewModel.loginResponseDto.token)
-            commit()
-        }
+    private fun saveResponse(){
+        val editor= sharedPreferences.edit()
+            editor.putString(R.string.user_id_key.toString(), loginViewModel.loginResponseDto.userId)
+            editor.putString(getString(R.string.user_token_key),loginViewModel.loginResponseDto.token)
+            editor.commit()
     }
 
-    private suspend fun goToUserActivity(){
+    private fun goToUserActivity(){
         val intent = Intent(this, VolunteerActivity::class.java)
         this?.startActivity(intent)
     }

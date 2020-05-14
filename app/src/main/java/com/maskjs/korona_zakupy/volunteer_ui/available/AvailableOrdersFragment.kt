@@ -40,14 +40,14 @@ class AvailableOrdersFragment : Fragment() {
         val root = inflater.inflate(R.layout.fragment_available_orders, container, false)
         val context = activity
 
-        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
-//        val userId = sharedPreferences.getString(R.string.user_id_key.toString(),"")
+        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity)
+       // val userId = sharedPreferences.getString(R.string.user_id_key.toString(),"")
         val userId = "85b68f59-02ff-456b-b502-cf9830f10b1f"
         listView = root.findViewById(R.id.listViewAvailableOrders) as ListView
 
         CoroutineScope(Dispatchers.IO).launch {
             val data = availableOrdersViewModel.getAvailableOrdersFromRepository()
-            setListViewAdapterOnMainThread(context, data)
+            setListViewAdapterOnMainThread(activity, data)
         }
 
         listView.setOnItemClickListener { _, _, position, _ ->
