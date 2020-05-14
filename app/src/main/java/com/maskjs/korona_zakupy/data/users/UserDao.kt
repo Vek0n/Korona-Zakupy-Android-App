@@ -11,7 +11,7 @@ class UserDao(private val client: OkHttpClient): IDataAccessObject {
 
 
     suspend  fun userLogin(userLoginJsonString: String): String{
-        return APIPostRequest(userLoginJsonString, "http:///korona-zakupy.hostingasp.pl/api/user/login", client)
+        return APIPostRequest(userLoginJsonString, "http://10.0.2.2:5001/api/user/login", client)
     }
 
 

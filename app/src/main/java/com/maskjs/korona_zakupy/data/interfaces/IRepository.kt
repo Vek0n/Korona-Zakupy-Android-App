@@ -4,6 +4,7 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.maskjs.korona_zakupy.data.orders.GetOrderDto
 import com.maskjs.korona_zakupy.data.orders.PlaceOrderDto
+import com.maskjs.korona_zakupy.data.users.LoginResponseDto
 import com.maskjs.korona_zakupy.data.users.RegisterResponseDto
 import java.lang.reflect.Type
 
@@ -22,6 +23,11 @@ interface IRepository<T> {
     suspend fun parseJsonToRegisterResponseDto(json: String): RegisterResponseDto{
         val collectionType: Type = object : TypeToken<RegisterResponseDto?>() {}.type
         return Gson().fromJson(json, collectionType) as RegisterResponseDto
+    }
+
+    suspend fun parseJsonToLoginResponseDto(json: String): LoginResponseDto{
+        val collectionType: Type = object : TypeToken<LoginResponseDto?>() {}.type
+        return Gson().fromJson(json, collectionType) as LoginResponseDto
     }
 
 }

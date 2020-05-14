@@ -1,10 +1,13 @@
 package com.maskjs.korona_zakupy
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
+import android.preference.PreferenceManager
 import androidx.activity.viewModels
 import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.edit
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
@@ -12,12 +15,16 @@ import com.maskjs.korona_zakupy.databinding.ActivityLoginBinding
 import com.maskjs.korona_zakupy.viewmodels.login.LoginViewModel
 
 import kotlinx.android.synthetic.main.activity_login.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import kotlin.math.log
 
 class LoginActivity : AppCompatActivity() {
     private val loginViewModel : LoginViewModel by viewModels()
     private lateinit var uiDataBinding: ActivityLoginBinding
-
+    private lateinit var sharedPreferences: SharedPreferences
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
@@ -32,9 +39,38 @@ class LoginActivity : AppCompatActivity() {
 
         uiDataBinding.fab.setOnClickListener {
             if(validateUi()){
+                CoroutineScope(Dispatchers.IO).launch {
+                    login()
+                }
 
             }
         }
+    }
+
+    private suspend fun login(){
+        loginViewModel.login()
+        withContext(Dispatchers.Main){
+            handleRegisterResponse()
+        }
+    }
+
+    private suspend fun handleRegisterResponse(){
+        saveResponse()
+        goToUserActivity()
+    }
+
+    private suspend fun saveResponse(){
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
+        sharedPreferences.edit(){
+            putString(getString(R.string.user_id_key), loginViewModel.loginResponseDto.id)
+            putString(getString(R.string.user_token_key),loginViewModel.loginResponseDto.token)
+            commit()
+        }
+    }
+
+    private suspend fun goToUserActivity(){
+        val intent = Intent(this, VolunteerActivity::class.java)
+        this?.startActivity(intent)
     }
 
     private fun goToRegisterActivity(){

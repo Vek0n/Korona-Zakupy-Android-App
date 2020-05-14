@@ -13,8 +13,13 @@ class UserRepository<T: Any>(private  val userDao: UserDao): IRepository<T> {
         return parseJsonToRegisterResponseDto(registerJsonResponse)
     }
 
-   suspend fun loginUser(loginUserDto: T): String
-            = userDao.userLogin(parseObjectToJson(loginUserDto))
+   suspend fun loginUser(loginUserDto: T): LoginResponseDto{
+       val loginJsonResponse = userDao.userLogin(
+           parseObjectToJson(loginUserDto))
+
+       return parseJsonToLoginResponseDto(loginJsonResponse)
+   }
+
 
    suspend fun getRole(userId: String, headerToken: String): String
             = userDao.getRole(userId, headerToken)
