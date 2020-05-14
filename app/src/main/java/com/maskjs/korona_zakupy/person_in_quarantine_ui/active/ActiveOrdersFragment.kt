@@ -1,6 +1,7 @@
 package com.maskjs.korona_zakupy.person_in_quarantine_ui.active
 
 import android.app.AlertDialog
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.preference.PreferenceManager
@@ -45,7 +46,7 @@ class ActiveOrdersFragment : Fragment() {
         activeOrdersViewModel =
             ViewModelProviders.of(this).get(ActiveOrdersViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_active_orders_quarantine, container, false)
-        val context = activity
+        val context = requireContext()
 
         val addNewOrderButton = root.findViewById(R.id.addNewOrderButton) as FloatingActionButton
         addNewOrderButton.setOnClickListener {
@@ -110,7 +111,7 @@ class ActiveOrdersFragment : Fragment() {
 
     private suspend fun setListViewAdapterOnMainThread(
         input: ArrayList<GetOrderDto>,
-        context: FragmentActivity?
+        context: Context
     ) {
         withContext(Dispatchers.Main) {
             adapterOrders = OrdersListAdapter(

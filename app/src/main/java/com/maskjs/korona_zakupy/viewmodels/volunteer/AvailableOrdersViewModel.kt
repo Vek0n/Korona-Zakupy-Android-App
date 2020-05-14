@@ -13,7 +13,6 @@ class AvailableOrdersViewModel : ViewModel() {
 
     suspend fun getAvailableOrdersFromRepository(): ArrayList<GetOrderDto>{
         return OrderRepository<GetOrderDto>(OrderDao(OkHttpClient()))
-           // .getAllOrdersOfUser("dc4d373d-f329-4b4d-afd9-0903520d86d6")
             .getActiveOrders()
     }
 

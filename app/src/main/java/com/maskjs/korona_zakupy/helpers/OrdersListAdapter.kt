@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import com.google.gson.internal.LinkedTreeMap
 import com.maskjs.korona_zakupy.R
 import com.maskjs.korona_zakupy.data.orders.GetOrderDto
@@ -14,10 +15,18 @@ import com.squareup.picasso.Picasso
 import java.text.SimpleDateFormat
 
 
-class OrdersListAdapter(private val context: Context?,
+class OrdersListAdapter(private val context: Context,
                         private val dataSource: ArrayList<GetOrderDto>
 ) : BaseAdapter() {
 
+    companion object {
+        private val LABEL_COLORS = hashMapOf(
+            "InProgress" to R.color.inProgress,
+            "Finished" to R.color.finished,
+            "Avalible" to R.color.available,
+            "AwaitingConfirmation" to R.color.awaitingConfirmation
+        )
+    }
 
     private val inflater: LayoutInflater
             = context?.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
@@ -120,6 +129,9 @@ class OrdersListAdapter(private val context: Context?,
         ratingTextView?.text = getRating(order).toString()
         addressTextView?.text = getAddress(position)
         statusTextView?.text = getStatus(order)
+
+        statusTextView?.setTextColor(
+            ContextCompat.getColor(context, LABEL_COLORS[getStatus(order)] ?: R.color.secondaryTextColor))
 
         Picasso.get()
             .load(getPhotoDirectory(order))

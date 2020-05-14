@@ -21,7 +21,7 @@ class RegisterViewModel () : ViewModel() {
     val lastNameEditTextContent = MutableLiveData<String>()
     val addressEditTextContent = MutableLiveData<String>()
     private val userRepository = UserRepository<RegisterUserDto>(userDao = UserDao(client = OkHttpClient()))
-    private val passwordPattern = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{4,}$"
+    private val passwordPattern = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=?!])(?=\\S+$).{4,}$"
 
     suspend fun register() {
             userRegisterResponseDto = userRepository.registerUser(

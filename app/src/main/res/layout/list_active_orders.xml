@@ -53,13 +53,13 @@
         <TextView
             android:id="@+id/addressTextView"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="20dp"
             android:layout_below="@+id/nameTextView"
             android:layout_alignParentBottom="true"
             android:layout_marginLeft="8dp"
             android:layout_marginTop="6dp"
             android:layout_marginRight="8dp"
-            android:layout_marginBottom="7dp"
+            android:layout_marginBottom="5dp"
             android:ellipsize="end"
             android:maxLines="3"
             android:textColor="@color/secondaryTextColor"
@@ -68,19 +68,18 @@
 
         <TextView
             android:id="@+id/statusTextView"
-            android:layout_width="123dp"
-            android:layout_height="21dp"
+            android:layout_width="126dp"
+            android:layout_height="27dp"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginStart="68dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="3dp"
-            android:layout_marginBottom="20dp"
-            android:layout_toEndOf="@+id/nameTextView"
+            android:layout_marginTop="17dp"
+            android:layout_marginEnd="6dp"
+            android:layout_marginBottom="17dp"
             android:text="STATUS"
             android:textColor="#000000"
-            android:textSize="16sp" />
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
     </RelativeLayout>
 </RelativeLayout>

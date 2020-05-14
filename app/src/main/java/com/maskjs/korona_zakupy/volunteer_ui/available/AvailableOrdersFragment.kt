@@ -1,6 +1,7 @@
 package com.maskjs.korona_zakupy.volunteer_ui.available
 
 import android.app.AlertDialog
+import android.content.Context
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.view.LayoutInflater
@@ -38,7 +39,7 @@ class AvailableOrdersFragment : Fragment() {
         availableOrdersViewModel =
             ViewModelProviders.of(this).get(AvailableOrdersViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_available_orders, container, false)
-        val context = activity
+        val context = requireContext()
 
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
 //        val userId = sharedPreferences.getString(R.string.user_id_key.toString(),"")
@@ -95,7 +96,7 @@ class AvailableOrdersFragment : Fragment() {
     }
 
 
-    private suspend fun setListViewAdapterOnMainThread(context: FragmentActivity?, input: ArrayList<GetOrderDto>) {
+    private suspend fun setListViewAdapterOnMainThread(context: Context, input: ArrayList<GetOrderDto>) {
         withContext(Dispatchers.Main) {
             adapterOrders = OrdersListAdapter(
                 context,

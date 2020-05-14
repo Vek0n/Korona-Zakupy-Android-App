@@ -8,4 +8,11 @@
     <color name="secondaryDarkColor">#9c64a6</color>
     <color name="primaryTextColor">#ffffff</color>
     <color name="secondaryTextColor">#000000</color>
+    <color name="inProgress">#F6BA00</color>
+    <color name="awaitingConfirmation">#F6BA00</color>
+    <color name="finished">#FF4A4A</color>
+    <color name="available">#28BB00</color>
+
+
+
 </resources>

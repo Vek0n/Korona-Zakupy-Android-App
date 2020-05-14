@@ -1,6 +1,7 @@
 package com.maskjs.korona_zakupy.volunteer_ui.active
 
 import android.app.AlertDialog
+import android.content.Context
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.view.*
@@ -38,7 +39,7 @@ class ActiveOrdersFragment : Fragment() {
         activeOrdersViewModel =
             ViewModelProviders.of(this).get(ActiveOrdersViewModel::class.java)
 
-        val context = activity
+        val context = requireContext()
         val root = inflater.inflate(R.layout.fragment_active_orders, container, false)
 
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
@@ -100,7 +101,7 @@ class ActiveOrdersFragment : Fragment() {
         return root
     }
 
-    private suspend fun setListViewAdapterOnMainThread(input: ArrayList<GetOrderDto>, context: FragmentActivity?){
+    private suspend fun setListViewAdapterOnMainThread(input: ArrayList<GetOrderDto>, context: Context){
         withContext(Main){
             adapterOrders = OrdersListAdapter(
                 context,
@@ -109,37 +110,4 @@ class ActiveOrdersFragment : Fragment() {
             listView.adapter = adapterOrders
         }
     }
-
-
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////
-//        val productslist = ArrayList<String>()
-//        productslist.add("Harnaś")
-//        productslist.add("Żubr")
-//        productslist.add("Kustosz")
-//
-//        val userInfo = ArrayList<UsersInfoModel>()
-//        val user1 = UsersInfoModel(
-//            userId = "123",
-//            address = "Kwiatowe 3",
-//            name = "Szymon",
-//            firstName = "Szymon",
-//            lastName = "Kaczmarek",
-//            rating = 4,
-//            photoDirectory = "https://i.imgur.com/KMH51Kr.png"
-//        )
-//        userInfo.add(user1)
-//        val order1 = GetOrderDto(
-//            orderId = 1,
-//            orderDate = "10.05.2020",
-//            products = productslist,
-//            isFinished = false,
-//            isActive = true,
-//            usersInfo = userInfo
-//        )
-//
-//        val ordersList = ArrayList<GetOrderDto>()
-//        ordersList.add(order1)
-////////////////////////////////////////////////////////////////////////////////////////////////////
-
 }
