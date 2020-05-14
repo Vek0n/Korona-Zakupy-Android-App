@@ -19,14 +19,6 @@ class OrdersListAdapter(private val context: Context,
                         private val dataSource: ArrayList<GetOrderDto>
 ) : BaseAdapter() {
 
-    companion object {
-        private val LABEL_COLORS = hashMapOf(
-            "InProgress" to R.color.inProgress,
-            "Finished" to R.color.finished,
-            "Avalible" to R.color.available,
-            "AwaitingConfirmation" to R.color.awaitingConfirmation
-        )
-    }
 
     private val inflater: LayoutInflater
             = context?.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
@@ -128,16 +120,34 @@ class OrdersListAdapter(private val context: Context,
         nameTextView?.text = getFirstName(order)
         ratingTextView?.text = getRating(order).toString()
         addressTextView?.text = getAddress(position)
-        statusTextView?.text = getStatus(order)
+
+        statusTextView?.setText(LABEL_NAME[getStatus(order)] ?: R.string.invalid_status)
 
         statusTextView?.setTextColor(
             ContextCompat.getColor(context, LABEL_COLORS[getStatus(order)] ?: R.color.secondaryTextColor))
+
 
         Picasso.get()
             .load(getPhotoDirectory(order))
             .into(thumbnailImageView)
 
         return view
+    }
+
+    companion object {
+        private val LABEL_COLORS = hashMapOf(
+            "InProgress" to R.color.inProgress,
+            "Finished" to R.color.finished,
+            "Avalible" to R.color.available,
+            "AwaitingConfirmation" to R.color.awaitingConfirmation
+        )
+
+        private val LABEL_NAME = hashMapOf(
+            "InProgress" to R.string.status_in_progress,
+            "Finished" to R.string.status_finished,
+            "Avalible" to R.string.status_available,
+            "AwaitingConfirmation" to R.string.status_awaiting_confirmation
+        )
     }
 
     internal class ViewHolder {
@@ -147,4 +157,7 @@ class OrdersListAdapter(private val context: Context,
         var address: TextView? = null
         var status: TextView? = null
         var imageThumbnailUrl: ImageView? = null
-    }}
+    }
+
+
+}

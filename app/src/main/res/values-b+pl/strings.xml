@@ -1,0 +1,64 @@
+<resources>
+    <string name="app_name">Korona-Zakupy</string>
+    <string name="title_activity_register_part1">Rejestracja</string>
+    <string name="logo">Logo</string>
+    <!-- Shared Preference -->
+    <string name="user_id_key"></string>
+    <string name="user_token_key"></string>
+    <string name="user_role_key"></string>
+    <!-- RegistrationActivity -->
+    <string name="reg_hint_username">Username</string>
+    <string name="reg_hint_password">Hasło</string>
+    <string name="reg_hint_confirmPassword">Potwierdź hasło</string>
+    <string name="reg_hint_email">E-mail</string>
+    <string name="reg_hint_first_name">Imię</string>
+    <string name="reg_hint_last_name">Nazwisko</string>
+    <string name="reg_hint_address">Adres</string>
+    <string name="reg_btn_text_add_photo">Dodaj zdjęcie</string>
+    <string name="reg_error_password_match">Hasła nie pasują!</string>
+    <string name="reg_error_password_regex">Hasło musi zawierać co najmniej 8 znaków w tym przynajmniej jedną cyfrę, dużą literę oraz znak specjalny</string>
+    <string name="reg_text_view_ask_have_account">Masz już konto?</string>
+    <string name="reg_text_view_to_login"><u>ZALOGUJ SIĘ!</u></string>
+    <!--LoginActivity-->
+    <string name="log_text_view_to_ask_have_account">Nie masz konta?</string>
+    <string name="log_text_view_to_register"><u>ZAREJESTRUJ SIĘ!</u></string>
+    <!--VolunteerAcitivy-->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_volunteer">VolunteerActivity</string>
+    <string name="title_available">Dostępne</string>
+    <string name="title_active">Aktywne</string>
+    <string name="title_history">Historia</string>
+    <string name="accept_order">Akceptuj</string>
+    <string name="cancel">Anuluj</string>
+    <string name="popup_text">Szczegóły zlecenia</string>
+    <string name="global_empty_field_error">Pole nie może być puste</string>
+    <!--    <string name="active_orders_list_name">History</string>-->
+    <string name="Ok">OK</string>
+    <string name="Address">Adres:</string>
+    <string name="Date">Złożono:</string>
+    <string name="confirm">Zakończ zlecenie</string>
+    <string name="cancel_order">Anuluj zlecenie</string>
+    <string name="order_details">Szczegóły zlecenia</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Następny</string>
+    <string name="previous">Poprzedni</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="title_activity_login">Login</string>
+    <string name="title_activity_person_in_quarantine">PersonInQuarantineActivity</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="my_orders">Moje zlecenia</string>
+
+    <string name="status_available">Dostępne</string>
+    <string name="status_in_progress">W trakcie</string>
+    <string name="status_awaiting_confirmation">Oczekiwanie</string>
+    <string name="status_finished">Zakończono</string>
+    <string name="invalid_status">Invalid status</string>
+
+
+</resources>

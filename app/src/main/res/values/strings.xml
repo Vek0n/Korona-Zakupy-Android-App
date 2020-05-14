@@ -54,5 +54,11 @@
     <string name="title_notifications">Notifications</string>
     <string name="my_orders">My orders</string>
 
+    <string name="status_available">Available</string>
+    <string name="status_in_progress">In Progress</string>
+    <string name="status_awaiting_confirmation">Awaiting confirmation</string>
+    <string name="status_finished">Finished</string>
+    <string name="invalid_status">Invalid status</string>
+
 
 </resources>
