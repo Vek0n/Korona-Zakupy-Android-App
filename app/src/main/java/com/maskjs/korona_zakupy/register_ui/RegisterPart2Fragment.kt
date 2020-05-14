@@ -157,8 +157,8 @@ class RegisterPart2Fragment : Fragment() {
     private suspend fun saveResponse(){
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
         sharedPreferences.edit(){
-            putString(getString(R.string.user_id_key), registerViewModel.userRegisterResponseDto.userId)
-            putString(getString(R.string.user_token_key),registerViewModel.userRegisterResponseDto.token)
+            putString(R.string.user_id_key.toString(), registerViewModel.userRegisterResponseDto.userId)
+            putString(R.string.user_token_key.toString(),registerViewModel.userRegisterResponseDto.token)
             commit()
         }
     }
