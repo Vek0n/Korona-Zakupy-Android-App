@@ -47,7 +47,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/reg_hint_username"
-                android:text="@={registerViewModel.userNameEditTextContent}" />
+                android:inputType="textPersonName"
+                android:text="@={registerViewModel.userNameEditTextContent}"
+                android:textColor="@color/primaryTextColor" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -71,7 +73,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/reg_hint_email"
-                android:text="@={registerViewModel.emailEditTextContent}" />
+                android:inputType="textWebEmailAddress"
+                android:text="@={registerViewModel.emailEditTextContent}"
+                android:textColor="@color/primaryTextColor" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -95,7 +99,8 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/reg_hint_password"
                 android:inputType="textPassword"
-                android:text="@={registerViewModel.passwordEditTextContent}" />
+                android:text="@={registerViewModel.passwordEditTextContent}"
+                android:textColor="@color/primaryTextColor" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -119,7 +124,8 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/reg_hint_confirmPassword"
                 android:inputType="textPassword"
-                android:text="@={registerViewModel.confirmPasswordEditTextContent}" />
+                android:text="@={registerViewModel.confirmPasswordEditTextContent}"
+                android:textColor="@color/primaryTextColor" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout

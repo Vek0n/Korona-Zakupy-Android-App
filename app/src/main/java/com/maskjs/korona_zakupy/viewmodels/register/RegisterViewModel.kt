@@ -7,6 +7,8 @@ import com.maskjs.korona_zakupy.data.users.RegisterUserDto
 import com.maskjs.korona_zakupy.data.users.UserDao
 import com.maskjs.korona_zakupy.data.users.UserRepository
 import com.maskjs.korona_zakupy.helpers.InputTextType
+import com.maskjs.korona_zakupy.helpers.RegistrationPart
+import kotlinx.coroutines.delay
 import okhttp3.OkHttpClient
 
 class RegisterViewModel () : ViewModel() {
@@ -23,6 +25,9 @@ class RegisterViewModel () : ViewModel() {
     val passwordErrorText = MutableLiveData<String?>()
     val confirmPasswordErrorText = MutableLiveData<String?>()
     val emailErrorText = MutableLiveData<String?>()
+    val firstNameErrorText = MutableLiveData<String?>()
+    val lastNameErrorText = MutableLiveData<String?>()
+    val addressErrorText = MutableLiveData<String?>()
     private val userRepository = UserRepository<RegisterUserDto>(userDao = UserDao(client = OkHttpClient()))
     private val passwordPattern = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=?!])(?=\\S+$).{4,}$"
     private lateinit var isUserNameAlreadyTaken: String
@@ -45,32 +50,42 @@ class RegisterViewModel () : ViewModel() {
 
     fun validate(textInputTextType: InputTextType,errorsText: Map<String,String>){
         when(textInputTextType){
-            InputTextType.USERNAME -> validateUserName(errorsText["emptyError"]?:"null")
-            InputTextType.EMAIL ->  validateEmail(errorsText["emptyError"]?:"null")
-            InputTextType.PASSWORD_REGISTER -> validatePassword(errorsText["emptyError"]?:"null",errorsText["errorRegexMessage"]?:"null")
-            InputTextType.CONFIRM_PASSWORD_REGISTER -> validateConfirmPassword(errorsText["emptyError"]?:"null",errorsText["notMatchError"]?:"null")
-        }
+            InputTextType.USER_NAME -> userNameErrorText.value = validateIsNotEmptyAndIsNotAlreadyTaken(userNameEditTextContent.value?:"",isUserNameAlreadyTaken,
+                errorsText["emptyError"]?:"null",errorsText["userNameIsAlreadyTaken"]?:"" )
 
+            InputTextType.EMAIL ->  emailErrorText.value = validateIsNotEmptyAndIsNotAlreadyTaken(emailEditTextContent.value?:"",isEmailAlreadyTaken,
+                errorsText["emptyError"]?:"null",errorsText["emailNameIsAlreadyTaken"]?:"" )
+
+            InputTextType.PASSWORD_REGISTER -> passwordErrorText.value =  validatePassword(passwordEditTextContent.value?:"",errorsText["emptyError"]?:"null",errorsText["errorRegexMessage"]?:"null")
+
+            InputTextType.CONFIRM_PASSWORD_REGISTER -> confirmPasswordErrorText.value = validateConfirmPassword(confirmPasswordEditTextContent.value?:"",passwordEditTextContent.value?:"",
+                errorsText["emptyError"]?:"null",errorsText["notMatchError"]?:"null")
+
+            InputTextType.FIRST_NAME -> firstNameErrorText.value = validateIsNotEmpty(firstNameEditTextContent.value?:"",errorsText["emptyError"]?:"null")
+
+            InputTextType.LAST_NAME -> lastNameErrorText.value = validateIsNotEmpty(lastNameEditTextContent.value?:"",errorsText["emptyError"]?:"null")
+
+            InputTextType.ADDRESS ->  addressErrorText.value = validateIsNotEmpty(addressEditTextContent.value?:"",errorsText["emptyError"]?:"null")
+        }
     }
 
-    private fun validateUserName(errorMessage: String){
-        userNameErrorText.value = if(!isNotEmpty(userNameEditTextContent?.value?:""))
+    private fun validateIsNotEmpty(textToValidate: String, errorMessage: String) : String?{
+        return if(!isNotEmpty(textToValidate))
             errorMessage
         else
             null
-        if(isUserNameAlreadyTaken.equals("true")){
-            userNameErrorText.value = "Is already taken!"
-        }
     }
 
-    private fun validateEmail(errorMessage: String){
-        emailErrorText.value = if(!isNotEmpty(emailEditTextContent?.value?:""))
-            errorMessage
-        else
-            null
-        if(isEmailAlreadyTaken.equals("true")){
-            emailErrorText.value = "Is already taken!"
-        }
+    private fun validateIsNotEmptyAndIsNotAlreadyTaken(textToValidate: String,apiResponse:String,
+       errorEmptyMessage: String, errorAlreadyTaken: String): String?{
+        return if(!isNotEmpty(textToValidate))
+            errorEmptyMessage
+        else {
+            if(apiResponse.equals("true"))
+                errorAlreadyTaken
+            else
+                null
+            }
     }
 
     fun isNotEmpty(validText: String): Boolean{
@@ -80,61 +95,101 @@ class RegisterViewModel () : ViewModel() {
         return true
     }
 
-    private fun validatePassword(errorEmptyMessage: String,errorRegexMessage:String){
-
-            if (!isNotEmpty(passwordEditTextContent?.value ?: ""))
-                passwordErrorText.value = errorEmptyMessage
-            else {
-                passwordEditTextContent.value?.let {
-                    passwordErrorText.value = if (it.length < 8)
-                        errorRegexMessage
-                    else
-                        errorRegexMessage
-
-                    val passwordMatcher = Regex(passwordPattern)
-
-                    passwordErrorText.value = if (passwordMatcher.find(it) == null)
-                        errorRegexMessage
-                    else
-                        null
-                }
+    private fun validatePassword(textToValidate: String, errorEmptyMessage: String,
+         errorRegexMessage:String):String?{
+        return if (!isNotEmpty(textToValidate))
+            errorEmptyMessage
+        else{
+            if(textToValidate.length < 8)
+                errorRegexMessage
+            else{
+                val passwordMatcher = Regex(passwordPattern)
+                if(passwordMatcher.find(textToValidate) == null)
+                    errorRegexMessage
+                else
+                    null
             }
-    }
-
-    private fun validateConfirmPassword(errorEmptyMessage:String, errorMatchMessage: String){
-        if(!isNotEmpty(confirmPasswordEditTextContent?.value?:""))
-            confirmPasswordErrorText.value = errorEmptyMessage
-        else {
-            if (confirmPasswordEditTextContent.value.toString() != passwordEditTextContent.value.toString())
-                confirmPasswordErrorText.value = errorMatchMessage
-            else
-                confirmPasswordErrorText.value = null
         }
     }
 
-    fun checkValidation(errorsText: Map<String, String>):Boolean{
-        validateUserName(errorsText["emptyError"]?:"null")
-        validateEmail(errorsText["emptyError"]?:"null")
-        validatePassword(errorsText["emptyError"]?:"null",errorsText["errorRegexMessage"]?:"null")
-        validateConfirmPassword(errorsText["emptyError"]?:"null",errorsText["notMatchError"]?:"null")
-        var check = true
-        if(userNameErrorText.value !=null)
-            check =false
-        else if(emailErrorText.value != null)
-            check = false
-        else if(passwordErrorText.value !=null)
-            check = false
-        else if(confirmPasswordErrorText.value != null)
-            check = false
+    private fun validateConfirmPassword(textToValidate: String, textToCompare:String,
+                                        errorEmptyMessage:String, errorMatchMessage: String):String?{
+        return if(!isNotEmpty(textToValidate))
+            errorEmptyMessage
+        else{
+            if(textToValidate!=textToCompare)
+                errorMatchMessage
+            else
+                null
+        }
+    }
 
-        return  check
+    fun checkValidation( registrationPart: RegistrationPart,errorMessage: Map<String,String>):Boolean{
+        return when(registrationPart){
+            RegistrationPart.PART_2 ->{
+                validateReg1UiElements(errorMessage)
+                checkValidationReg1UiElements()
+            }
+            RegistrationPart.PART_3 ->{
+                validateReg2UiElements(errorMessage)
+                checkValidationReg2UiElements()
+            }
+            else -> false
+        }
+    }
+
+    private fun validateReg1UiElements(errorMessage: Map<String,String>){
+        if(!isNotEmpty(userNameEditTextContent.value?:"null"))
+            userNameErrorText.value = errorMessage["emptyError"]
+        if(!isNotEmpty(emailEditTextContent.value?:"null"))
+            emailErrorText.value = errorMessage["emptyError"]
+        if(!isNotEmpty(passwordEditTextContent.value?:"null"))
+            passwordErrorText.value = errorMessage["emptyError"]
+        if(!isNotEmpty(confirmPasswordEditTextContent.value?:"null"))
+            confirmPasswordErrorText.value = errorMessage["emptyError"]
+    }
+
+    private fun checkValidationReg1UiElements():Boolean{
+
+        if(userNameErrorText.value !=null)
+            return false
+        else if(emailErrorText.value != null)
+          return false
+        else if(passwordErrorText.value !=null)
+          return false
+        else if(confirmPasswordErrorText.value != null)
+            return false
+
+        return true
+    }
+
+    private fun validateReg2UiElements(errorMessage: Map<String,String>){
+        if(!isNotEmpty(firstNameEditTextContent.value?:"null"))
+            firstNameErrorText.value = errorMessage["emptyError"]
+        if(!isNotEmpty(lastNameEditTextContent.value?:"null"))
+            lastNameErrorText.value = errorMessage["emptyError"]
+        if(!isNotEmpty(addressEditTextContent.value?:"null"))
+            addressErrorText.value = errorMessage["emptyError"]
+    }
+
+    private fun checkValidationReg2UiElements(): Boolean{
+        if(firstNameErrorText.value !=null)
+            return false
+        else if(lastNameErrorText.value != null)
+            return false
+        else if(addressErrorText.value !=null)
+            return false
+
+        return true
     }
 
     suspend fun checkIsUserNameAlreadyTaken() {
+        delay(1500)
         isUserNameAlreadyTaken = userRepository.getValidation("name",userNameEditTextContent.value?:"userDefault")
     }
 
     suspend fun checkIsEmailAlreadyTaken() {
+        delay(1500)
         isEmailAlreadyTaken = userRepository.getValidation("email",emailEditTextContent.value?:"emailDefault")
     }
 

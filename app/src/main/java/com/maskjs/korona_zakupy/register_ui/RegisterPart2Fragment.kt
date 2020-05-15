@@ -17,6 +17,8 @@ import androidx.lifecycle.Observer
 import com.maskjs.korona_zakupy.R
 import com.maskjs.korona_zakupy.VolunteerActivity
 import com.maskjs.korona_zakupy.databinding.FragmentRegisterPart2Binding
+import com.maskjs.korona_zakupy.helpers.InputTextType
+import com.maskjs.korona_zakupy.helpers.RegistrationPart
 import com.maskjs.korona_zakupy.viewmodels.register.RegisterViewModel
 import kotlinx.coroutines.*
 
@@ -26,6 +28,7 @@ class RegisterPart2Fragment : Fragment() {
     private val registerViewModel: RegisterViewModel by activityViewModels()
     private lateinit var uiDataBinding: FragmentRegisterPart2Binding
     private lateinit var sharedPreferences: SharedPreferences
+    private lateinit var errorMessages: Map<String,String>
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -53,14 +56,17 @@ class RegisterPart2Fragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        initializeUiDataBinding(inflater,container)
+        initialize(inflater,container)
         observeUiElements()
         setUiListener()
 
         return uiDataBinding.root
     }
 
-    private fun initializeUiDataBinding(inflater: LayoutInflater,container: ViewGroup?){
+    private fun initialize(inflater: LayoutInflater, container: ViewGroup?){
+        errorMessages = mapOf(
+            Pair("emptyError",getString(R.string.global_empty_field_error))
+        )
         uiDataBinding = DataBindingUtil.inflate(inflater,
             R.layout.fragment_register_part2,container,false)
         uiDataBinding.lifecycleOwner = this@RegisterPart2Fragment
@@ -74,31 +80,19 @@ class RegisterPart2Fragment : Fragment() {
 
     private fun observeFirstName(){
         registerViewModel.firstNameEditTextContent.observe(viewLifecycleOwner, Observer {
-            if(!registerViewModel.isNotEmpty(it))  uiDataBinding.firstNameTextInputLayout.error = getString(
-                R.string.global_empty_field_error
-            ) else {
-                uiDataBinding.firstNameTextInputLayout.error = null
-            }
+            registerViewModel.validate(InputTextType.FIRST_NAME, errorMessages)
         })
     }
 
     private fun observeLastName(){
         registerViewModel.lastNameEditTextContent.observe(viewLifecycleOwner, Observer {
-            if(!registerViewModel.isNotEmpty(it))  uiDataBinding.lastNameTextInputLayout.error = getString(
-                R.string.global_empty_field_error
-            ) else {
-                uiDataBinding.lastNameTextInputLayout.error = null
-            }
+            registerViewModel.validate(InputTextType.LAST_NAME,errorMessages)
         })
     }
 
     private fun observeAddress(){
         registerViewModel.addressEditTextContent.observe(viewLifecycleOwner, Observer {
-            if(!registerViewModel.isNotEmpty(it))  uiDataBinding.addressTextInputLayout.error = getString(
-                R.string.global_empty_field_error
-            ) else {
-                uiDataBinding.addressTextInputLayout.error = null
-            }
+            registerViewModel.validate(InputTextType.ADDRESS,errorMessages)
         })
     }
 
@@ -108,7 +102,7 @@ class RegisterPart2Fragment : Fragment() {
         }
 
         uiDataBinding.floatingActionButton.setOnClickListener {
-            if(uiValidate()){
+            if(checkValidation()){
                 CoroutineScope(Dispatchers.IO).launch {
                     register()
                 }
@@ -116,29 +110,8 @@ class RegisterPart2Fragment : Fragment() {
         }
     }
 
-    private fun uiValidate() : Boolean{
-       var check = true
-
-        if(!registerViewModel.isNotEmpty(registerViewModel.firstNameEditTextContent.value.toString())) {
-            uiDataBinding.firstNameTextInputLayout.error =
-                getString(R.string.global_empty_field_error)
-            check = false
-        }
-
-        if(!registerViewModel.isNotEmpty(registerViewModel.lastNameEditTextContent.value.toString())) {
-            uiDataBinding.lastNameTextInputLayout.error =
-                getString(R.string.global_empty_field_error)
-            check = false
-        }
-
-        if(!registerViewModel.isNotEmpty(registerViewModel.addressEditTextContent.value.toString())) {
-            uiDataBinding.addressTextInputLayout.error =
-                getString(R.string.global_empty_field_error)
-            check = false
-        }
-
-        return check
-
+    private fun checkValidation() : Boolean{
+        return registerViewModel.checkValidation(RegistrationPart.PART_3,errorMessages)
     }
 
     private suspend fun register(){

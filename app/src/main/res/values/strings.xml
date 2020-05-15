@@ -17,8 +17,10 @@
     <string name="reg_btn_text_add_photo">Add Photo</string>
     <string name="reg_error_password_match">Passwords not match</string>
     <string name="reg_error_password_regex">Password must have at least 8 characters and contain at least one digit, a lower and upper case letter and special character</string>
+    <string name="reg_error_user_name_is_already_taken">User name is already taken</string>
+    <string name="reg_error_email_is_already_taken">Email is already taken</string>
     <string name="reg_text_view_ask_have_account">Already have an account?</string>
-    <string name="reg_text_view_to_login"><u>SIGN UP!</u></string>
+    <string name="reg_text_view_to_login"><u>SIGN IN!</u></string>
     <!--LoginActivity-->
     <string name="log_text_view_to_ask_have_account">Don\'t have an account?</string>
     <string name="log_text_view_to_register"><u>REGISTER NOW!</u></string>

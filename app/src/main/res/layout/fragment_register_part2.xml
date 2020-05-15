@@ -36,14 +36,17 @@
             android:textColorHint="@color/primaryTextColor"
             app:errorTextColor="#F44336"
             app:errorEnabled="true"
-            app:hintEnabled="true">
+            app:hintEnabled="true"
+            app:errorText="@{registerViewModel.firstNameErrorText}">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/first_name_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/reg_hint_first_name"
-                android:text="@={registerViewModel.firstNameEditTextContent}"/>
+                android:inputType="textPersonName"
+                android:text="@={registerViewModel.firstNameEditTextContent}"
+                android:textColor="@color/primaryTextColor" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -57,14 +60,17 @@
             android:textColorHint="@color/primaryTextColor"
             app:errorTextColor="#F44336"
             app:errorEnabled="true"
-            app:hintEnabled="true">
+            app:hintEnabled="true"
+            app:errorText="@{registerViewModel.lastNameErrorText}">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/last_name_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/reg_hint_last_name"
-                android:text="@={registerViewModel.lastNameEditTextContent}"/>
+                android:inputType="textPersonName"
+                android:text="@={registerViewModel.lastNameEditTextContent}"
+                android:textColor="@color/primaryTextColor" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -78,14 +84,17 @@
             android:textColorHint="@color/primaryTextColor"
             app:errorTextColor="#F44336"
             app:errorEnabled="true"
-            app:hintEnabled="true">
+            app:hintEnabled="true"
+            app:errorText="@{registerViewModel.addressErrorText}">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/address_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/reg_hint_address"
-                android:text="@={registerViewModel.addressEditTextContent}"/>
+                android:inputType="textPersonName"
+                android:text="@={registerViewModel.addressEditTextContent}"
+                android:textColor="@color/primaryTextColor" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button

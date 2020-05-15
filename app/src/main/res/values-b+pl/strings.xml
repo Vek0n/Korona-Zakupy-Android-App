@@ -17,6 +17,8 @@
     <string name="reg_btn_text_add_photo">Dodaj zdjęcie</string>
     <string name="reg_error_password_match">Hasła nie pasują!</string>
     <string name="reg_error_password_regex">Hasło musi zawierać co najmniej 8 znaków w tym przynajmniej jedną cyfrę, dużą literę oraz znak specjalny</string>
+    <string name="reg_error_user_name_is_already_taken">Username jest już zajęty</string>
+    <string name="reg_error_email_is_already_taken">Email jest już zajęty</string>
     <string name="reg_text_view_ask_have_account">Masz już konto?</string>
     <string name="reg_text_view_to_login"><u>ZALOGUJ SIĘ!</u></string>
     <!--LoginActivity-->

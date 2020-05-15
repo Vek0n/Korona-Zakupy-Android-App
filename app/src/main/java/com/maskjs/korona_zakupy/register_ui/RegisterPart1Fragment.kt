@@ -12,6 +12,7 @@ import androidx.lifecycle.Observer
 import com.maskjs.korona_zakupy.R
 import com.maskjs.korona_zakupy.databinding.FragmentRegisterPart1Binding
 import com.maskjs.korona_zakupy.helpers.InputTextType
+import com.maskjs.korona_zakupy.helpers.RegistrationPart
 import com.maskjs.korona_zakupy.viewmodels.register.RegisterViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -50,6 +51,8 @@ class RegisterPart1Fragment : Fragment() {
     private fun initialize(inflater: LayoutInflater,container: ViewGroup?){
         errorsText = mapOf(
             Pair("emptyError",getString(R.string.global_empty_field_error)),
+            Pair("userNameIsAlreadyTaken",getString(R.string.reg_error_user_name_is_already_taken)),
+            Pair("emailNameIsAlreadyTaken",getString(R.string.reg_error_email_is_already_taken)),
             Pair("errorRegexMessage",getString(R.string.reg_error_password_regex)),
             Pair("notMatchError",getString(R.string.reg_error_password_match))
         )
@@ -76,7 +79,7 @@ class RegisterPart1Fragment : Fragment() {
         CoroutineScope(Dispatchers.IO).launch {
             registerViewModel.checkIsUserNameAlreadyTaken()
             withContext(Dispatchers.Main) {
-                registerViewModel.validate(InputTextType.USERNAME, errorsText)
+                registerViewModel.validate(InputTextType.USER_NAME, errorsText)
             }
         }
     }
@@ -118,7 +121,7 @@ class RegisterPart1Fragment : Fragment() {
         }
     }
     private fun checkValidation(){
-        if(registerViewModel.checkValidation(errorsText))
+        if(registerViewModel.checkValidation(RegistrationPart.PART_2,errorsText))
             onFabListener?.goToReg2Fragment()
     }
     interface OnReg1FabButtonClickedListener{
