@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.ListView
+import android.widget.ProgressBar
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModelProviders
@@ -19,6 +20,7 @@ import com.maskjs.korona_zakupy.NewOrderActivity
 import com.maskjs.korona_zakupy.R
 import com.maskjs.korona_zakupy.RegisterActivity
 import com.maskjs.korona_zakupy.data.orders.GetOrderDto
+import com.maskjs.korona_zakupy.helpers.LoadingSpinner
 import com.maskjs.korona_zakupy.helpers.OrdersListAdapter
 import com.maskjs.korona_zakupy.viewmodels.quarantine.ActiveOrdersViewModel
 import kotlinx.android.synthetic.main.active_order_details_popup.view.*
@@ -36,6 +38,7 @@ class ActiveOrdersFragment : Fragment() {
 
     private lateinit var activeOrdersViewModel: ActiveOrdersViewModel
     private lateinit var listView: ListView
+    private lateinit var progressBar: ProgressBar
     private lateinit var adapterOrders: OrdersListAdapter
 
     override fun onCreateView(
@@ -59,59 +62,20 @@ class ActiveOrdersFragment : Fragment() {
         val userId = "69d717d5-a97a-43d0-86b1-37605e6585bc" //Adam małysz
 
         listView = root.findViewById(R.id.listViewActiveOrders) as ListView
+        progressBar = root.findViewById(R.id.pBar) as ProgressBar
 
         CoroutineScope(Dispatchers.IO).launch {
+            LoadingSpinner().showLoadingDialog(progressBar)
+
             val data = activeOrdersViewModel.getActiveOrdersFromRepository(userId)
             setListViewAdapterOnMainThread(data, context)
+
+            LoadingSpinner().hideLoadingDialog(progressBar)
         }
 
 
         listView.setOnItemClickListener { _, _, position, _ ->
-
-            val dialogView =
-                LayoutInflater.from(context).inflate(R.layout.quarantine_active_order_details_popup, null)
-            val builder = AlertDialog.Builder(context)
-                .setView(dialogView)
-                .setTitle(R.string.order_details)
-
-            val alertDialog = builder.show()
-
-            val productsListView = dialogView.products_list_view
-            val addressTextView = dialogView.address_text_view
-            val dateTextView = dialogView.date_text_view
-
-            addressTextView.text = adapterOrders
-                .getAddress(position)
-
-            dateTextView.text = adapterOrders
-                .getOrderDate(position)
-
-            val productsAdapter = ArrayAdapter(
-                context,
-                android.R.layout.simple_list_item_1,
-                adapterOrders
-                    .getProducts(position)
-            )
-            productsListView.adapter = productsAdapter
-
-            val orderId = adapterOrders.getOrderId(position).toLong()
-
-            alertDialog.setOnDismissListener {
-                refreshFragment()
-            }
-
-            dialogView.cancel_order_q.setOnClickListener {
-                refreshFragment()
-                alertDialog.dismiss()
-            }
-
-            dialogView.ok_button.setOnClickListener {
-                CoroutineScope(Dispatchers.IO).launch {
-                    activeOrdersViewModel.completeOrder(userId, orderId)
-                }
-                refreshFragment()
-                alertDialog.dismiss()
-            }
+            showActiveOrderDetailDialog(position,userId)
         }
         return root
     }
@@ -128,6 +92,54 @@ class ActiveOrdersFragment : Fragment() {
             listView.adapter = adapterOrders
         }
     }
+
+    private fun showActiveOrderDetailDialog(position: Int, userId: String){
+        val dialogView =
+            LayoutInflater.from(context).inflate(R.layout.quarantine_active_order_details_popup, null)
+        val builder = AlertDialog.Builder(context)
+            .setView(dialogView)
+            .setTitle(R.string.order_details)
+
+        val alertDialog = builder.show()
+
+        val productsListView = dialogView.products_list_view
+        val addressTextView = dialogView.address_text_view
+        val dateTextView = dialogView.date_text_view
+
+        addressTextView.text = adapterOrders
+            .getAddress(position)
+
+        dateTextView.text = adapterOrders
+            .getOrderDate(position)
+
+        val productsAdapter = ArrayAdapter(
+            context,
+            android.R.layout.simple_list_item_1,
+            adapterOrders
+                .getProducts(position)
+        )
+        productsListView.adapter = productsAdapter
+
+        val orderId = adapterOrders.getOrderId(position).toLong()
+
+        alertDialog.setOnDismissListener {
+            refreshFragment()
+        }
+
+        dialogView.cancel_order_q.setOnClickListener {
+            refreshFragment()
+            alertDialog.dismiss()
+        }
+
+        dialogView.ok_button.setOnClickListener {
+            CoroutineScope(Dispatchers.IO).launch {
+                activeOrdersViewModel.completeOrder(userId, orderId)
+            }
+            refreshFragment()
+            alertDialog.dismiss()
+        }
+    }
+
     private fun refreshFragment(){
         val f : androidx.fragment.app.FragmentTransaction? = this.fragmentManager?.beginTransaction()
         f?.detach(this)

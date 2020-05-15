@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".volunteer_ui.available.AvailableOrdersFragment">
 
+
     <ListView
         android:id="@+id/listViewAvailableOrders"
         android:layout_width="0dp"
@@ -14,4 +15,21 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+
+
+    <ProgressBar
+        android:id="@+id/pBar"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:visibility="gone"/>
+
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
