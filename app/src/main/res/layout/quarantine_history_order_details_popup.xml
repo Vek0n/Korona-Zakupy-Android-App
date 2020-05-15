@@ -31,7 +31,7 @@
                 android:textSize="20sp" />
 
             <TextView
-                android:id="@+id/acceptedByQuarantineActiveTV"
+                android:id="@+id/acceptedByQuarantineHistoryTV"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="40dp"
@@ -59,7 +59,7 @@
                 android:textSize="20sp" />
 
             <TextView
-                android:id="@+id/dateQuarantineActiveTV"
+                android:id="@+id/dateQuarantineHistoryTV"
                 android:layout_width="127dp"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="40dp"
@@ -78,7 +78,7 @@
                 android:layout_height="wrap_content">
 
                 <ListView
-                    android:id="@+id/productsQuarantineActiveLV"
+                    android:id="@+id/productsQuarantineHistoryLV"
                     android:layout_width="match_parent"
                     android:layout_height="160dp" />
 
@@ -90,41 +90,14 @@
             android:layout_height="match_parent"
             android:orientation="horizontal">
 
-            <!--            <View-->
-            <!--                android:layout_width="0dp"-->
-            <!--                android:layout_height="0dp"-->
-            <!--                android:layout_weight="1"-->
-            <!--                android:text="Right Button" />-->
-
             <Button
-                android:id="@+id/cancel_order_q"
-                android:layout_width="7dp"
-                android:layout_height="60dp"
-                android:layout_weight="1"
-                android:background="#FF8585"
-                android:text="@string/cancel_order"
-                android:textColor="#FFFFFF" />
-
-            <!--            <View-->
-            <!--                android:layout_width="0dp"-->
-            <!--                android:layout_height="0dp"-->
-            <!--                android:layout_weight="0"-->
-            <!--                android:text="Right Button" />-->
-
-            <Button
-                android:id="@+id/ok_button"
+                android:id="@+id/dismiss_button"
                 android:layout_width="7dp"
                 android:layout_height="60dp"
                 android:layout_weight="1"
                 android:background="#58C031"
-                android:text="@string/confirm"
-                android:textColor="#FFFFFF" />
-
-            <!--            <View-->
-            <!--                android:layout_width="0dp"-->
-            <!--                android:layout_height="0dp"-->
-            <!--                android:layout_weight="1"-->
-            <!--                android:text="Right Button" />-->
+                android:text="@string/Ok"
+                android:textColor="#FFFCFC" />
         </LinearLayout>
 
     </LinearLayout>

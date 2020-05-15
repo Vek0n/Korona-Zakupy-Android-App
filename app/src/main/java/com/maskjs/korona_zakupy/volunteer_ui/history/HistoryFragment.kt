@@ -11,18 +11,13 @@ import android.widget.ArrayAdapter
 import android.widget.ListView
 import android.widget.ProgressBar
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.ViewModelProviders
 import com.maskjs.korona_zakupy.R
 import com.maskjs.korona_zakupy.data.orders.GetOrderDto
 import com.maskjs.korona_zakupy.helpers.LoadingSpinner
-import com.maskjs.korona_zakupy.helpers.OrdersListAdapter
+import com.maskjs.korona_zakupy.helpers.VolunteerOrdersListAdapter
 import com.maskjs.korona_zakupy.viewmodels.volunteer.HistoryViewModel
-import kotlinx.android.synthetic.main.activity_volunteer.*
-import kotlinx.android.synthetic.main.available_order_details_popup.view.address_text_view
-import kotlinx.android.synthetic.main.available_order_details_popup.view.date_text_view
-import kotlinx.android.synthetic.main.available_order_details_popup.view.products_list_view
-import kotlinx.android.synthetic.main.history_order_details_popup.view.*
+import kotlinx.android.synthetic.main.history_order_details_popup_volunteer.view.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -33,8 +28,7 @@ class HistoryFragment : Fragment() {
     private lateinit var historyViewModel: HistoryViewModel
     private lateinit var listView: ListView
     private lateinit var progressBar: ProgressBar
-    private lateinit var adapterOrders: OrdersListAdapter
-
+    private lateinit var adapterOrders: VolunteerOrdersListAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -71,7 +65,7 @@ class HistoryFragment : Fragment() {
 
     private suspend fun setListViewAdapterOnMainThread(context: Context, input: ArrayList<GetOrderDto>) {
         withContext(Dispatchers.Main) {
-            adapterOrders = OrdersListAdapter(
+            adapterOrders = VolunteerOrdersListAdapter(
                 context,
                 input
             )
@@ -80,16 +74,16 @@ class HistoryFragment : Fragment() {
     }
 
     private fun showHistoryOrderDetailDialog(position: Int, userId: String){
-        val dialogView = LayoutInflater.from(context).inflate(R.layout.history_order_details_popup, null)
+        val dialogView = LayoutInflater.from(context).inflate(R.layout.history_order_details_popup_volunteer, null)
         val builder = AlertDialog.Builder(context)
             .setView(dialogView)
             .setTitle(R.string.order_details)
 
         val alertDialog = builder.show()
 
-        val productsListView = dialogView.products_list_view
-        val addressTextView = dialogView.address_text_view
-        val dateTextView = dialogView.date_text_view
+        val productsListView = dialogView.productsVolunteerHistoryLV
+        val addressTextView = dialogView.addressVolunteerHistoryTV
+        val dateTextView = dialogView.dateVolunteerHistoryTV
 
         addressTextView.text = adapterOrders
             .getAddress(position)

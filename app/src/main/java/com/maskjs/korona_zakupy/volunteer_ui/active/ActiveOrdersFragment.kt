@@ -7,17 +7,13 @@ import android.preference.PreferenceManager
 import android.view.*
 import android.widget.*
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModelProviders
 import com.maskjs.korona_zakupy.R
 import com.maskjs.korona_zakupy.data.orders.GetOrderDto
 import com.maskjs.korona_zakupy.helpers.LoadingSpinner
 import com.maskjs.korona_zakupy.viewmodels.volunteer.ActiveOrdersViewModel
-import com.maskjs.korona_zakupy.helpers.OrdersListAdapter
+import com.maskjs.korona_zakupy.helpers.VolunteerOrdersListAdapter
 import kotlinx.android.synthetic.main.active_order_details_popup.view.*
-import kotlinx.android.synthetic.main.available_order_details_popup.view.address_text_view
-import kotlinx.android.synthetic.main.available_order_details_popup.view.date_text_view
-import kotlinx.android.synthetic.main.available_order_details_popup.view.products_list_view
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
@@ -30,7 +26,8 @@ class ActiveOrdersFragment : Fragment() {
     private lateinit var activeOrdersViewModel: ActiveOrdersViewModel
     private  lateinit var listView: ListView
     private lateinit var progressBar: ProgressBar
-    private lateinit var adapterOrders: OrdersListAdapter
+    private lateinit var adapterOrders: VolunteerOrdersListAdapter
+    val fragment: String = "Volunteer"
 
 
     override fun onCreateView(
@@ -69,7 +66,7 @@ class ActiveOrdersFragment : Fragment() {
 
     private suspend fun setListViewAdapterOnMainThread(input: ArrayList<GetOrderDto>, context: Context){
         withContext(Main){
-            adapterOrders = OrdersListAdapter(
+            adapterOrders = VolunteerOrdersListAdapter(
                 context,
                 input
             )
@@ -85,9 +82,9 @@ class ActiveOrdersFragment : Fragment() {
 
         val alertDialog = builder.show()
 
-        val productsListView = dialogView.products_list_view
-        val addressTextView = dialogView.address_text_view
-        val dateTextView = dialogView.date_text_view
+        val productsListView = dialogView.productsVolunteerActiveLV
+        val addressTextView = dialogView.addressVolunteerActiveTV
+        val dateTextView = dialogView.dateVolunteerActiveTV
 
         addressTextView.text = adapterOrders
             .getAddress(position)

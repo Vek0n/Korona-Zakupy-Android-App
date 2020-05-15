@@ -11,12 +11,11 @@ import androidx.core.content.ContextCompat
 import com.google.gson.internal.LinkedTreeMap
 import com.maskjs.korona_zakupy.R
 import com.maskjs.korona_zakupy.data.orders.GetOrderDto
-import com.squareup.picasso.Picasso
 import java.text.SimpleDateFormat
 
 
-class OrdersListAdapter(private val context: Context,
-                        private val dataSource: ArrayList<GetOrderDto>
+class QuarantineOrdersListAdapter(private val context: Context,
+                                  private val dataSource: ArrayList<GetOrderDto>
 ) : BaseAdapter() {
 
 
@@ -35,19 +34,6 @@ class OrdersListAdapter(private val context: Context,
         return position.toLong()
     }
 
-    private fun getUserInfo(order: LinkedTreeMap<*, *>): LinkedTreeMap<*,*>{
-        val x = order["usersInfo"] as ArrayList<*>
-        return if (x.size == 1)
-            x[0] as LinkedTreeMap<*,*>
-        else{
-            val user = x[0] as LinkedTreeMap<*,*>
-            if(user["userRole"] == "PersonInQuarantine") user
-            else x[1] as LinkedTreeMap<*, *>
-        }
-        //TODO FIND USER BY ROLE
-    }
-
-
     fun getProducts(position: Int): List<String> {
         val order = getItem(position) as LinkedTreeMap<*, *>
         return order["products"] as List<String>
@@ -55,18 +41,22 @@ class OrdersListAdapter(private val context: Context,
 
     fun getAddress(position: Int): String?{
         val order = getItem(position) as LinkedTreeMap<*, *>
-        return getUserInfo(order)["address"] as String?
+        return getUserInfo(order)?.get("address") as String?
     }
 
-    private fun getFirstName(order: LinkedTreeMap<*, *>): String?{
-        return getUserInfo(order)["firstName"] as String?
+    fun getFirstName(position: Int): String?{
+        val order = getItem(position) as LinkedTreeMap<*, *>
+        val userInfo = getUserInfo(order)
+
+        return if (userInfo == null) "-"
+        else getUserInfo(order)?.get("firstName") as String?
     }
 
     private fun getRating(order: LinkedTreeMap<*, *>): Double?{
-        return getUserInfo(order)["rating"] as Double?
+        return getUserInfo(order)?.get("rating") as Double?
     }
 
-    private fun getStatus(order: LinkedTreeMap<*, *>): String?{
+    private fun getOrderStatus(order: LinkedTreeMap<*, *>): String?{
         return order["orderStatus"] as String?
     }
 
@@ -83,9 +73,21 @@ class OrdersListAdapter(private val context: Context,
         return formatter.format(parser.parse(date))
     }
 
-    private fun getPhotoDirectory(order: LinkedTreeMap<*, *>): String?{
-        return getUserInfo(order)["photoDirectory"] as String?
+    private fun getPhotoDirectory(order: LinkedTreeMap<*, *>, role: String): String?{
+        return getUserInfo(order)?.get("photoDirectory") as String?
     }
+
+    private fun getUserInfo(order: LinkedTreeMap<*, *>): LinkedTreeMap<*,*>?{
+        val users = order["usersInfo"] as ArrayList<*>
+        return if (users.size == 1)
+            null
+        else{
+            val user = users[0] as LinkedTreeMap<*,*>
+            if(user["userRole"] == "Volunteer") user
+            else users[1] as LinkedTreeMap<*, *>?
+        }
+    }
+
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         val view: View
@@ -93,43 +95,30 @@ class OrdersListAdapter(private val context: Context,
 
         if (convertView == null) {
 
-            view = inflater.inflate(R.layout.list_active_orders, parent, false)
+            view = inflater.inflate(R.layout.list_active_orders_quarantine, parent, false)
 
             holder =
                 ViewHolder()
-            holder.nameText = view.findViewById(R.id.nameTextView) as TextView
-            //holder.dateText = view.findViewById(R.id.addressTextView) as TextView
-            holder.rating = view.findViewById(R.id.ratingTextView) as TextView
-            holder.address = view.findViewById(R.id.addressTextView) as TextView
+            holder.dateText = view.findViewById(R.id.dateTextView) as TextView
             holder.status = view.findViewById(R.id.statusTextView) as TextView
-            holder.imageThumbnailUrl = view.findViewById(R.id.avatarThumbnailImageView) as ImageView
             view.tag = holder
         } else {
             view = convertView
             holder = convertView.tag as ViewHolder
         }
 
-        val nameTextView = holder.nameText
-        val ratingTextView = holder.rating
-        val addressTextView = holder.address
+        val dateTextView = holder.dateText
         val statusTextView = holder.status
-        val thumbnailImageView = holder.imageThumbnailUrl
 
         val order = getItem(position) as LinkedTreeMap<*, *>
 
-        nameTextView?.text = getFirstName(order)
-        ratingTextView?.text = getRating(order).toString()
-        addressTextView?.text = getAddress(position)
+        dateTextView?.text = getOrderDate(position)
+        statusTextView?.text = getOrderStatus(order)
 
-        statusTextView?.setText(LABEL_NAME[getStatus(order)] ?: R.string.invalid_status)
+        statusTextView?.setText(LABEL_NAME_PERSON_IN_QUARANTINE[getOrderStatus(order)] ?: R.string.invalid_status)
 
         statusTextView?.setTextColor(
-            ContextCompat.getColor(context, LABEL_COLORS[getStatus(order)] ?: R.color.secondaryTextColor))
-
-        Picasso.get()
-//            .load(getPhotoDirectory(order))
-            .load("https://i.imgur.com/KMH51Kr.png") //DEBUG
-            .into(thumbnailImageView)
+            ContextCompat.getColor(context, LABEL_COLORS[getOrderStatus(order)] ?: R.color.secondaryTextColor))
 
         return view
     }
@@ -142,10 +131,10 @@ class OrdersListAdapter(private val context: Context,
             "AwaitingConfirmation" to R.color.awaitingConfirmation
         )
 
-        private val LABEL_NAME = hashMapOf(
-            "InProgress" to R.string.status_in_progress,
+        private val LABEL_NAME_PERSON_IN_QUARANTINE= hashMapOf(
+            "InProgress" to R.string.status_in_progress_quaranteen,
             "Finished" to R.string.status_finished,
-            "Avalible" to R.string.status_available,
+            "Avalible" to R.string.status_available_quaranteen,
             "AwaitingConfirmation" to R.string.status_awaiting_confirmation
         )
     }

@@ -57,9 +57,13 @@
 
     <string name="status_available">Dostępne</string>
     <string name="status_in_progress">W trakcie</string>
-    <string name="status_awaiting_confirmation">Oczekiwanie</string>
+    <string name="status_awaiting_confirmation">Oczekiwanie na zakończenie</string>
     <string name="status_finished">Zakończono</string>
     <string name="invalid_status">Invalid status</string>
+    <string name="accepted_by">Przyjęte przez:</string>
+    <string name="status_in_progress_quaranteen">W trakcie realizacji</string>
+    <string name="status_available_quaranteen">Oczekiwanie na przyjęcie</string>
+    <string name="order_from">Zlecenie z dnia:</string>
 
 
 </resources>

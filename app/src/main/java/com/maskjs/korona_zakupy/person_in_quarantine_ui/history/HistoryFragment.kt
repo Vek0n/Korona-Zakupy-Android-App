@@ -11,18 +11,15 @@ import android.widget.ArrayAdapter
 import android.widget.ListView
 import android.widget.ProgressBar
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModelProviders
 import com.maskjs.korona_zakupy.R
 import com.maskjs.korona_zakupy.data.orders.GetOrderDto
 import com.maskjs.korona_zakupy.helpers.LoadingSpinner
-import com.maskjs.korona_zakupy.helpers.OrdersListAdapter
+import com.maskjs.korona_zakupy.helpers.QuarantineOrdersListAdapter
 import com.maskjs.korona_zakupy.viewmodels.quarantine.HistoryViewModel
 import kotlinx.android.synthetic.main.available_order_details_popup.view.*
-import kotlinx.android.synthetic.main.available_order_details_popup.view.address_text_view
-import kotlinx.android.synthetic.main.available_order_details_popup.view.date_text_view
-import kotlinx.android.synthetic.main.available_order_details_popup.view.products_list_view
-import kotlinx.android.synthetic.main.history_order_details_popup.view.*
+import kotlinx.android.synthetic.main.quarantine_active_order_details_popup.view.*
+import kotlinx.android.synthetic.main.quarantine_history_order_details_popup.view.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -33,7 +30,8 @@ class HistoryFragment : Fragment() {
     private lateinit var historyViewModel: HistoryViewModel
     private lateinit var listView: ListView
     private lateinit var progressBar: ProgressBar
-    private lateinit var adapterOrders: OrdersListAdapter
+    private lateinit var adapterQuarantineOrders: QuarantineOrdersListAdapter
+    val fragment: String = "PersonInQuarantine"
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -71,36 +69,37 @@ class HistoryFragment : Fragment() {
 
     private suspend fun setListViewAdapterOnMainThread(context: Context, input: ArrayList<GetOrderDto>) {
         withContext(Dispatchers.Main) {
-            adapterOrders = OrdersListAdapter(
+            adapterQuarantineOrders = QuarantineOrdersListAdapter(
                 context,
                 input
             )
-            listView.adapter = adapterOrders
+            listView.adapter = adapterQuarantineOrders
         }
     }
 
     private fun showHistoryOrderDetailDialog(position: Int, userId: String){
-        val dialogView = LayoutInflater.from(context).inflate(R.layout.history_order_details_popup, null)
+        val dialogView =
+            LayoutInflater.from(context).inflate(R.layout.quarantine_history_order_details_popup, null)
         val builder = AlertDialog.Builder(context)
             .setView(dialogView)
             .setTitle(R.string.order_details)
 
         val alertDialog = builder.show()
 
-        val productsListView = dialogView.products_list_view
-        val addressTextView = dialogView.address_text_view
-        val dateTextView = dialogView.date_text_view
+        val productsListView = dialogView.productsQuarantineHistoryLV
+        val acceptedByTextView = dialogView.acceptedByQuarantineHistoryTV
+        val dateTextView = dialogView.dateQuarantineHistoryTV
 
-        addressTextView.text = adapterOrders
-            .getAddress(position)
+        acceptedByTextView.text = adapterQuarantineOrders
+            .getFirstName(position)
 
-        dateTextView.text = adapterOrders
+        dateTextView.text = adapterQuarantineOrders
             .getOrderDate(position)
 
         val productsAdapter = ArrayAdapter(
             context,
             android.R.layout.simple_list_item_1,
-            adapterOrders
+            adapterQuarantineOrders
                 .getProducts(position)
         )
 

@@ -19,7 +19,7 @@ class ActiveOrdersViewModel : ViewModel() {
         for (i in 0 until allOrders.size){
             val order = allOrders[i] as LinkedTreeMap<*,*>
             val orderStatus = order["orderStatus"]
-            if(orderStatus == "InProgress" || orderStatus == "AwaitingConfirmation") activeOrders.add(order)
+            if(orderStatus == "InProgress" || orderStatus == "AwaitingConfirmation" || orderStatus == "Avalible") activeOrders.add(order)
         }
         return activeOrders as ArrayList<GetOrderDto>
     }

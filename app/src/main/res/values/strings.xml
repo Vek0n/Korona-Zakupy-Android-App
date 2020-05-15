@@ -59,7 +59,11 @@
     <string name="status_in_progress">In Progress</string>
     <string name="status_awaiting_confirmation">Awaiting confirmation</string>
     <string name="status_finished">Finished</string>
-    <string name="invalid_status">Invalid status</string>
+    <string name="invalid_status">Status jest inwalidą</string>
+    <string name="accepted_by">Accepted by:</string>
+    <string name="status_in_progress_quaranteen">Order taken</string>
+    <string name="status_available_quaranteen">Waiting for acceptance</string>
+    <string name="order_from">Order from:</string>
 
 
 </resources>

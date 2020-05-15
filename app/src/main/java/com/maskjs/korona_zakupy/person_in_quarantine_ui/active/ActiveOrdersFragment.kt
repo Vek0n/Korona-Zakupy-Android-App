@@ -9,25 +9,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
-import android.widget.Button
 import android.widget.ListView
 import android.widget.ProgressBar
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModelProviders
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.maskjs.korona_zakupy.NewOrderActivity
 import com.maskjs.korona_zakupy.R
-import com.maskjs.korona_zakupy.RegisterActivity
 import com.maskjs.korona_zakupy.data.orders.GetOrderDto
 import com.maskjs.korona_zakupy.helpers.LoadingSpinner
-import com.maskjs.korona_zakupy.helpers.OrdersListAdapter
+import com.maskjs.korona_zakupy.helpers.QuarantineOrdersListAdapter
 import com.maskjs.korona_zakupy.viewmodels.quarantine.ActiveOrdersViewModel
-import kotlinx.android.synthetic.main.active_order_details_popup.view.*
-import kotlinx.android.synthetic.main.available_order_details_popup.view.*
-import kotlinx.android.synthetic.main.available_order_details_popup.view.address_text_view
-import kotlinx.android.synthetic.main.available_order_details_popup.view.date_text_view
-import kotlinx.android.synthetic.main.available_order_details_popup.view.products_list_view
 import kotlinx.android.synthetic.main.quarantine_active_order_details_popup.view.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -39,7 +31,8 @@ class ActiveOrdersFragment : Fragment() {
     private lateinit var activeOrdersViewModel: ActiveOrdersViewModel
     private lateinit var listView: ListView
     private lateinit var progressBar: ProgressBar
-    private lateinit var adapterOrders: OrdersListAdapter
+    private lateinit var adapterQuarantineOrders: QuarantineOrdersListAdapter
+    val fragment: String = "PersonInQuarantine"
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -50,7 +43,6 @@ class ActiveOrdersFragment : Fragment() {
             ViewModelProviders.of(this).get(ActiveOrdersViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_active_orders_quarantine, container, false)
         val context = requireContext()
-
         val addNewOrderButton = root.findViewById(R.id.addNewOrderButton) as FloatingActionButton
         addNewOrderButton.setOnClickListener {
             val intent = Intent(context, NewOrderActivity::class.java)
@@ -59,7 +51,7 @@ class ActiveOrdersFragment : Fragment() {
 
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
 //        val userId = sharedPreferences.getString(R.string.user_id_key.toString(),"")
-        val userId = "69d717d5-a97a-43d0-86b1-37605e6585bc" //Adam małysz
+        val userId = "6ecf2f0d-7b87-44fa-aa5b-bffbe25529e5" //Adam małysz
 
         listView = root.findViewById(R.id.listViewActiveOrders) as ListView
         progressBar = root.findViewById(R.id.pBar) as ProgressBar
@@ -85,11 +77,11 @@ class ActiveOrdersFragment : Fragment() {
         context: Context
     ) {
         withContext(Dispatchers.Main) {
-            adapterOrders = OrdersListAdapter(
+            adapterQuarantineOrders = QuarantineOrdersListAdapter(
                 context,
                 input
             )
-            listView.adapter = adapterOrders
+            listView.adapter = adapterQuarantineOrders
         }
     }
 
@@ -102,25 +94,25 @@ class ActiveOrdersFragment : Fragment() {
 
         val alertDialog = builder.show()
 
-        val productsListView = dialogView.products_list_view
-        val addressTextView = dialogView.address_text_view
-        val dateTextView = dialogView.date_text_view
+        val productsListView = dialogView.productsQuarantineActiveLV
+        val acceptedByTextView = dialogView.acceptedByQuarantineActiveTV
+        val dateTextView = dialogView.dateQuarantineActiveTV
 
-        addressTextView.text = adapterOrders
-            .getAddress(position)
+        acceptedByTextView.text = adapterQuarantineOrders
+            .getFirstName(position)
 
-        dateTextView.text = adapterOrders
+        dateTextView.text = adapterQuarantineOrders
             .getOrderDate(position)
 
         val productsAdapter = ArrayAdapter(
             context,
             android.R.layout.simple_list_item_1,
-            adapterOrders
+            adapterQuarantineOrders
                 .getProducts(position)
         )
         productsListView.adapter = productsAdapter
 
-        val orderId = adapterOrders.getOrderId(position).toLong()
+        val orderId = adapterQuarantineOrders.getOrderId(position).toLong()
 
         alertDialog.setOnDismissListener {
             refreshFragment()
