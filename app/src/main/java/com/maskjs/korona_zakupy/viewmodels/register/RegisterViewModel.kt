@@ -8,7 +8,9 @@ import com.maskjs.korona_zakupy.data.users.RegisterResponseDto
 import com.maskjs.korona_zakupy.data.users.RegisterUserDto
 import com.maskjs.korona_zakupy.data.users.UserDao
 import com.maskjs.korona_zakupy.data.users.UserRepository
+import com.maskjs.korona_zakupy.helpers.InputTextType
 import okhttp3.OkHttpClient
+import java.util.*
 
 class RegisterViewModel () : ViewModel() {
 
@@ -20,6 +22,11 @@ class RegisterViewModel () : ViewModel() {
     val firstNameEditTextContent = MutableLiveData<String>()
     val lastNameEditTextContent = MutableLiveData<String>()
     val addressEditTextContent = MutableLiveData<String>()
+    val userNameErrorText = MutableLiveData<String?>()
+    var passwordErrorText = MutableLiveData<String?>()
+    var confirmPasswordErrorText = MutableLiveData<String?>()
+    var emailErrorText = MutableLiveData<String?>()
+
     private val userRepository = UserRepository<RegisterUserDto>(userDao = UserDao(client = OkHttpClient()))
     private val passwordPattern = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=?!])(?=\\S+$).{4,}$"
 
@@ -38,11 +45,41 @@ class RegisterViewModel () : ViewModel() {
             )!!
     }
 
+    fun validate(textToValidate:String,textInputTextType: InputTextType,errorsText: Map<String,String>){
+
+        userNameErrorText.value = if(!isNotEmpty(textToValidate))
+            errorsText["emptyError"]
+        else
+            null
+
+        when(textInputTextType){
+            InputTextType.PASSWORD_REGISTER -> refactoredCheckPassword(errorsText["errorRegexMessage"]?:"null")
+            InputTextType.CONFIRM_PASSWORD_REGISTER ->refactoredCheckConfirmPassword(errorsText["notMatchError"]?:"null")
+            else -> return
+        }
+    }
+
     fun isNotEmpty(validText: String): Boolean{
         if(validText.isEmpty()|| validText == "null")
             return false
 
         return true
+    }
+
+    fun refactoredCheckPassword( errorRegexMessage:String){
+        passwordEditTextContent.value?.let {
+            passwordErrorText.value = if(it.length < 8)
+                errorRegexMessage
+            else
+                errorRegexMessage
+
+            val passwordMatcher = Regex(passwordPattern)
+
+            passwordErrorText.value = if(passwordMatcher.find(it) == null)
+                errorRegexMessage
+            else
+                null
+        }
     }
 
     fun  checkPassword(): Boolean{
@@ -56,6 +93,14 @@ class RegisterViewModel () : ViewModel() {
         } ?: return false
 
     }
+
+    fun refactoredCheckConfirmPassword(errorMessage: String){
+        if(confirmPasswordEditTextContent.value.toString() != passwordEditTextContent.value.toString())
+          confirmPasswordErrorText.value =  errorMessage
+
+        confirmPasswordErrorText.value = null
+    }
+
 
     fun checkConfirmPassword(): Boolean{
         if(confirmPasswordEditTextContent.value.toString() != passwordEditTextContent.value.toString())

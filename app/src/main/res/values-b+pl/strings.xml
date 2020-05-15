@@ -22,6 +22,7 @@
     <!--LoginActivity-->
     <string name="log_text_view_to_ask_have_account">Nie masz konta?</string>
     <string name="log_text_view_to_register"><u>ZAREJESTRUJ SIĘ!</u></string>
+    <string name="log_error_invalid_email_or_password">Email albo hasło nieprawidłowe</string>
     <!--VolunteerAcitivy-->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_volunteer">VolunteerActivity</string>

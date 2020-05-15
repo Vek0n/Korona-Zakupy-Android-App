@@ -142,7 +142,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun handleException(){
-        uiDataBinding.emailTextEditText.error = "Email or password invalid"
-        uiDataBinding.passwordEditText.error = "Email or password invalid"
+        uiDataBinding.emailTextEditText.error = R.string.log_error_invalid_email_or_password.toString()
+        uiDataBinding.passwordEditText.error = R.string.log_error_invalid_email_or_password.toString()
     }
 }

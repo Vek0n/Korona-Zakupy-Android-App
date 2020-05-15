@@ -11,7 +11,9 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import com.maskjs.korona_zakupy.R
 import com.maskjs.korona_zakupy.databinding.FragmentRegisterPart1Binding
+import com.maskjs.korona_zakupy.helpers.InputTextType
 import com.maskjs.korona_zakupy.viewmodels.register.RegisterViewModel
+import java.util.*
 
 
 class RegisterPart1Fragment : Fragment() {
@@ -19,7 +21,7 @@ class RegisterPart1Fragment : Fragment() {
     private var onFabListener: OnReg1FabButtonClickedListener? = null
     private val registerViewModel: RegisterViewModel by activityViewModels()
     private lateinit var uiDataBinding: FragmentRegisterPart1Binding
-
+    private lateinit var errorsText: Map<String,String>
     override fun onAttach(context: Context) {
         super.onAttach(context)
 
@@ -33,11 +35,21 @@ class RegisterPart1Fragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
+        initializeErrorsText()
         initializeUiDataBinding(inflater,container)
         observeUiElements()
         setUiListener()
 
         return uiDataBinding.root
+    }
+
+    private fun initializeErrorsText(){
+        errorsText = mapOf(
+            Pair("emptyError",getString(R.string.global_empty_field_error)),
+            Pair("errorRegexMessage",getString(R.string.reg_error_password_regex)),
+            Pair("notMatchError",getString(R.string.reg_error_password_regex))
+        )
     }
 
     private fun initializeUiDataBinding(inflater: LayoutInflater,container: ViewGroup?){
@@ -56,53 +68,25 @@ class RegisterPart1Fragment : Fragment() {
 
     private fun observeUserName(){
         registerViewModel.userNameEditTextContent.observe(viewLifecycleOwner, Observer {
-            if(!registerViewModel.isNotEmpty(it))  uiDataBinding.userNameTextInputLayout.error = getString(
-                R.string.global_empty_field_error
-            ) else {
-                uiDataBinding.userNameTextInputLayout.error = null
-            }
+           registerViewModel.validate(it,InputTextType.OTHERS,errorsText)
         })
     }
 
     private  fun observeEmail(){
         registerViewModel.emailEditTextContent.observe(viewLifecycleOwner, Observer {
-            if(!registerViewModel.isNotEmpty(it))  uiDataBinding.emailTextInputLayout.error = getString(
-                R.string.global_empty_field_error
-            ) else {
-                uiDataBinding.emailTextInputLayout.error = null
-            }
+            registerViewModel.validate(it,InputTextType.OTHERS,errorsText)
         })
     }
 
     private  fun observePassword(){
         registerViewModel.passwordEditTextContent.observe(viewLifecycleOwner, Observer {
-            if(!registerViewModel.isNotEmpty(it))  uiDataBinding.passwordInputTextLayout.error = getString(
-                R.string.global_empty_field_error
-            ) else {
-                uiDataBinding.passwordInputTextLayout.error = null
-            }
-
-            if(!registerViewModel.checkPassword()) uiDataBinding.passwordInputTextLayout.error = getString(
-                R.string.reg_error_password_regex
-            ) else {
-                uiDataBinding.passwordInputTextLayout.error = null
-            }
+            registerViewModel.validate(it,InputTextType.PASSWORD_REGISTER,errorsText)
         })
     }
 
     private  fun observeConfirmPassword(){
         registerViewModel.confirmPasswordEditTextContent.observe(viewLifecycleOwner, Observer {
-            if(!registerViewModel.isNotEmpty(it))  uiDataBinding.confirmPasswordTextInputLayout.error = getString(
-                R.string.global_empty_field_error
-            ) else {
-                uiDataBinding.confirmPasswordTextInputLayout.error = null
-            }
-
-            if (!registerViewModel.checkConfirmPassword()) uiDataBinding.confirmPasswordTextInputLayout.error = getString(
-                R.string.reg_error_password_match
-            ) else {
-                uiDataBinding.confirmPasswordTextInputLayout.error = null
-            }
+            registerViewModel.validate(it,InputTextType.CONFIRM_PASSWORD_REGISTER,errorsText)
         })
     }
 

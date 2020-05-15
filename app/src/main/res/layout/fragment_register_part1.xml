@@ -39,7 +39,8 @@
             android:textColorHint="@color/primaryTextColor"
             app:errorTextColor="#F44336"
             app:errorEnabled="true"
-            app:hintEnabled="true">
+            app:hintEnabled="true"
+            app:errorText="@{registerViewModel.userNameErrorText}">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/user_name_edit_text"
@@ -62,7 +63,8 @@
             android:textColorHint="@color/primaryTextColor"
             app:errorEnabled="true"
             app:errorTextColor="#F44336"
-            app:hintEnabled="true">
+            app:hintEnabled="true"
+            app:errorText="@{registerViewModel.emailErrorText}">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/email_edit_text"
@@ -84,7 +86,8 @@
             android:textColorHint="@color/primaryTextColor"
             app:errorEnabled="true"
             app:errorTextColor="#F44336"
-            app:hintEnabled="true">
+            app:hintEnabled="true"
+            app:errorText="@{registerViewModel.passwordErrorText}">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/password_edit_text"
@@ -107,7 +110,8 @@
             android:textColorHint="@color/primaryTextColor"
             app:errorEnabled="true"
             app:errorTextColor="#F44336"
-            app:hintEnabled="true">
+            app:hintEnabled="true"
+            app:errorText="@{registerViewModel.confirmPasswordErrorText}">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/confirm_password_edit_text"
