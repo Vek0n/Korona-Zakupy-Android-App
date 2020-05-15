@@ -18,4 +18,9 @@ class UserDao(private val client: OkHttpClient): IDataAccessObject {
     suspend  fun getRole(userId: String, headerToken:String): String{
         return APIGetRequestAuth("http:///korona-zakupy.hostingasp.pl/api/user/role/$userId", headerToken, client)
     }
+
+    suspend fun getValidation(resource:String,name:String):String{
+        return APIGetRequest("http://korona-zakupy.hostingasp.pl/api/user/exist/$resource/$name",client)
+    }
+
 }

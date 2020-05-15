@@ -13,7 +13,10 @@ import com.maskjs.korona_zakupy.R
 import com.maskjs.korona_zakupy.databinding.FragmentRegisterPart1Binding
 import com.maskjs.korona_zakupy.helpers.InputTextType
 import com.maskjs.korona_zakupy.viewmodels.register.RegisterViewModel
-import java.util.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 
 class RegisterPart1Fragment : Fragment() {
@@ -35,24 +38,21 @@ class RegisterPart1Fragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        initialize(inflater,container)
 
-        initializeErrorsText()
-        initializeUiDataBinding(inflater,container)
         observeUiElements()
+
         setUiListener()
 
         return uiDataBinding.root
     }
 
-    private fun initializeErrorsText(){
+    private fun initialize(inflater: LayoutInflater,container: ViewGroup?){
         errorsText = mapOf(
             Pair("emptyError",getString(R.string.global_empty_field_error)),
             Pair("errorRegexMessage",getString(R.string.reg_error_password_regex)),
-            Pair("notMatchError",getString(R.string.reg_error_password_regex))
+            Pair("notMatchError",getString(R.string.reg_error_password_match))
         )
-    }
-
-    private fun initializeUiDataBinding(inflater: LayoutInflater,container: ViewGroup?){
         uiDataBinding = DataBindingUtil.inflate(inflater,
             R.layout.fragment_register_part1,container,false)
         uiDataBinding.lifecycleOwner = this@RegisterPart1Fragment
@@ -68,25 +68,43 @@ class RegisterPart1Fragment : Fragment() {
 
     private fun observeUserName(){
         registerViewModel.userNameEditTextContent.observe(viewLifecycleOwner, Observer {
-           registerViewModel.validate(it,InputTextType.OTHERS,errorsText)
+            validateUserName()
         })
+    }
+
+    private fun validateUserName(){
+        CoroutineScope(Dispatchers.IO).launch {
+            registerViewModel.checkIsUserNameAlreadyTaken()
+            withContext(Dispatchers.Main) {
+                registerViewModel.validate(InputTextType.USERNAME, errorsText)
+            }
+        }
     }
 
     private  fun observeEmail(){
         registerViewModel.emailEditTextContent.observe(viewLifecycleOwner, Observer {
-            registerViewModel.validate(it,InputTextType.OTHERS,errorsText)
+          validateEmail()
         })
+    }
+
+    private fun validateEmail(){
+        CoroutineScope(Dispatchers.IO).launch {
+            registerViewModel.checkIsEmailAlreadyTaken()
+            withContext(Dispatchers.Main) {
+                registerViewModel.validate(InputTextType.EMAIL, errorsText)
+            }
+        }
     }
 
     private  fun observePassword(){
         registerViewModel.passwordEditTextContent.observe(viewLifecycleOwner, Observer {
-            registerViewModel.validate(it,InputTextType.PASSWORD_REGISTER,errorsText)
+            registerViewModel.validate(InputTextType.PASSWORD_REGISTER,errorsText)
         })
     }
 
     private  fun observeConfirmPassword(){
         registerViewModel.confirmPasswordEditTextContent.observe(viewLifecycleOwner, Observer {
-            registerViewModel.validate(it,InputTextType.CONFIRM_PASSWORD_REGISTER,errorsText)
+            registerViewModel.validate(InputTextType.CONFIRM_PASSWORD_REGISTER,errorsText)
         })
     }
 
@@ -96,54 +114,13 @@ class RegisterPart1Fragment : Fragment() {
         }
 
         uiDataBinding.fabReg1.setOnClickListener {
-            if(uiValidate())
-                onFabListener?.goToReg2Fragment()
+            checkValidation()
         }
     }
-
-    private fun uiValidate(): Boolean{
-        var check = true
-
-        if(!registerViewModel.checkPassword()) uiDataBinding.passwordInputTextLayout.error = getString(
-            R.string.reg_error_password_regex
-        ) else {
-            uiDataBinding.passwordInputTextLayout.error = null
-        }
-
-        if (!registerViewModel.checkConfirmPassword()) uiDataBinding.confirmPasswordTextInputLayout.error = getString(
-            R.string.reg_error_password_match
-        ) else {
-            uiDataBinding.confirmPasswordTextInputLayout.error = null
-        }
-
-        if(!registerViewModel.isNotEmpty(registerViewModel.userNameEditTextContent.value.toString())) {
-            uiDataBinding.userNameTextInputLayout.error =
-                getString(R.string.global_empty_field_error)
-                check = false
-        }
-
-        if(!registerViewModel.isNotEmpty(registerViewModel.emailEditTextContent.value.toString())) {
-            uiDataBinding.emailTextInputLayout.error =
-                getString(R.string.global_empty_field_error)
-                check = false
-        }
-
-
-        if(!registerViewModel.isNotEmpty(registerViewModel.passwordEditTextContent.value.toString())) {
-            uiDataBinding.passwordInputTextLayout.error =
-                getString(R.string.global_empty_field_error)
-            check = false
-        }
-
-        if(!registerViewModel.isNotEmpty(registerViewModel.confirmPasswordEditTextContent.value.toString())) {
-            uiDataBinding.confirmPasswordTextInputLayout.error =
-                getString(R.string.global_empty_field_error)
-                check = false
-        }
-
-        return check
+    private fun checkValidation(){
+        if(registerViewModel.checkValidation(errorsText))
+            onFabListener?.goToReg2Fragment()
     }
-
     interface OnReg1FabButtonClickedListener{
         fun goToReg2Fragment()
         fun goToLoginActivity()

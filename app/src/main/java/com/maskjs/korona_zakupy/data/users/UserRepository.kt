@@ -20,6 +20,7 @@ class UserRepository<T: Any>(private  val userDao: UserDao): IRepository<T> {
        return parseJsonToLoginResponseDto(loginJsonResponse)
    }
 
+    suspend fun getValidation(resource:String,name:String):String = userDao.getValidation(resource,name)
 
    suspend fun getRole(userId: String, headerToken: String): String
             = userDao.getRole(userId, headerToken)
