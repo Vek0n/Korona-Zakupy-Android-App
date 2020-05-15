@@ -9,11 +9,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.ListView
+import android.widget.ProgressBar
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.ViewModelProviders
 import com.maskjs.korona_zakupy.R
 import com.maskjs.korona_zakupy.data.orders.GetOrderDto
+import com.maskjs.korona_zakupy.helpers.LoadingSpinner
 import com.maskjs.korona_zakupy.helpers.OrdersListAdapter
 import com.maskjs.korona_zakupy.viewmodels.volunteer.HistoryViewModel
 import kotlinx.android.synthetic.main.activity_volunteer.*
@@ -30,6 +32,7 @@ class HistoryFragment : Fragment() {
 
     private lateinit var historyViewModel: HistoryViewModel
     private lateinit var listView: ListView
+    private lateinit var progressBar: ProgressBar
     private lateinit var adapterOrders: OrdersListAdapter
 
 
@@ -48,47 +51,19 @@ class HistoryFragment : Fragment() {
         val userId = "85b68f59-02ff-456b-b502-cf9830f10b1f"
 
         listView = root.findViewById(R.id.listViewHistory) as ListView
+        progressBar = root.findViewById(R.id.pBar) as ProgressBar
 
         CoroutineScope(Dispatchers.IO).launch {
+            LoadingSpinner().showLoadingDialog(progressBar)
+
             val data = historyViewModel.getHistoryOrdersFromRepository(userId)
             setListViewAdapterOnMainThread(context, data)
+
+            LoadingSpinner().hideLoadingDialog(progressBar)
         }
 
         listView.setOnItemClickListener { _, _, position, _ ->
-
-            val dialogView = LayoutInflater.from(context).inflate(R.layout.history_order_details_popup, null)
-            val builder = AlertDialog.Builder(context)
-                .setView(dialogView)
-                .setTitle(R.string.order_details)
-
-            val alertDialog = builder.show()
-
-            val productsListView = dialogView.products_list_view
-            val addressTextView = dialogView.address_text_view
-            val dateTextView = dialogView.date_text_view
-
-            addressTextView.text = adapterOrders
-                .getAddress(position)
-
-            dateTextView.text = adapterOrders
-                .getOrderDate(position)
-
-            val productsAdapter = ArrayAdapter(
-                context,
-                android.R.layout.simple_list_item_1,
-                adapterOrders
-                    .getProducts(position)
-            )
-            productsListView.adapter = productsAdapter
-
-            alertDialog.setOnDismissListener {
-                refreshFragment()
-            }
-
-            dialogView.dismiss_button.setOnClickListener {
-                refreshFragment()
-                alertDialog.dismiss()
-            }
+            showHistoryOrderDetailDialog(position, userId)
         }
         return root
     }
@@ -101,6 +76,42 @@ class HistoryFragment : Fragment() {
                 input
             )
             listView.adapter = adapterOrders
+        }
+    }
+
+    private fun showHistoryOrderDetailDialog(position: Int, userId: String){
+        val dialogView = LayoutInflater.from(context).inflate(R.layout.history_order_details_popup, null)
+        val builder = AlertDialog.Builder(context)
+            .setView(dialogView)
+            .setTitle(R.string.order_details)
+
+        val alertDialog = builder.show()
+
+        val productsListView = dialogView.products_list_view
+        val addressTextView = dialogView.address_text_view
+        val dateTextView = dialogView.date_text_view
+
+        addressTextView.text = adapterOrders
+            .getAddress(position)
+
+        dateTextView.text = adapterOrders
+            .getOrderDate(position)
+
+        val productsAdapter = ArrayAdapter(
+            context,
+            android.R.layout.simple_list_item_1,
+            adapterOrders
+                .getProducts(position)
+        )
+        productsListView.adapter = productsAdapter
+
+        alertDialog.setOnDismissListener {
+            refreshFragment()
+        }
+
+        dialogView.dismiss_button.setOnClickListener {
+            refreshFragment()
+            alertDialog.dismiss()
         }
     }
 

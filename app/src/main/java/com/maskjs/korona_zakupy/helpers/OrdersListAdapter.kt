@@ -126,9 +126,9 @@ class OrdersListAdapter(private val context: Context,
         statusTextView?.setTextColor(
             ContextCompat.getColor(context, LABEL_COLORS[getStatus(order)] ?: R.color.secondaryTextColor))
 
-
         Picasso.get()
-            .load(getPhotoDirectory(order))
+//            .load(getPhotoDirectory(order))
+            .load("https://i.imgur.com/KMH51Kr.png") //DEBUG
             .into(thumbnailImageView)
 
         return view
