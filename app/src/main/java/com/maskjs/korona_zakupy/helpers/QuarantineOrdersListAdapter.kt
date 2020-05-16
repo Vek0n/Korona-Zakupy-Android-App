@@ -39,11 +39,6 @@ class QuarantineOrdersListAdapter(private val context: Context,
         return order["products"] as List<String>
     }
 
-    fun getAddress(position: Int): String?{
-        val order = getItem(position) as LinkedTreeMap<*, *>
-        return getUserInfo(order)?.get("address") as String?
-    }
-
     fun getFirstName(position: Int): String?{
         val order = getItem(position) as LinkedTreeMap<*, *>
         val userInfo = getUserInfo(order)
@@ -85,6 +80,17 @@ class QuarantineOrdersListAdapter(private val context: Context,
             val user = users[0] as LinkedTreeMap<*,*>
             if(user["userRole"] == "Volunteer") user
             else users[1] as LinkedTreeMap<*, *>?
+        }
+    }
+
+    fun getVolunteerId(position: Int): String{
+        val order = getItem(position) as LinkedTreeMap<*, *>
+        val users = order["usersInfo"] as ArrayList<*>
+        var user = users[0] as LinkedTreeMap<*,*>
+        return if(user["userRole"] == "Volunteer") user["userId"] as String
+        else {
+            user = users[1] as LinkedTreeMap<*, *>
+            user["userId"] as String
         }
     }
 

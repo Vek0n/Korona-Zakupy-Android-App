@@ -36,6 +36,8 @@
     <string name="popup_text">Szczegóły zlecenia</string>
     <string name="global_empty_field_error">Pole nie może być puste</string>
     <!--    <string name="active_orders_list_name">History</string>-->
+    <string name="second_fragment_label">lol</string>
+    <string name="first_fragment_label">lol</string>
     <string name="Ok">OK</string>
     <string name="Address">Adres:</string>
     <string name="Date">Złożono:</string>
@@ -43,18 +45,9 @@
     <string name="cancel_order">Anuluj zlecenie</string>
     <string name="order_details">Szczegóły zlecenia</string>
     <!-- Strings used for fragments for navigation -->
-    <string name="first_fragment_label">First Fragment</string>
-    <string name="second_fragment_label">Second Fragment</string>
-    <string name="next">Następny</string>
-    <string name="previous">Poprzedni</string>
 
-    <string name="hello_first_fragment">Hello first fragment</string>
-    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="title_activity_login">Login</string>
     <string name="title_activity_person_in_quarantine">PersonInQuarantineActivity</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
     <string name="my_orders">Moje zlecenia</string>
 
     <string name="status_available">Dostępne</string>
@@ -66,6 +59,10 @@
     <string name="status_in_progress_quaranteen">W trakcie realizacji</string>
     <string name="status_available_quaranteen">Oczekiwanie na przyjęcie</string>
     <string name="order_from">Zlecenie z dnia:</string>
+    <string name="send_review">Wyślij ocenę</string>
+    <string name="review_of_person_in_quarantine_title">Oceń zleceniodawcę: </string>
+    <string name="review_of_volunteer_title">Oceń wolontariusza: </string>
+    <string name="please_review">Najpierw wystaw ocenę</string>
 
 
 </resources>

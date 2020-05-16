@@ -20,7 +20,7 @@ class VolunteerOrdersListAdapter(private val context: Context,
 
 
     private val inflater: LayoutInflater
-            = context?.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+            = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
 
     override fun getCount(): Int {
         return dataSource.size
@@ -88,6 +88,17 @@ class VolunteerOrdersListAdapter(private val context: Context,
         }
     }
 
+
+    fun getPersonInQuarantineId(position: Int): String{
+        val order = getItem(position) as LinkedTreeMap<*, *>
+        val users = order["usersInfo"] as ArrayList<*>
+        var user = users[0] as LinkedTreeMap<*,*>
+        return if(user["userRole"] == "PersonInQuarantine") user["userId"] as String
+        else {
+            user = users[1] as LinkedTreeMap<*, *>
+            user["userId"] as String
+        }
+    }
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         val view: View

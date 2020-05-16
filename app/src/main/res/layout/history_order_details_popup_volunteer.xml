@@ -98,7 +98,7 @@
                 android:layout_height="60dp"
                 android:layout_weight="1"
                 android:background="#58C031"
-                android:text="@string/Ok"
+                android:text="@string/send_review"
                 android:textColor="#FFFCFC" />
 
 

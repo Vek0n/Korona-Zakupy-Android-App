@@ -1,5 +1,6 @@
 package com.maskjs.korona_zakupy.volunteer_ui.active
 
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Context
 import android.os.Bundle
@@ -74,6 +75,7 @@ class ActiveOrdersFragment : Fragment() {
         }
     }
 
+    @SuppressLint("InflateParams")
     private fun showActiveOrderDetailDialog(position: Int, userId: String){
         val dialogView = LayoutInflater.from(context).inflate(R.layout.active_order_details_popup, null)
         val builder = AlertDialog.Builder(context)

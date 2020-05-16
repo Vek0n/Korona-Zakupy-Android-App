@@ -1,5 +1,6 @@
 package com.maskjs.korona_zakupy.volunteer_ui.history
 
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Context
 import android.os.Bundle
@@ -7,9 +8,8 @@ import android.preference.PreferenceManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
-import android.widget.ListView
-import android.widget.ProgressBar
+import android.widget.*
+import android.widget.RatingBar.OnRatingBarChangeListener
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import com.maskjs.korona_zakupy.R
@@ -18,10 +18,12 @@ import com.maskjs.korona_zakupy.helpers.LoadingSpinner
 import com.maskjs.korona_zakupy.helpers.VolunteerOrdersListAdapter
 import com.maskjs.korona_zakupy.viewmodels.volunteer.HistoryViewModel
 import kotlinx.android.synthetic.main.history_order_details_popup_volunteer.view.*
+import kotlinx.android.synthetic.main.rating_popup.view.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+
 
 class HistoryFragment : Fragment() {
 
@@ -29,6 +31,7 @@ class HistoryFragment : Fragment() {
     private lateinit var listView: ListView
     private lateinit var progressBar: ProgressBar
     private lateinit var adapterOrders: VolunteerOrdersListAdapter
+    private lateinit var ratingBar: RatingBar
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -57,7 +60,7 @@ class HistoryFragment : Fragment() {
         }
 
         listView.setOnItemClickListener { _, _, position, _ ->
-            showHistoryOrderDetailDialog(position, userId)
+            showHistoryOrderDetailDialog(position)
         }
         return root
     }
@@ -73,7 +76,43 @@ class HistoryFragment : Fragment() {
         }
     }
 
-    private fun showHistoryOrderDetailDialog(position: Int, userId: String){
+
+    @SuppressLint("InflateParams")
+    private fun showReviewDialog(position: Int){
+        val dialogView = LayoutInflater.from(context).inflate(R.layout.rating_popup, null)
+        val builder = AlertDialog.Builder(context)
+            .setView(dialogView)
+            .setTitle(R.string.review_of_person_in_quarantine_title)
+        ratingBar = dialogView.findViewById(R.id.ratingBar) as RatingBar
+
+        val alertDialog = builder.show()
+        val ratingBar = dialogView.ratingBar
+        var ratingFloat = 0.0f
+
+        ratingBar.onRatingBarChangeListener = OnRatingBarChangeListener{ _, v, _ ->
+            ratingFloat = v
+        }
+
+        alertDialog.setOnDismissListener {
+            refreshFragment()
+        }
+
+        val userId = adapterOrders.getPersonInQuarantineId(position)
+
+        dialogView.sendReviewButton.setOnClickListener {
+            CoroutineScope(Dispatchers.IO).launch {
+//                historyViewModel.sendReview(userId, ratingFloat)
+            }
+            if(ratingFloat == 0.0f)
+                Toast.makeText(dialogView.context,getString(R.string.please_review), Toast.LENGTH_SHORT).show()
+            else
+                alertDialog.dismiss()
+        }
+    }
+
+
+    @SuppressLint("InflateParams")
+    private fun showHistoryOrderDetailDialog(position: Int){
         val dialogView = LayoutInflater.from(context).inflate(R.layout.history_order_details_popup_volunteer, null)
         val builder = AlertDialog.Builder(context)
             .setView(dialogView)
@@ -92,7 +131,7 @@ class HistoryFragment : Fragment() {
             .getOrderDate(position)
 
         val productsAdapter = ArrayAdapter(
-            context,
+            requireContext(),
             android.R.layout.simple_list_item_1,
             adapterOrders
                 .getProducts(position)
@@ -104,7 +143,7 @@ class HistoryFragment : Fragment() {
         }
 
         dialogView.dismiss_button.setOnClickListener {
-            refreshFragment()
+            showReviewDialog(position)
             alertDialog.dismiss()
         }
     }

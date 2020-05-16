@@ -1,5 +1,6 @@
 package com.maskjs.korona_zakupy.volunteer_ui.available
 
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Context
 import android.os.Bundle
@@ -73,6 +74,7 @@ class AvailableOrdersFragment : Fragment() {
         }
     }
 
+    @SuppressLint("InflateParams")
     private fun showAvailableOrderDetailDialog(position: Int, userId: String){
         val dialogView = LayoutInflater.from(context).inflate(R.layout.available_order_details_popup, null)
         val builder = AlertDialog.Builder(context)

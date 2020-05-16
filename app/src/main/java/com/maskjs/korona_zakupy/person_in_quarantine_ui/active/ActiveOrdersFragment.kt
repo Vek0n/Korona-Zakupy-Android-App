@@ -1,5 +1,6 @@
 package com.maskjs.korona_zakupy.person_in_quarantine_ui.active
 
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
@@ -85,6 +86,7 @@ class ActiveOrdersFragment : Fragment() {
         }
     }
 
+    @SuppressLint("InflateParams")
     private fun showActiveOrderDetailDialog(position: Int, userId: String){
         val dialogView =
             LayoutInflater.from(context).inflate(R.layout.quarantine_active_order_details_popup, null)

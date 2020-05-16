@@ -7,6 +7,8 @@ import com.google.gson.internal.LinkedTreeMap
 import com.maskjs.korona_zakupy.data.orders.GetOrderDto
 import com.maskjs.korona_zakupy.data.orders.OrderDao
 import com.maskjs.korona_zakupy.data.orders.OrderRepository
+import com.maskjs.korona_zakupy.data.users.UserDao
+import com.maskjs.korona_zakupy.data.users.UserRepository
 import okhttp3.OkHttpClient
 
 class HistoryViewModel : ViewModel() {
@@ -23,5 +25,8 @@ class HistoryViewModel : ViewModel() {
         }
         return historyOrders as ArrayList<GetOrderDto>
     }
+
+    suspend fun sendReview(userId: String, rating: Float)
+        = UserRepository<Any>(UserDao(OkHttpClient())).rateUser(userId, rating)
 
 }

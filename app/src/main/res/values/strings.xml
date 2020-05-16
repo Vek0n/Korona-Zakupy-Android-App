@@ -43,20 +43,12 @@
     <string name="cancel_order">Cancel order</string>
     <string name="order_details">Order details</string>
     <!-- Strings used for fragments for navigation -->
-    <string name="first_fragment_label">First Fragment</string>
-    <string name="second_fragment_label">Second Fragment</string>
-    <string name="next">Next</string>
-    <string name="previous">Previous</string>
 
-    <string name="hello_first_fragment">Hello first fragment</string>
-    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="title_activity_login">Login</string>
     <string name="title_activity_person_in_quarantine">PersonInQuarantineActivity</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
     <string name="my_orders">My orders</string>
-
+    <string name="second_fragment_label">lol</string>
+    <string name="first_fragment_label">lol</string>
     <string name="status_available">Available</string>
     <string name="status_in_progress">In Progress</string>
     <string name="status_awaiting_confirmation">Awaiting confirmation</string>
@@ -66,6 +58,10 @@
     <string name="status_in_progress_quaranteen">Order taken</string>
     <string name="status_available_quaranteen">Waiting for acceptance</string>
     <string name="order_from">Order from:</string>
+    <string name="send_review">Send review</string>
+    <string name="review_of_person_in_quarantine_title">Rate the orderer:</string>
+    <string name="review_of_volunteer_title">Rate the volunteer: </string>
+    <string name="please_review">Please rate the orderer first</string>
 
 
 </resources>
