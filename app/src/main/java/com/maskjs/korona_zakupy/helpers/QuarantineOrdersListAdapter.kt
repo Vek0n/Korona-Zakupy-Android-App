@@ -11,6 +11,7 @@ import androidx.core.content.ContextCompat
 import com.google.gson.internal.LinkedTreeMap
 import com.maskjs.korona_zakupy.R
 import com.maskjs.korona_zakupy.data.orders.GetOrderDto
+import com.squareup.picasso.Picasso
 import java.text.SimpleDateFormat
 
 
@@ -47,9 +48,9 @@ class QuarantineOrdersListAdapter(private val context: Context,
         else getUserInfo(order)?.get("firstName") as String?
     }
 
-    private fun getRating(order: LinkedTreeMap<*, *>): Double?{
-        return getUserInfo(order)?.get("rating") as Double?
-    }
+//    private fun getRating(order: LinkedTreeMap<*, *>): Double?{
+//        return getUserInfo(order)?.get("rating") as Double?
+//    }
 
     private fun getOrderStatus(order: LinkedTreeMap<*, *>): String?{
         return order["orderStatus"] as String?
@@ -68,8 +69,13 @@ class QuarantineOrdersListAdapter(private val context: Context,
         return formatter.format(parser.parse(date))
     }
 
-    private fun getPhotoDirectory(order: LinkedTreeMap<*, *>, role: String): String?{
-        return getUserInfo(order)?.get("photoDirectory") as String?
+//    private fun getPhotoDirectory(order: LinkedTreeMap<*, *>, role: String): String?{
+//        return getUserInfo(order)?.get("photoDirectory") as String?
+//    }
+
+    private fun getTypeOfOrderAvatar(order: LinkedTreeMap<*, *>): Int {
+        val typeOfOrder = order["typeOfOrder"] as String
+        return LABEL_TYPE_OF_ORDER[typeOfOrder]!!
     }
 
     private fun getUserInfo(order: LinkedTreeMap<*, *>): LinkedTreeMap<*,*>?{
@@ -107,6 +113,7 @@ class QuarantineOrdersListAdapter(private val context: Context,
                 ViewHolder()
             holder.dateText = view.findViewById(R.id.dateTextView) as TextView
             holder.status = view.findViewById(R.id.statusTextView) as TextView
+            holder.imageThumbnailUrl = view.findViewById(R.id.avatarListQuarantine) as ImageView
             view.tag = holder
         } else {
             view = convertView
@@ -115,6 +122,7 @@ class QuarantineOrdersListAdapter(private val context: Context,
 
         val dateTextView = holder.dateText
         val statusTextView = holder.status
+        val thumbnailImageView = holder.imageThumbnailUrl
 
         val order = getItem(position) as LinkedTreeMap<*, *>
 
@@ -125,6 +133,11 @@ class QuarantineOrdersListAdapter(private val context: Context,
 
         statusTextView?.setTextColor(
             ContextCompat.getColor(context, LABEL_COLORS[getOrderStatus(order)] ?: R.color.secondaryTextColor))
+
+        Picasso.get()
+//            .load(getTypeOfOrderAvatar(order))
+            .load(R.drawable.groceries_avatar) //DEBUG
+            .into(thumbnailImageView)
 
         return view
     }
@@ -143,10 +156,16 @@ class QuarantineOrdersListAdapter(private val context: Context,
             "Avalible" to R.string.status_available_quaranteen,
             "AwaitingConfirmation" to R.string.status_awaiting_confirmation
         )
+
+        private val LABEL_TYPE_OF_ORDER = hashMapOf(
+            "Grocery" to R.drawable.groceries_avatar,
+            "Grocery18plus" to R.drawable.groceries_avatar_18plus,
+            "Pharmacy" to R.drawable.pharmacy_avatar,
+            "Dog" to R.drawable.dog_avatar
+        )
     }
 
     internal class ViewHolder {
-        var nameText: TextView? = null
         var dateText: TextView? = null
         var rating: TextView? = null
         var address: TextView? = null

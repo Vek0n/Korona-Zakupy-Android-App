@@ -77,6 +77,11 @@ class VolunteerOrdersListAdapter(private val context: Context,
         return getUserInfo(order)?.get("photoDirectory") as String?
     }
 
+    private fun getTypeOfOrderAvatar(order: LinkedTreeMap<*, *>): Int {
+        val typeOfOrder = order["typeOfOrder"] as String
+        return LABEL_TYPE_OF_ORDER[typeOfOrder]!!
+    }
+
     private fun getUserInfo(order: LinkedTreeMap<*, *>): LinkedTreeMap<*, *>?{
         val users = order["usersInfo"] as ArrayList<*>
         return if (users.size == 1)
@@ -114,7 +119,7 @@ class VolunteerOrdersListAdapter(private val context: Context,
             holder.rating = view.findViewById(R.id.ratingTextView) as TextView
             holder.address = view.findViewById(R.id.addressTextView) as TextView
             holder.status = view.findViewById(R.id.statusTextView) as TextView
-            holder.imageThumbnailUrl = view.findViewById(R.id.avatarThumbnailImageView) as ImageView
+            holder.imageThumbnailUrl = view.findViewById(R.id.avatarListVolunteer) as ImageView
             view.tag = holder
         } else {
             view = convertView
@@ -139,8 +144,8 @@ class VolunteerOrdersListAdapter(private val context: Context,
             ContextCompat.getColor(context, LABEL_COLORS[getOrderStatus(order)] ?: R.color.secondaryTextColor))
 
         Picasso.get()
-//            .load(getPhotoDirectory(order))
-            .load("https://i.imgur.com/KMH51Kr.png") //DEBUG
+//            .load(getTypeOfOrderAvatar(order)) //DEBUG
+            .load(R.drawable.groceries_avatar) //DEBUG
             .into(thumbnailImageView)
 
         return view
@@ -159,6 +164,13 @@ class VolunteerOrdersListAdapter(private val context: Context,
             "Finished" to R.string.status_finished,
             "Avalible" to R.string.status_available,
             "AwaitingConfirmation" to R.string.status_awaiting_confirmation
+        )
+
+        private val LABEL_TYPE_OF_ORDER = hashMapOf(
+            "Grocery" to R.drawable.groceries_avatar,
+            "Grocery18plus" to R.drawable.groceries_avatar_18plus,
+            "Pharmacy" to R.drawable.pharmacy_avatar,
+            "Dog" to R.drawable.dog_avatar
         )
     }
 
