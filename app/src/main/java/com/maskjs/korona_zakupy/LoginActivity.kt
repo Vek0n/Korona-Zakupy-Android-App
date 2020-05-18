@@ -22,6 +22,7 @@ class LoginActivity : AppCompatActivity() {
     private val loginViewModel : LoginViewModel by viewModels()
     private lateinit var uiDataBinding: ActivityLoginBinding
     private lateinit var sharedPreferences: SharedPreferences
+    private lateinit var errorMessages: Map<String,String>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,6 +35,13 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun initialize(){
+        errorMessages = mapOf(
+            Pair("emptyError",getString(R.string.global_empty_field_error)),
+            Pair("userNameIsAlreadyTaken",getString(R.string.reg_error_user_name_is_already_taken)),
+            Pair("emailNameIsAlreadyTaken",getString(R.string.reg_error_email_is_already_taken)),
+            Pair("errorRegexMessage",getString(R.string.reg_error_password_regex)),
+            Pair("notMatchError",getString(R.string.reg_error_password_match))
+        )
         setContentView(R.layout.activity_login)
         setSupportActionBar(toolbar)
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
@@ -48,24 +56,14 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun observeEmail(){
-        loginViewModel.emailEditTextContent.observe(this, Observer {
-            uiDataBinding.emailTextEditText.error = null
-
-            if(!loginViewModel.isNotEmpty(it))  uiDataBinding.emailTextInputLayout.error = getString(
-                R.string.global_empty_field_error) else {
-                uiDataBinding.emailTextInputLayout.error = null
-            }
+        loginViewModel.emailInputTextLayoutViewModel.textContent.observe(this, Observer {
+            loginViewModel.validateEmail(errorMessages)
         })
     }
 
     private fun observePassword(){
-        loginViewModel.passwordEditTextContent.observe(this, Observer {
-            uiDataBinding.passwordEditText.error = null
-
-            if(!loginViewModel.isNotEmpty(it))  uiDataBinding.passwordTextInputLayout.error = getString(
-                R.string.global_empty_field_error) else {
-                uiDataBinding.passwordTextInputLayout.error = null
-            }
+        loginViewModel.passwordInputTextLayoutViewModel.textContent.observe(this, Observer {
+            loginViewModel.validatePassword(errorMessages)
         })
     }
 
@@ -82,7 +80,7 @@ class LoginActivity : AppCompatActivity() {
 
     private  fun setFabListener(){
         uiDataBinding.fab.setOnClickListener {
-            if(validateUi()){
+            if(checkUiValidation()){
                 CoroutineScope(Dispatchers.IO).launch {
                     login()
                 }
@@ -95,21 +93,8 @@ class LoginActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
-    private fun validateUi() : Boolean {
-        var check = true
+    private fun checkUiValidation() =  loginViewModel.checkValidation(errorMessages)
 
-        if (!loginViewModel.isNotEmpty(loginViewModel.emailEditTextContent.value.toString())) {
-            uiDataBinding.emailTextInputLayout.error = getString(R.string.global_empty_field_error)
-            check = false
-        }
-
-        if(!loginViewModel.isNotEmpty(loginViewModel.passwordEditTextContent.value.toString())){
-            uiDataBinding.passwordTextInputLayout.error = getString(R.string.global_empty_field_error)
-            check = false
-        }
-
-        return check
-    }
 
     private suspend fun login(){
         try {
@@ -138,11 +123,11 @@ class LoginActivity : AppCompatActivity() {
 
     private fun goToUserActivity(){
         val intent = Intent(this, VolunteerActivity::class.java)
-        this?.startActivity(intent)
+        this.startActivity(intent)
     }
 
     private fun handleException(){
-        uiDataBinding.emailTextEditText.error = R.string.log_error_invalid_email_or_password.toString()
-        uiDataBinding.passwordEditText.error = R.string.log_error_invalid_email_or_password.toString()
+        uiDataBinding.emailTextEditText.error = getString(R.string.log_error_invalid_email_or_password)
+        uiDataBinding.passwordEditText.error =getString(R.string.log_error_invalid_email_or_password)
     }
 }

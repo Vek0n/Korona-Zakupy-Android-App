@@ -79,21 +79,24 @@ class RegisterPart2Fragment : Fragment() {
     }
 
     private fun observeFirstName(){
-        registerViewModel.firstNameEditTextContent.observe(viewLifecycleOwner, Observer {
-            registerViewModel.validate(InputTextType.FIRST_NAME, errorMessages)
+        registerViewModel.firstNameInputLayoutViewModel.textContent.observe(viewLifecycleOwner,
+            Observer {
+                registerViewModel.validateFirstName(errorMessages)
         })
     }
 
     private fun observeLastName(){
-        registerViewModel.lastNameEditTextContent.observe(viewLifecycleOwner, Observer {
-            registerViewModel.validate(InputTextType.LAST_NAME,errorMessages)
-        })
+       registerViewModel.lastNameInputLayoutViewModel.textContent.observe(viewLifecycleOwner,
+           Observer {
+            registerViewModel.validateLastName(errorMessages)
+       })
     }
 
     private fun observeAddress(){
-        registerViewModel.addressEditTextContent.observe(viewLifecycleOwner, Observer {
-            registerViewModel.validate(InputTextType.ADDRESS,errorMessages)
-        })
+        registerViewModel.addressInputTextLayoutViewModel.textContent.observe(viewLifecycleOwner,
+            Observer {
+                registerViewModel.validateAdress(errorMessages)
+            })
     }
 
     private  fun setUiListener(){
@@ -111,7 +114,7 @@ class RegisterPart2Fragment : Fragment() {
     }
 
     private fun checkValidation() : Boolean{
-        return registerViewModel.checkValidation(RegistrationPart.PART_3,errorMessages)
+        return registerViewModel.checkValidationForPartTwo(errorMessages)
     }
 
     private suspend fun register(){
@@ -126,7 +129,7 @@ class RegisterPart2Fragment : Fragment() {
         goToUserActivity()
     }
 
-    private suspend fun saveResponse(){
+    private  fun saveResponse(){
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
         sharedPreferences.edit(){
             putString(R.string.user_id_key.toString(), registerViewModel.userRegisterResponseDto.userId)
@@ -135,7 +138,7 @@ class RegisterPart2Fragment : Fragment() {
         }
     }
 
-    private suspend fun goToUserActivity(){
+    private  fun goToUserActivity(){
         val intent = Intent(activity, VolunteerActivity::class.java)
         activity?.startActivity(intent)
     }

@@ -40,7 +40,7 @@
             app:errorTextColor="#F44336"
             app:errorEnabled="true"
             app:hintEnabled="true"
-            app:errorText="@{registerViewModel.userNameErrorText}">
+            app:errorText="@{registerViewModel.userNameInputTextLayoutViewModel.errorContent}">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/user_name_edit_text"
@@ -48,7 +48,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/reg_hint_username"
                 android:inputType="textPersonName"
-                android:text="@={registerViewModel.userNameEditTextContent}"
+                android:text="@={registerViewModel.userNameInputTextLayoutViewModel.textContent}"
                 android:textColor="@color/primaryTextColor" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -66,7 +66,7 @@
             app:errorEnabled="true"
             app:errorTextColor="#F44336"
             app:hintEnabled="true"
-            app:errorText="@{registerViewModel.emailErrorText}">
+            app:errorText="@{registerViewModel.emailInputTextLayoutViewModel.errorContent}">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/email_edit_text"
@@ -74,7 +74,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/reg_hint_email"
                 android:inputType="textWebEmailAddress"
-                android:text="@={registerViewModel.emailEditTextContent}"
+                android:text="@={registerViewModel.emailInputTextLayoutViewModel.textContent}"
                 android:textColor="@color/primaryTextColor" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -91,7 +91,7 @@
             app:errorEnabled="true"
             app:errorTextColor="#F44336"
             app:hintEnabled="true"
-            app:errorText="@{registerViewModel.passwordErrorText}">
+            app:errorText="@{registerViewModel.passwordInputTextLayoutViewModel.errorContent}">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/password_edit_text"
@@ -99,7 +99,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/reg_hint_password"
                 android:inputType="textPassword"
-                android:text="@={registerViewModel.passwordEditTextContent}"
+                android:text="@={registerViewModel.passwordInputTextLayoutViewModel.textContent}"
                 android:textColor="@color/primaryTextColor" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -116,7 +116,7 @@
             app:errorEnabled="true"
             app:errorTextColor="#F44336"
             app:hintEnabled="true"
-            app:errorText="@{registerViewModel.confirmPasswordErrorText}">
+            app:errorText="@{registerViewModel.confirmPasswordInputTextLayoutViewModel.errorContent}">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/confirm_password_edit_text"
@@ -124,7 +124,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/reg_hint_confirmPassword"
                 android:inputType="textPassword"
-                android:text="@={registerViewModel.confirmPasswordEditTextContent}"
+                android:text="@={registerViewModel.confirmPasswordInputTextLayoutViewModel.textContent}"
                 android:textColor="@color/primaryTextColor" />
         </com.google.android.material.textfield.TextInputLayout>
 

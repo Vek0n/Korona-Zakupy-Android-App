@@ -64,14 +64,15 @@
                     android:textColorHint="@color/primaryTextColor"
                     app:errorTextColor="#F44336"
                     app:errorEnabled="true"
-                    app:hintEnabled="true">
+                    app:hintEnabled="true"
+                    app:errorText="@{loginViewModel.emailInputTextLayoutViewModel.errorContent}">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/email_text_edit_text"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/reg_hint_email"
-                        android:text="@={loginViewModel.emailEditTextContent}" />
+                        android:text="@={loginViewModel.emailInputTextLayoutViewModel.textContent}" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -85,7 +86,8 @@
                     android:textColorHint="@color/primaryTextColor"
                     app:errorTextColor="#F44336"
                     app:errorEnabled="true"
-                    app:hintEnabled="true">
+                    app:hintEnabled="true"
+                    app:errorText="@{loginViewModel.passwordInputTextLayoutViewModel.errorContent}">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/password_edit_text"
@@ -93,7 +95,7 @@
                         android:layout_height="wrap_content"
                         android:hint="@string/reg_hint_password"
                         android:inputType="textPassword"
-                        android:text="@={loginViewModel.passwordEditTextContent}" />
+                        android:text="@={loginViewModel.passwordInputTextLayoutViewModel.textContent}" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <LinearLayout

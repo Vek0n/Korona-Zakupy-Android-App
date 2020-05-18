@@ -11,14 +11,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import com.maskjs.korona_zakupy.R
 import com.maskjs.korona_zakupy.databinding.FragmentRegisterPart1Binding
-import com.maskjs.korona_zakupy.helpers.InputTextType
-import com.maskjs.korona_zakupy.helpers.RegistrationPart
 import com.maskjs.korona_zakupy.viewmodels.register.RegisterViewModel
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-
 
 class RegisterPart1Fragment : Fragment() {
 
@@ -26,6 +19,7 @@ class RegisterPart1Fragment : Fragment() {
     private val registerViewModel: RegisterViewModel by activityViewModels()
     private lateinit var uiDataBinding: FragmentRegisterPart1Binding
     private lateinit var errorsText: Map<String,String>
+
     override fun onAttach(context: Context) {
         super.onAttach(context)
 
@@ -70,44 +64,26 @@ class RegisterPart1Fragment : Fragment() {
     }
 
     private fun observeUserName(){
-        registerViewModel.userNameEditTextContent.observe(viewLifecycleOwner, Observer {
-            validateUserName()
+        registerViewModel.userNameInputTextLayoutViewModel.textContent.observe(viewLifecycleOwner, Observer {
+           registerViewModel.validateUserName(errorsText)
         })
-    }
-
-    private fun validateUserName(){
-        CoroutineScope(Dispatchers.IO).launch {
-            registerViewModel.checkIsUserNameAlreadyTaken()
-            withContext(Dispatchers.Main) {
-                registerViewModel.validate(InputTextType.USER_NAME, errorsText)
-            }
-        }
     }
 
     private  fun observeEmail(){
-        registerViewModel.emailEditTextContent.observe(viewLifecycleOwner, Observer {
-          validateEmail()
+        registerViewModel.emailInputTextLayoutViewModel.textContent.observe(viewLifecycleOwner, Observer {
+            registerViewModel.validateEmail(errorsText)
         })
     }
 
-    private fun validateEmail(){
-        CoroutineScope(Dispatchers.IO).launch {
-            registerViewModel.checkIsEmailAlreadyTaken()
-            withContext(Dispatchers.Main) {
-                registerViewModel.validate(InputTextType.EMAIL, errorsText)
-            }
-        }
-    }
-
     private  fun observePassword(){
-        registerViewModel.passwordEditTextContent.observe(viewLifecycleOwner, Observer {
-            registerViewModel.validate(InputTextType.PASSWORD_REGISTER,errorsText)
+        registerViewModel.passwordInputTextLayoutViewModel.textContent.observe(viewLifecycleOwner, Observer {
+            registerViewModel.validatePassword(errorsText)
         })
     }
 
     private  fun observeConfirmPassword(){
-        registerViewModel.confirmPasswordEditTextContent.observe(viewLifecycleOwner, Observer {
-            registerViewModel.validate(InputTextType.CONFIRM_PASSWORD_REGISTER,errorsText)
+        registerViewModel.confirmPasswordInputTextLayoutViewModel.textContent.observe(viewLifecycleOwner, Observer {
+            registerViewModel.validateConfirmPassword(errorsText,registerViewModel.passwordInputTextLayoutViewModel.textContent.value?:"")
         })
     }
 
@@ -121,7 +97,7 @@ class RegisterPart1Fragment : Fragment() {
         }
     }
     private fun checkValidation(){
-        if(registerViewModel.checkValidation(RegistrationPart.PART_2,errorsText))
+        if(registerViewModel.checkValidationForPartOne(errorsText))
             onFabListener?.goToReg2Fragment()
     }
     interface OnReg1FabButtonClickedListener{
