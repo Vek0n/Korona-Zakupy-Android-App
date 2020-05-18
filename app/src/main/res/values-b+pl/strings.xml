@@ -21,6 +21,8 @@
     <string name="reg_error_email_is_already_taken">Email jest już zajęty</string>
     <string name="reg_text_view_ask_have_account">Masz już konto?</string>
     <string name="reg_text_view_to_login"><u>ZALOGUJ SIĘ!</u></string>
+    <string name="reg_choose_vol">Wolontariusz</string>
+    <string name="reg_choose_person">Osoba w kwarantannie</string>
     <!--LoginActivity-->
     <string name="log_text_view_to_ask_have_account">Nie masz konta?</string>
     <string name="log_text_view_to_register"><u>ZAREJESTRUJ SIĘ!</u></string>

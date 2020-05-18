@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout  xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
 
     <data>
         <variable
@@ -10,7 +10,6 @@
     </data>
 
     <LinearLayout
-
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:animationCache="false"
@@ -19,7 +18,7 @@
         android:orientation="vertical">
 
         <ImageView
-            android:id="@+id/imageView3"
+            android:id="@+id/imageView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
@@ -27,125 +26,89 @@
             app:srcCompat="@drawable/korona_zakupy_title2" />
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/user_name_text_input_layout"
+            android:id="@+id/first_name_text_input_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
             android:layout_marginLeft="40dp"
             android:layout_marginTop="5dp"
             android:layout_marginRight="40dp"
             android:layout_marginBottom="5dp"
-            android:gravity="center"
             android:textColorHint="@color/primaryTextColor"
             app:errorTextColor="#F44336"
             app:errorEnabled="true"
             app:hintEnabled="true"
-            app:errorText="@{registerViewModel.userNameInputTextLayoutViewModel.errorContent}">
+            app:errorText="@{registerViewModel.firstNameInputLayoutViewModel.errorContent}">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/user_name_edit_text"
+                android:id="@+id/first_name_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/reg_hint_username"
+                android:hint="@string/reg_hint_first_name"
                 android:inputType="textPersonName"
-                android:text="@={registerViewModel.userNameInputTextLayoutViewModel.textContent}"
+                android:text="@={registerViewModel.firstNameInputLayoutViewModel.textContent}"
                 android:textColor="@color/primaryTextColor" />
-
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/email_text_input_layout"
+            android:id="@+id/last_name_text_input_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="40dp"
             android:layout_marginTop="5dp"
             android:layout_marginRight="40dp"
             android:layout_marginBottom="5dp"
-            android:gravity="center"
             android:textColorHint="@color/primaryTextColor"
-            app:errorEnabled="true"
             app:errorTextColor="#F44336"
+            app:errorEnabled="true"
             app:hintEnabled="true"
-            app:errorText="@{registerViewModel.emailInputTextLayoutViewModel.errorContent}">
+            app:errorText="@{registerViewModel.lastNameInputLayoutViewModel.errorContent}">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/email_edit_text"
+                android:id="@+id/last_name_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/reg_hint_email"
-                android:inputType="textWebEmailAddress"
-                android:text="@={registerViewModel.emailInputTextLayoutViewModel.textContent}"
+                android:hint="@string/reg_hint_last_name"
+                android:inputType="textPersonName"
+                android:text="@={registerViewModel.lastNameInputLayoutViewModel.textContent}"
                 android:textColor="@color/primaryTextColor" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/password_input_text_layout"
+            android:id="@+id/address_text_input_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="40dp"
             android:layout_marginTop="5dp"
             android:layout_marginRight="40dp"
             android:layout_marginBottom="5dp"
-            android:gravity="center"
             android:textColorHint="@color/primaryTextColor"
-            app:errorEnabled="true"
             app:errorTextColor="#F44336"
+            app:errorEnabled="true"
             app:hintEnabled="true"
-            app:errorText="@{registerViewModel.passwordInputTextLayoutViewModel.errorContent}">
+            app:errorText="@{registerViewModel.addressInputTextLayoutViewModel.errorContent}">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/password_edit_text"
+                android:id="@+id/address_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/reg_hint_password"
-                android:inputType="textPassword"
-                android:text="@={registerViewModel.passwordInputTextLayoutViewModel.textContent}"
+                android:hint="@string/reg_hint_address"
+                android:inputType="textPersonName"
+                android:text="@={registerViewModel.addressInputTextLayoutViewModel.textContent}"
                 android:textColor="@color/primaryTextColor" />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/confirm_password_text_input_layout"
-            android:layout_width="match_parent"
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="40dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginRight="40dp"
-            android:layout_marginBottom="5dp"
-            android:gravity="center"
-            android:textColorHint="@color/primaryTextColor"
-            app:errorEnabled="true"
-            app:errorTextColor="#F44336"
-            app:hintEnabled="true"
-            app:errorText="@{registerViewModel.confirmPasswordInputTextLayoutViewModel.errorContent}">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/confirm_password_edit_text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/reg_hint_confirmPassword"
-                android:inputType="textPassword"
-                android:text="@={registerViewModel.confirmPasswordInputTextLayoutViewModel.textContent}"
-                android:textColor="@color/primaryTextColor" />
-        </com.google.android.material.textfield.TextInputLayout>
+            android:layout_marginTop="30dp"
+            android:background="@color/primaryDarkColor"
+            android:text="@string/reg_btn_text_add_photo"
+            android:textColor="@color/primaryTextColor" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/fab_reg1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="30dp"
-                android:layout_marginEnd="42dp"
-                android:layout_marginBottom="42dp"
-                android:clickable="true"
-                android:contextClickable="true"
-                android:focusable="true"
-                android:rotation="180"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:srcCompat="@drawable/abc_vector_test" />
 
             <LinearLayout
                 android:id="@+id/linear_layout_to_login"
@@ -156,7 +119,7 @@
                 android:layout_marginBottom="42dp"
                 android:orientation="horizontal"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/fab_reg1"
+                app:layout_constraintEnd_toStartOf="@+id/floatingActionButton"
                 app:layout_constraintStart_toStartOf="parent">
 
                 <TextView
@@ -179,6 +142,18 @@
                     android:textColor="@color/primaryTextColor"
                     android:textStyle="bold" />
             </LinearLayout>
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/floatingActionButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="40dp"
+                android:layout_marginBottom="40dp"
+                android:clickable="true"
+                android:focusable="true"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:srcCompat="@drawable/tick_white" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </LinearLayout>

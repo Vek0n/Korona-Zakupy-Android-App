@@ -21,6 +21,10 @@
     <string name="reg_error_email_is_already_taken">Email is already taken</string>
     <string name="reg_text_view_ask_have_account">Already have an account?</string>
     <string name="reg_text_view_to_login"><u>SIGN IN!</u></string>
+    <string name="reg_choose_vol">Volunteer</string>
+    <string name="reg_choose_person">Person in Quarantine</string>
+    <string name="global_person_in_quarantine_role" translatable="false">PersonInQuarantine</string>
+    <string name="global_volunteer_role" translatable="false">Volunteer</string>
     <!--LoginActivity-->
     <string name="log_text_view_to_ask_have_account">Don\'t have an account?</string>
     <string name="log_text_view_to_register"><u>REGISTER NOW!</u></string>

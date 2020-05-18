@@ -15,6 +15,7 @@ class RegisterViewModel () : ViewModel() {
     lateinit var userRegisterResponseDto: RegisterResponseDto
     lateinit var isUserNameAlreadyTaken: String
     lateinit var isEmailAlreadyTaken: String
+    lateinit var roleName: String
     val userNameInputTextLayoutViewModel: InputTextLayoutViewModel = PlainTextInputTextLayoutViewModel()
     val emailInputTextLayoutViewModel: InputTextLayoutViewModel = PlainTextInputTextLayoutViewModel()
     val passwordInputTextLayoutViewModel: InputTextLayoutViewModel = PasswordTextInputLayoutViewModel()
@@ -33,7 +34,7 @@ class RegisterViewModel () : ViewModel() {
                     firstName = firstNameInputLayoutViewModel.textContent.value ?: "",
                     lastName = lastNameInputLayoutViewModel.textContent.value ?: "",
                     address = addressInputTextLayoutViewModel.textContent.value ?: "",
-                    roleName = "Volunteer"
+                    roleName = roleName
                 )
             )!!
     }

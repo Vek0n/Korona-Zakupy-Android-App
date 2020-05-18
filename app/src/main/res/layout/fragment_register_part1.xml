@@ -9,177 +9,32 @@
             type="com.maskjs.korona_zakupy.viewmodels.register.RegisterViewModel" />
     </data>
 
-    <LinearLayout
-
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:animationCache="false"
-        android:background="@drawable/gradient"
-        android:gravity="center_horizontal"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-        <ImageView
-            android:id="@+id/imageView3"
-            android:layout_width="match_parent"
+        <Button
+            android:id="@+id/button_volunteer"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
-            app:srcCompat="@drawable/korona_zakupy_title2" />
+            android:layout_marginTop="20dp"
+            android:text="@string/reg_choose_vol"
+            app:layout_constraintBottom_toTopOf="@+id/button_person_in_quarantine"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.314" />
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/user_name_text_input_layout"
-            android:layout_width="match_parent"
+        <Button
+            android:id="@+id/button_person_in_quarantine"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginLeft="40dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginRight="40dp"
-            android:layout_marginBottom="5dp"
-            android:gravity="center"
-            android:textColorHint="@color/primaryTextColor"
-            app:errorTextColor="#F44336"
-            app:errorEnabled="true"
-            app:hintEnabled="true"
-            app:errorText="@{registerViewModel.userNameInputTextLayoutViewModel.errorContent}">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/user_name_edit_text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/reg_hint_username"
-                android:inputType="textPersonName"
-                android:text="@={registerViewModel.userNameInputTextLayoutViewModel.textContent}"
-                android:textColor="@color/primaryTextColor" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/email_text_input_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="40dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginRight="40dp"
-            android:layout_marginBottom="5dp"
-            android:gravity="center"
-            android:textColorHint="@color/primaryTextColor"
-            app:errorEnabled="true"
-            app:errorTextColor="#F44336"
-            app:hintEnabled="true"
-            app:errorText="@{registerViewModel.emailInputTextLayoutViewModel.errorContent}">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/email_edit_text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/reg_hint_email"
-                android:inputType="textWebEmailAddress"
-                android:text="@={registerViewModel.emailInputTextLayoutViewModel.textContent}"
-                android:textColor="@color/primaryTextColor" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/password_input_text_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="40dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginRight="40dp"
-            android:layout_marginBottom="5dp"
-            android:gravity="center"
-            android:textColorHint="@color/primaryTextColor"
-            app:errorEnabled="true"
-            app:errorTextColor="#F44336"
-            app:hintEnabled="true"
-            app:errorText="@{registerViewModel.passwordInputTextLayoutViewModel.errorContent}">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/password_edit_text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/reg_hint_password"
-                android:inputType="textPassword"
-                android:text="@={registerViewModel.passwordInputTextLayoutViewModel.textContent}"
-                android:textColor="@color/primaryTextColor" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/confirm_password_text_input_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="40dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginRight="40dp"
-            android:layout_marginBottom="5dp"
-            android:gravity="center"
-            android:textColorHint="@color/primaryTextColor"
-            app:errorEnabled="true"
-            app:errorTextColor="#F44336"
-            app:hintEnabled="true"
-            app:errorText="@{registerViewModel.confirmPasswordInputTextLayoutViewModel.errorContent}">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/confirm_password_edit_text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/reg_hint_confirmPassword"
-                android:inputType="textPassword"
-                android:text="@={registerViewModel.confirmPasswordInputTextLayoutViewModel.textContent}"
-                android:textColor="@color/primaryTextColor" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/fab_reg1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="30dp"
-                android:layout_marginEnd="42dp"
-                android:layout_marginBottom="42dp"
-                android:clickable="true"
-                android:contextClickable="true"
-                android:focusable="true"
-                android:rotation="180"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:srcCompat="@drawable/abc_vector_test" />
-
-            <LinearLayout
-                android:id="@+id/linear_layout_to_login"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="56dp"
-                android:layout_marginEnd="42dp"
-                android:layout_marginBottom="42dp"
-                android:orientation="horizontal"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/fab_reg1"
-                app:layout_constraintStart_toStartOf="parent">
-
-                <TextView
-                    android:id="@+id/text_view_ask_have_account"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="5dp"
-                    android:layout_weight="1"
-                    android:text="@string/reg_text_view_ask_have_account"
-                    android:textColor="@color/primaryTextColor" />
-
-                <TextView
-                    android:id="@+id/text_view_to_login"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:layout_weight="1"
-                    android:clickable="true"
-                    android:text="@string/reg_text_view_to_login"
-                    android:textColor="@color/primaryTextColor"
-                    android:textStyle="bold" />
-            </LinearLayout>
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </LinearLayout>
+            android:layout_marginTop="100dp"
+            android:text="@string/reg_choose_person"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.467"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/button_volunteer" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
