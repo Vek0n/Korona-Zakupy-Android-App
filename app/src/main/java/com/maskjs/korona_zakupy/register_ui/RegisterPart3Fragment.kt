@@ -15,15 +15,15 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import com.maskjs.korona_zakupy.R
+import com.maskjs.korona_zakupy.RegisterNavigation
 import com.maskjs.korona_zakupy.VolunteerActivity
-import com.maskjs.korona_zakupy.databinding.FragmentRegisterPart2Binding
 import com.maskjs.korona_zakupy.databinding.FragmentRegisterPart3Binding
 import com.maskjs.korona_zakupy.viewmodels.register.RegisterViewModel
 import kotlinx.coroutines.*
 
 class RegisterPart3Fragment : Fragment() {
 
-    private var onBackListener: OnReg2BackButtonPressed? = null
+    private var registerNavigation: RegisterNavigation? = null
     private val registerViewModel: RegisterViewModel by activityViewModels()
     private lateinit var uiDataBinding: FragmentRegisterPart3Binding
     private lateinit var sharedPreferences: SharedPreferences
@@ -32,22 +32,17 @@ class RegisterPart3Fragment : Fragment() {
     override fun onAttach(context: Context) {
         super.onAttach(context)
 
-        onBackListener = (context as? OnReg2BackButtonPressed)
+        registerNavigation = (context as? RegisterNavigation)
 
-        if(onBackListener == null)
+        if(registerNavigation == null)
             throw ClassCastException("Error!")
-    }
-
-    interface OnReg2BackButtonPressed{
-        fun  goToReg2Fragment()
-        fun  goToLoginActivity()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         val callback = requireActivity().onBackPressedDispatcher.addCallback(this) {
-            onBackListener?.goToReg2Fragment()
+            registerNavigation?.goToReg2Fragment()
         }
     }
 
@@ -94,13 +89,13 @@ class RegisterPart3Fragment : Fragment() {
     private fun observeAddress(){
         registerViewModel.addressInputTextLayoutViewModel.textContent.observe(viewLifecycleOwner,
             Observer {
-                registerViewModel.validateAdress(errorMessages)
+                registerViewModel.validateAddress(errorMessages)
             })
     }
 
     private  fun setUiListener(){
         uiDataBinding.textViewToLogin.setOnClickListener {
-            onBackListener?.goToLoginActivity()
+            registerNavigation?.goToLoginActivity()
         }
 
         uiDataBinding.floatingActionButton.setOnClickListener {
@@ -123,9 +118,9 @@ class RegisterPart3Fragment : Fragment() {
         }
     }
 
-    private suspend fun handleRegisterResponse(){
+    private fun handleRegisterResponse(){
         saveResponse()
-        goToUserActivity()
+        registerNavigation?.goToUserActivity()
     }
 
     private  fun saveResponse(){
@@ -134,17 +129,6 @@ class RegisterPart3Fragment : Fragment() {
             putString(R.string.user_id_key.toString(), registerViewModel.userRegisterResponseDto.userId)
             putString(R.string.user_token_key.toString(),registerViewModel.userRegisterResponseDto.token)
             commit()
-        }
-    }
-
-    private  fun goToUserActivity(){
-        val intent = Intent(activity, VolunteerActivity::class.java)
-        activity?.startActivity(intent)
-    }
-
-    companion object{
-        fun newInstance(): RegisterPart3Fragment {
-            return RegisterPart3Fragment()
         }
     }
 }

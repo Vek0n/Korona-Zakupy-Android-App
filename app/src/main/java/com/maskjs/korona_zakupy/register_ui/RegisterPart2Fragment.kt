@@ -5,17 +5,19 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.addCallback
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import com.maskjs.korona_zakupy.R
+import com.maskjs.korona_zakupy.RegisterNavigation
 import com.maskjs.korona_zakupy.databinding.FragmentRegisterPart2Binding
 import com.maskjs.korona_zakupy.viewmodels.register.RegisterViewModel
 
 class RegisterPart2Fragment : Fragment() {
 
-    private var onFabListener: OnReg1FabButtonClickedListener? = null
+    private var registerNavigation: RegisterNavigation? = null
     private val registerViewModel: RegisterViewModel by activityViewModels()
     private lateinit var uiDataBinding: FragmentRegisterPart2Binding
     private lateinit var errorsText: Map<String,String>
@@ -23,12 +25,18 @@ class RegisterPart2Fragment : Fragment() {
     override fun onAttach(context: Context) {
         super.onAttach(context)
 
-        onFabListener = context as? OnReg1FabButtonClickedListener
+        registerNavigation = context as? RegisterNavigation
 
-        if(onFabListener == null)
+        if(registerNavigation == null)
             throw ClassCastException("Error!")
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        val callback = requireActivity().onBackPressedDispatcher.addCallback(this) {
+            registerNavigation?.goToReg1Fragment()
+        }
+    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -89,7 +97,7 @@ class RegisterPart2Fragment : Fragment() {
 
     private  fun setUiListener(){
         uiDataBinding.textViewToLogin.setOnClickListener {
-            onFabListener?.goToLoginActivity()
+            registerNavigation?.goToLoginActivity()
         }
 
         uiDataBinding.fabReg1.setOnClickListener {
@@ -98,17 +106,7 @@ class RegisterPart2Fragment : Fragment() {
     }
     private fun checkValidation(){
         if(registerViewModel.checkValidationForPartOne(errorsText))
-            onFabListener?.goToReg3Fragment()
-    }
-    interface OnReg1FabButtonClickedListener{
-        fun goToReg3Fragment()
-        fun goToLoginActivity()
-    }
-
-    companion object{
-        fun newInstance(): RegisterPart2Fragment {
-            return RegisterPart2Fragment()
-        }
+            registerNavigation?.goToReg3Fragment()
     }
 
 }

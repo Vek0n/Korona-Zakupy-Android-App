@@ -48,13 +48,24 @@ class RegisterViewModel () : ViewModel() {
        }
     }
 
+    private suspend fun checkIsUserNameAlreadyTaken() {
+        delay(1500)
+        isUserNameAlreadyTaken = userRepository.getValidation("name",userNameInputTextLayoutViewModel.textContent.value?:"userDefault")
+    }
+
+
     fun validateEmail(errorMessages: Map<String, String>){
         CoroutineScope(Dispatchers.IO).launch {
-            checkIsUserNameAlreadyTaken()
+            checkIsEmailNameAlreadyTaken()
             withContext(Dispatchers.Main) {
-              userNameInputTextLayoutViewModel.validate(errorMessages,isUserNameAlreadyTaken)
+              emailInputTextLayoutViewModel.validate(errorMessages,isEmailAlreadyTaken)
             }
         }
+    }
+
+    private suspend fun checkIsEmailNameAlreadyTaken() {
+        delay(1500)
+        isEmailAlreadyTaken = userRepository.getValidation("email",emailInputTextLayoutViewModel.textContent.value?:"emailDefault")
     }
 
     fun validatePassword(errorMessages: Map<String, String>){
@@ -73,7 +84,7 @@ class RegisterViewModel () : ViewModel() {
         lastNameInputLayoutViewModel.validate(errorMessages)
     }
 
-    fun validateAdress(errorMessages: Map<String, String>){
+    fun validateAddress(errorMessages: Map<String, String>){
         addressInputTextLayoutViewModel.validate(errorMessages)
     }
 
@@ -118,15 +129,4 @@ class RegisterViewModel () : ViewModel() {
 
         return true
     }
-
-    suspend fun checkIsUserNameAlreadyTaken() {
-        delay(1500)
-        isUserNameAlreadyTaken = userRepository.getValidation("name",userNameInputTextLayoutViewModel.textContent.value?:"userDefault")
-    }
-
-    suspend fun checkIsEmailAlreadyTaken() {
-        delay(1500)
-        isEmailAlreadyTaken = userRepository.getValidation("email",emailInputTextLayoutViewModel.textContent.value?:"emailDefault")
-    }
-
 }

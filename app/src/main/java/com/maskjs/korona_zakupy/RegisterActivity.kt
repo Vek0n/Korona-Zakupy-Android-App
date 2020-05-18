@@ -11,13 +11,12 @@ import com.maskjs.korona_zakupy.viewmodels.register.RegisterViewModel
 
 import kotlinx.android.synthetic.main.activity_register_part.*
 
-class RegisterActivity : AppCompatActivity(),RegisterPart1Fragment.OnButtonChooseRoleListener, RegisterPart2Fragment.OnReg1FabButtonClickedListener,
-RegisterPart3Fragment.OnReg2BackButtonPressed{
+class RegisterActivity : AppCompatActivity(),RegisterNavigation{
 
     private val fragmentManager = supportFragmentManager
     private val regFragment1 = RegisterPart1Fragment()
-    private val regFragment2 = RegisterPart2Fragment.newInstance()
-    private val regFragment3 = RegisterPart3Fragment.newInstance()
+    private val regFragment2 = RegisterPart2Fragment()
+    private val regFragment3 = RegisterPart3Fragment()
 
     val registerViewModel: RegisterViewModel by viewModels()
 
@@ -29,18 +28,16 @@ RegisterPart3Fragment.OnReg2BackButtonPressed{
         goToReg1Fragment()
     }
 
-    fun goToReg1Fragment(){
+     override fun goToReg1Fragment(){
         val fragmentTransaction = fragmentManager.beginTransaction()
         fragmentTransaction.replace(R.id.reg_fragments, regFragment1)
         fragmentTransaction.commit()
     }
 
-     override fun goToReg2Fragment(){
+    override fun goToReg2Fragment(){
         val fragmentTransaction = fragmentManager.beginTransaction()
         fragmentTransaction.replace(R.id.reg_fragments, regFragment2)
         fragmentTransaction.commit()
-
-
     }
 
      override fun goToReg3Fragment(){
@@ -53,4 +50,23 @@ RegisterPart3Fragment.OnReg2BackButtonPressed{
         val intent = Intent(this,LoginActivity::class.java)
         startActivity(intent)
     }
+
+    override fun goToUserActivity() {
+        if(registerViewModel.roleName == getString(R.string.global_volunteer_role)) {
+            val intent = Intent(this, VolunteerActivity::class.java)
+            this.startActivity(intent)
+        }
+        if(registerViewModel.roleName == getString(R.string.global_person_in_quarantine_role)){
+            val intent = Intent(this, PersonInQuarantineActivity::class.java)
+            this.startActivity(intent)
+        }
+    }
+}
+
+interface RegisterNavigation{
+    fun goToReg1Fragment()
+    fun goToReg2Fragment()
+    fun goToReg3Fragment()
+    fun goToLoginActivity()
+    fun goToUserActivity()
 }
