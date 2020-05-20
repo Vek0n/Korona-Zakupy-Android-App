@@ -22,10 +22,7 @@ import com.maskjs.korona_zakupy.helpers.LoadingSpinner
 import com.maskjs.korona_zakupy.helpers.QuarantineOrdersListAdapter
 import com.maskjs.korona_zakupy.viewmodels.quarantine.ActiveOrdersViewModel
 import kotlinx.android.synthetic.main.quarantine_active_order_details_popup.view.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 
 class ActiveOrdersFragment : Fragment() {
 
@@ -59,10 +56,15 @@ class ActiveOrdersFragment : Fragment() {
 
         CoroutineScope(Dispatchers.IO).launch {
             LoadingSpinner().showLoadingDialog(progressBar)
-
-            val data = activeOrdersViewModel.getActiveOrdersFromRepository(userId)
-            setListViewAdapterOnMainThread(data, context)
-
+            supervisorScope {
+                try {
+                    val data = activeOrdersViewModel.getActiveOrdersFromRepository(userId)
+                    setListViewAdapterOnMainThread(data, context)
+                }catch (ex: Exception){
+                    val data = arrayListOf<GetOrderDto>()
+                    setListViewAdapterOnMainThread(data, context)
+                }
+            }
             LoadingSpinner().hideLoadingDialog(progressBar)
         }
 

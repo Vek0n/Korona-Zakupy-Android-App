@@ -8,6 +8,7 @@ import android.preference.PreferenceManager
 import android.view.*
 import android.widget.*
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.ViewModelProviders
 import com.maskjs.korona_zakupy.R
 import com.maskjs.korona_zakupy.data.orders.GetOrderDto
@@ -15,12 +16,10 @@ import com.maskjs.korona_zakupy.helpers.LoadingSpinner
 import com.maskjs.korona_zakupy.viewmodels.volunteer.ActiveOrdersViewModel
 import com.maskjs.korona_zakupy.helpers.VolunteerOrdersListAdapter
 import kotlinx.android.synthetic.main.active_order_details_popup.view.*
-import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.*
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-
+import kotlin.Exception
 
 class ActiveOrdersFragment : Fragment() {
 
@@ -28,7 +27,6 @@ class ActiveOrdersFragment : Fragment() {
     private  lateinit var listView: ListView
     private lateinit var progressBar: ProgressBar
     private lateinit var adapterOrders: VolunteerOrdersListAdapter
-    val fragment: String = "Volunteer"
 
 
     override fun onCreateView(
@@ -51,12 +49,22 @@ class ActiveOrdersFragment : Fragment() {
 
         CoroutineScope(IO).launch {
             LoadingSpinner().showLoadingDialog(progressBar)
-
-            val data = activeOrdersViewModel.getActiveOrdersFromRepository(userId)
-            setListViewAdapterOnMainThread(data, context)
-
+            supervisorScope {
+                try {
+                    val data = activeOrdersViewModel.getActiveOrdersFromRepository(userId)
+                    setListViewAdapterOnMainThread(data, context)
+                }catch (ex: Exception){
+                    val data = arrayListOf<GetOrderDto>()
+                    setListViewAdapterOnMainThread(data, context)
+                }
+            }
             LoadingSpinner().hideLoadingDialog(progressBar)
         }
+//        }catch (ex: Exception){
+//            val data = arrayListOf<GetOrderDto>()
+//            adapterOrders = VolunteerOrdersListAdapter(context, data)
+//            listView.adapter = adapterOrders
+//        }
 
         listView.setOnItemClickListener { _, _, position, _ ->
             showActiveOrderDetailDialog(position, userId)
@@ -126,7 +134,7 @@ class ActiveOrdersFragment : Fragment() {
     }
 
     private fun refreshFragment(){
-        val f : androidx.fragment.app.FragmentTransaction? = this.fragmentManager?.beginTransaction()
+        val f : FragmentTransaction? = this.fragmentManager?.beginTransaction()
         f?.detach(this)
         f?.attach(this)
         f?.commit()

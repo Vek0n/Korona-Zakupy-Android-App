@@ -18,10 +18,8 @@ import com.maskjs.korona_zakupy.viewmodels.volunteer.AvailableOrdersViewModel
 import com.maskjs.korona_zakupy.helpers.VolunteerOrdersListAdapter
 import kotlinx.android.synthetic.main.available_order_details_popup.view.*
 import kotlinx.android.synthetic.main.available_order_details_popup.view.cancel_button
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
+import kotlin.Exception
 
 class AvailableOrdersFragment : Fragment() {
 
@@ -50,10 +48,15 @@ class AvailableOrdersFragment : Fragment() {
 
         CoroutineScope(Dispatchers.IO).launch {
             LoadingSpinner().showLoadingDialog(progressBar)
-
-            val data = availableOrdersViewModel.getAvailableOrdersFromRepository()
-            setListViewAdapterOnMainThread(context, data)
-
+            supervisorScope {
+                try{
+                    val data = availableOrdersViewModel.getAvailableOrdersFromRepository()
+                    setListViewAdapterOnMainThread(context, data)
+                }catch (ex: Exception){
+                    val data = arrayListOf<GetOrderDto>()
+                    setListViewAdapterOnMainThread(context, data)
+                }
+            }
             LoadingSpinner().hideLoadingDialog(progressBar)
         }
 
