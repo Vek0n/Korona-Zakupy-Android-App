@@ -27,7 +27,6 @@ class AvailableOrdersFragment : Fragment() {
     private lateinit var listView: ListView
     private lateinit var progressBar: ProgressBar
     private lateinit var adapterOrders: VolunteerOrdersListAdapter
-    val fragment: String = "Volunteer"
 
     override fun onCreateView(
         inflater: LayoutInflater,

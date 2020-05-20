@@ -30,7 +30,6 @@ class ActiveOrdersFragment : Fragment() {
     private lateinit var listView: ListView
     private lateinit var progressBar: ProgressBar
     private lateinit var adapterQuarantineOrders: QuarantineOrdersListAdapter
-    val fragment: String = "PersonInQuarantine"
 
     override fun onCreateView(
         inflater: LayoutInflater,
