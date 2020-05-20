@@ -22,7 +22,7 @@ class UserDao(private val client: OkHttpClient): IDataAccessObject {
             = APIGetRequest("http://korona-zakupy.hostingasp.pl/api/user/exist/$resource/$name",client)
 
 
-    suspend fun rateUser(userId: String, rating: Float)
-            = APIPostRequest("", "http://korona-zakupy.hostingasp.pl/api/user/rate/$userId/$rating", client)
+    suspend fun rateUser(userId: String, rating: Double, token: String)
+            = APIPostRequestAuth("", "http://korona-zakupy.hostingasp.pl/api/user/rate/$userId/$rating",token , client)
 
 }

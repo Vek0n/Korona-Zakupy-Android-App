@@ -4,41 +4,41 @@ import com.maskjs.korona_zakupy.data.interfaces.IRepository
 
 class OrderRepository<T: Any>(private val orderDao: OrderDao): IRepository<T>{
 
-    suspend fun getActiveOrders(): ArrayList<T>
+    suspend fun getActiveOrders(token: String): ArrayList<T>
             = parseJsonToObject(
-            orderDao.getActiveOrders())
+            orderDao.getActiveOrders(token))
 
 
-    suspend fun getAllActiveOrdersOfUser(userId:String): ArrayList<T>
+    suspend fun getAllActiveOrdersOfUser(userId:String, token: String): ArrayList<T>
             = parseJsonToObject(
-            orderDao.getAllActiveOrdersOfUser(userId))
+            orderDao.getAllActiveOrdersOfUser(userId, token))
 
 
-    suspend fun getAllOrdersOfUser(userId: String): ArrayList<T>
-            = parseJsonToObject(orderDao.getAllOrdersOfUser(userId))
+    suspend fun getAllOrdersOfUser(userId: String, token: String): ArrayList<T>
+            = parseJsonToObject(orderDao.getAllOrdersOfUser(userId, token))
 
 
-    suspend fun placeOrder(orderDto: T): String
-            = orderDao.placeOrder(parseObjectToJson(orderDto))
+    suspend fun placeOrder(orderDto: T, token: String): String
+            = orderDao.placeOrder(parseObjectToJson(orderDto), token)
 
 
-    suspend fun acceptOrder(userId: String, orderId: Long): String
-            = orderDao.acceptOrder(orderId, userId)
+    suspend fun acceptOrder(userId: String, orderId: Long, token: String): String
+            = orderDao.acceptOrder(orderId, userId, token)
 
 
-    suspend fun unAcceptOrder(userId: String, orderId: Long): String
-            = orderDao.unAcceptOrder(orderId, userId)
+    suspend fun unAcceptOrder(userId: String, orderId: Long, token: String): String
+            = orderDao.unAcceptOrder(orderId, userId, token)
 
 
-    suspend fun confirmOrder(userId: String, orderId: Long): String
-            = orderDao.confirmOrder(orderId, userId)
+    suspend fun confirmOrder(userId: String, orderId: Long, token: String): String
+            = orderDao.confirmOrder(orderId, userId, token)
 
 
-    suspend fun cancelConfirmOrder(userId: String, orderId: Long): String
-            = orderDao.cancelConfirmOrder(orderId, userId)
+    suspend fun cancelConfirmOrder(userId: String, orderId: Long, token: String): String
+            = orderDao.cancelConfirmOrder(orderId, userId, token)
 
 
-    suspend fun checkConfirmation(orderId: Long): Boolean
-            = orderDao.checkConfirmation(orderId)
+    suspend fun checkConfirmation(orderId: Long,token: String): Boolean
+            = orderDao.checkConfirmation(orderId, token)
                 .toBoolean()
 }

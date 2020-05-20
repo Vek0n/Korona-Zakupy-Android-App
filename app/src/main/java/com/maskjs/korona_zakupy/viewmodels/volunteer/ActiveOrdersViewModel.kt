@@ -12,9 +12,9 @@ import okhttp3.OkHttpClient
 
 class ActiveOrdersViewModel : ViewModel() {
 
-    suspend fun getActiveOrdersFromRepository(userId: String): ArrayList<GetOrderDto>{
+    suspend fun getActiveOrdersFromRepository(userId: String, token: String): ArrayList<GetOrderDto>{
         val allOrders = OrderRepository<GetOrderDto>(OrderDao(OkHttpClient()))
-            .getAllOrdersOfUser(userId)
+            .getAllOrdersOfUser(userId, token)
         val activeOrders = arrayListOf<LinkedTreeMap<*, *>>()
 
         for (i in 0 until allOrders.size){
@@ -25,14 +25,14 @@ class ActiveOrdersViewModel : ViewModel() {
         return activeOrders as ArrayList<GetOrderDto>
     }
 
-    suspend fun unAcceptOrder(userId: String, orderId: Long): String{
+    suspend fun unAcceptOrder(userId: String, orderId: Long, token: String): String{
         return OrderRepository<Any>(OrderDao(OkHttpClient()))
-            .unAcceptOrder(userId, orderId)
+            .unAcceptOrder(userId, orderId, token)
     }
 
-    suspend fun completeOrder(userId: String, orderId: Long): String{
+    suspend fun completeOrder(userId: String, orderId: Long, token: String): String{
         return OrderRepository<Any>(OrderDao(OkHttpClient()))
-            .confirmOrder(userId, orderId)
+            .confirmOrder(userId, orderId, token)
     }
 
 }

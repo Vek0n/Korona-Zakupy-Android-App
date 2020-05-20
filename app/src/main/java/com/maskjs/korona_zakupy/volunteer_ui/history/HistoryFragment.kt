@@ -42,8 +42,8 @@ class HistoryFragment : Fragment() {
 
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
 //        val userId = sharedPreferences.getString(R.string.user_id_key.toString(),"")
-        val userId = "85b68f59-02ff-456b-b502-cf9830f10b1f"
-
+        val userId = "17d4fb4e-d252-4154-9d44-88693b07e99e"
+        val token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ0ZXN0MTEyMUB0ZXN0LmNvbSIsImp0aSI6IjVjMWU1NGM3LTVjZGUtNGUzZS1hMWIwLTM3MDEyMzU4M2U2ZSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWVpZGVudGlmaWVyIjoiMTdkNGZiNGUtZDI1Mi00MTU0LTlkNDQtODg2OTNiMDdlOTllIiwiZXhwIjoxNjIxMDk2MTQ5LCJpc3MiOiJodHRwOi8veW91cmRvbWFpbi5jb20iLCJhdWQiOiJodHRwOi8veW91cmRvbWFpbi5jb20ifQ.s_KyGQ0PuxBs0Z_WiBBPYGtCAigBRW4JF6Tl9lBFyws"
         listView = root.findViewById(R.id.listViewHistory) as ListView
         progressBar = root.findViewById(R.id.pBar) as ProgressBar
 
@@ -51,7 +51,7 @@ class HistoryFragment : Fragment() {
             LoadingSpinner().showLoadingDialog(progressBar)
             supervisorScope {
                 try {
-                    val data = historyViewModel.getHistoryOrdersFromRepository(userId)
+                    val data = historyViewModel.getHistoryOrdersFromRepository(userId, token)
                     setListViewAdapterOnMainThread(context, data)
                 }catch (ex: Exception){
                     val data = arrayListOf<GetOrderDto>()
@@ -62,7 +62,7 @@ class HistoryFragment : Fragment() {
         }
 
         listView.setOnItemClickListener { _, _, position, _ ->
-            showHistoryOrderDetailDialog(position)
+            showHistoryOrderDetailDialog(position, token)
         }
         return root
     }
@@ -80,7 +80,7 @@ class HistoryFragment : Fragment() {
 
 
     @SuppressLint("InflateParams")
-    private fun showReviewDialog(position: Int){
+    private fun showReviewDialog(position: Int, token: String){
         val dialogView = LayoutInflater.from(context).inflate(R.layout.rating_popup, null)
         val builder = AlertDialog.Builder(context)
             .setView(dialogView)
@@ -103,7 +103,7 @@ class HistoryFragment : Fragment() {
 
         dialogView.sendReviewButton.setOnClickListener {
             CoroutineScope(Dispatchers.IO).launch {
-//                historyViewModel.sendReview(userId, ratingFloat)
+                historyViewModel.sendReview(userId, ratingFloat.toDouble(), token)
             }
             if(ratingFloat == 0.0f)
                 Toast.makeText(dialogView.context,getString(R.string.please_review), Toast.LENGTH_SHORT).show()
@@ -114,7 +114,7 @@ class HistoryFragment : Fragment() {
 
 
     @SuppressLint("InflateParams")
-    private fun showHistoryOrderDetailDialog(position: Int){
+    private fun showHistoryOrderDetailDialog(position: Int, token: String){
         val dialogView = LayoutInflater.from(context).inflate(R.layout.history_order_details_popup_volunteer, null)
         val builder = AlertDialog.Builder(context)
             .setView(dialogView)
@@ -145,7 +145,7 @@ class HistoryFragment : Fragment() {
         }
 
         dialogView.dismiss_button.setOnClickListener {
-            showReviewDialog(position)
+            showReviewDialog(position, token)
             alertDialog.dismiss()
         }
     }

@@ -13,9 +13,9 @@ import okhttp3.OkHttpClient
 
 class HistoryViewModel : ViewModel() {
 
-    suspend fun getHistoryOrdersFromRepository(userId: String): ArrayList<GetOrderDto>{
+    suspend fun getHistoryOrdersFromRepository(userId: String, token: String): ArrayList<GetOrderDto>{
         val allOrders = OrderRepository<GetOrderDto>(OrderDao(OkHttpClient()))
-            .getAllOrdersOfUser(userId)
+            .getAllOrdersOfUser(userId, token)
 
         val historyOrders = arrayListOf<LinkedTreeMap<*, *>>()
 
@@ -26,7 +26,7 @@ class HistoryViewModel : ViewModel() {
         return historyOrders as ArrayList<GetOrderDto>
     }
 
-    suspend fun sendReview(userId: String, rating: Float)
-        = UserRepository<Any>(UserDao(OkHttpClient())).rateUser(userId, rating)
+    suspend fun sendReview(userId: String, rating: Double, token: String)
+        = UserRepository<Any>(UserDao(OkHttpClient())).rateUser(userId, rating, token)
 
 }

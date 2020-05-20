@@ -29,6 +29,6 @@ class UserRepository<T: Any>(private  val userDao: UserDao): IRepository<T> {
             = userDao.getRole(userId, headerToken)
 
 
-    suspend fun rateUser(userId: String, rating: Float)
-            = userDao.rateUser(userId, rating)
+    suspend fun rateUser(userId: String, rating: Double, token: String)
+            = userDao.rateUser(userId, rating, token)
 }
