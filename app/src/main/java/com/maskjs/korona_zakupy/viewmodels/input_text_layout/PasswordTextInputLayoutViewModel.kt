@@ -1,4 +1,6 @@
-package com.maskjs.korona_zakupy.helpers
+package com.maskjs.korona_zakupy.viewmodels.input_text_layout
+
+import com.maskjs.korona_zakupy.viewmodels.input_text_layout.InputTextLayoutViewModel
 
 class PasswordTextInputLayoutViewModel : InputTextLayoutViewModel() {
     private val passwordPattern = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=?!])(?=\\S+$).{4,}$"

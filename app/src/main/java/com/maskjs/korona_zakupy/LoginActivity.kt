@@ -37,8 +37,7 @@ class LoginActivity : AppCompatActivity() {
     private fun initialize(){
         errorMessages = mapOf(
             Pair("emptyError",getString(R.string.global_empty_field_error)),
-            Pair("userNameIsAlreadyTaken",getString(R.string.reg_error_user_name_is_already_taken)),
-            Pair("emailNameIsAlreadyTaken",getString(R.string.reg_error_email_is_already_taken)),
+            Pair("userNameIsAlreadyTaken",getString(R.string.reg_error_is_already_taken)),
             Pair("errorRegexMessage",getString(R.string.reg_error_password_regex)),
             Pair("notMatchError",getString(R.string.reg_error_password_match))
         )
@@ -118,6 +117,7 @@ class LoginActivity : AppCompatActivity() {
         val editor= sharedPreferences.edit()
         editor.putString(R.string.user_id_key.toString(), loginViewModel.loginResponseDto.userId)
         editor.putString(getString(R.string.user_token_key),loginViewModel.loginResponseDto.token)
+        editor.putString(getString(R.string.user_role_key),loginViewModel.loginResponseDto.roleName)
         editor.commit()
     }
 

@@ -11,16 +11,18 @@ import android.view.ViewGroup
 import androidx.core.content.edit
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 
 import com.maskjs.korona_zakupy.R
 import com.maskjs.korona_zakupy.RegisterNavigation
 import com.maskjs.korona_zakupy.databinding.FragmentRegisterPart1Binding
+import com.maskjs.korona_zakupy.viewmodels.register.RegisterPartOneViewModel
 import com.maskjs.korona_zakupy.viewmodels.register.RegisterViewModel
 
 
 class RegisterPart1Fragment : Fragment() {
     private var registerNavigation: RegisterNavigation? = null
-    private val registerViewModel: RegisterViewModel by activityViewModels()
+    private val registerViewModel: RegisterPartOneViewModel by activityViewModels()
     private lateinit var uiDataBinding: FragmentRegisterPart1Binding
     private lateinit var sharedPreferences: SharedPreferences
 
@@ -66,6 +68,7 @@ class RegisterPart1Fragment : Fragment() {
     }
 
     private fun saveRoleName(roleName: String){
+        registerViewModel.save()
         sharedPreferences.edit(){
             putString(R.string.user_role_key.toString(), roleName)
             commit()

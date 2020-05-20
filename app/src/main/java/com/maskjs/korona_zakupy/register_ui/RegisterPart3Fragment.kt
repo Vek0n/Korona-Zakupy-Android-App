@@ -1,7 +1,6 @@
 package com.maskjs.korona_zakupy.register_ui
 
 import android.content.Context
-import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.preference.PreferenceManager
@@ -12,19 +11,18 @@ import android.view.ViewGroup
 import androidx.activity.addCallback
 import androidx.core.content.edit
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.maskjs.korona_zakupy.R
 import com.maskjs.korona_zakupy.RegisterNavigation
-import com.maskjs.korona_zakupy.VolunteerActivity
 import com.maskjs.korona_zakupy.databinding.FragmentRegisterPart3Binding
-import com.maskjs.korona_zakupy.viewmodels.register.RegisterViewModel
+import com.maskjs.korona_zakupy.viewmodels.register.RegisterPartThreeViewModel
 import kotlinx.coroutines.*
 
 class RegisterPart3Fragment : Fragment() {
 
     private var registerNavigation: RegisterNavigation? = null
-    private val registerViewModel: RegisterViewModel by activityViewModels()
+    private val registerViewModel: RegisterPartThreeViewModel by viewModels()
     private lateinit var uiDataBinding: FragmentRegisterPart3Binding
     private lateinit var sharedPreferences: SharedPreferences
     private lateinit var errorMessages: Map<String,String>
@@ -94,21 +92,25 @@ class RegisterPart3Fragment : Fragment() {
     }
 
     private  fun setUiListener(){
+        setOnToLoginActivityListener()
+        setOnFabListener()
+    }
+
+    private fun setOnToLoginActivityListener(){
         uiDataBinding.textViewToLogin.setOnClickListener {
             registerNavigation?.goToLoginActivity()
         }
-
+    }
+    private fun setOnFabListener(){
         uiDataBinding.floatingActionButton.setOnClickListener {
-            if(checkValidation()){
+            if(registerViewModel.checkValidation(errorMessages)){
+                registerViewModel.save()
+
                 CoroutineScope(Dispatchers.IO).launch {
                     register()
                 }
             }
         }
-    }
-
-    private fun checkValidation() : Boolean{
-        return registerViewModel.checkValidationForPartTwo(errorMessages)
     }
 
     private suspend fun register(){

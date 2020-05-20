@@ -1,4 +1,4 @@
-package com.maskjs.korona_zakupy.helpers
+package com.maskjs.korona_zakupy.viewmodels.input_text_layout
 
 class ConfirmPasswordTextInputLayoutViewModel : InputTextLayoutViewModel() {
     override fun validate(errorsMessages: Map<String, String>, extraParameter:String) {

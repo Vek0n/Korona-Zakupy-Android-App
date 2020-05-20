@@ -1,18 +1,19 @@
 package com.maskjs.korona_zakupy.viewmodels.login
 
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.maskjs.korona_zakupy.data.users.*
-import com.maskjs.korona_zakupy.helpers.InputTextLayoutViewModel
-import com.maskjs.korona_zakupy.helpers.PlainTextInputTextLayoutViewModel
+import com.maskjs.korona_zakupy.viewmodels.input_text_layout.InputTextLayoutViewModel
+import com.maskjs.korona_zakupy.viewmodels.input_text_layout.PlainTextInputTextLayoutViewModel
 import okhttp3.OkHttpClient
 
 class LoginViewModel : ViewModel() {
     private val userRepository = UserRepository<LoginUserDto>(userDao = UserDao(client = OkHttpClient()))
     lateinit var loginResponseDto: LoginResponseDto
 
-    val emailInputTextLayoutViewModel : InputTextLayoutViewModel = PlainTextInputTextLayoutViewModel()
-    val passwordInputTextLayoutViewModel : InputTextLayoutViewModel = PlainTextInputTextLayoutViewModel()
+    val emailInputTextLayoutViewModel : InputTextLayoutViewModel =
+        PlainTextInputTextLayoutViewModel()
+    val passwordInputTextLayoutViewModel : InputTextLayoutViewModel =
+        PlainTextInputTextLayoutViewModel()
 
     suspend fun login(){
         loginResponseDto = userRepository.loginUser(

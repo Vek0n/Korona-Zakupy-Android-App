@@ -5,7 +5,10 @@ import com.maskjs.korona_zakupy.data.users.RegisterResponseDto
 import com.maskjs.korona_zakupy.data.users.RegisterUserDto
 import com.maskjs.korona_zakupy.data.users.UserDao
 import com.maskjs.korona_zakupy.data.users.UserRepository
-import com.maskjs.korona_zakupy.helpers.*
+import com.maskjs.korona_zakupy.viewmodels.input_text_layout.ConfirmPasswordTextInputLayoutViewModel
+import com.maskjs.korona_zakupy.viewmodels.input_text_layout.InputTextLayoutViewModel
+import com.maskjs.korona_zakupy.viewmodels.input_text_layout.PasswordTextInputLayoutViewModel
+import com.maskjs.korona_zakupy.viewmodels.input_text_layout.PlainTextInputTextLayoutViewModel
 import kotlinx.coroutines.*
 import okhttp3.OkHttpClient
 
@@ -16,13 +19,20 @@ class RegisterViewModel () : ViewModel() {
     lateinit var isUserNameAlreadyTaken: String
     lateinit var isEmailAlreadyTaken: String
     lateinit var roleName: String
-    val userNameInputTextLayoutViewModel: InputTextLayoutViewModel = PlainTextInputTextLayoutViewModel()
-    val emailInputTextLayoutViewModel: InputTextLayoutViewModel = PlainTextInputTextLayoutViewModel()
-    val passwordInputTextLayoutViewModel: InputTextLayoutViewModel = PasswordTextInputLayoutViewModel()
-    val confirmPasswordInputTextLayoutViewModel: InputTextLayoutViewModel = ConfirmPasswordTextInputLayoutViewModel()
-    val firstNameInputLayoutViewModel: InputTextLayoutViewModel = PlainTextInputTextLayoutViewModel()
-    val lastNameInputLayoutViewModel: InputTextLayoutViewModel = PlainTextInputTextLayoutViewModel()
-    val addressInputTextLayoutViewModel: InputTextLayoutViewModel= PlainTextInputTextLayoutViewModel()
+    val userNameInputTextLayoutViewModel: InputTextLayoutViewModel =
+        PlainTextInputTextLayoutViewModel()
+    val emailInputTextLayoutViewModel: InputTextLayoutViewModel =
+        PlainTextInputTextLayoutViewModel()
+    val passwordInputTextLayoutViewModel: InputTextLayoutViewModel =
+        PasswordTextInputLayoutViewModel()
+    val confirmPasswordInputTextLayoutViewModel: InputTextLayoutViewModel =
+        ConfirmPasswordTextInputLayoutViewModel()
+    val firstNameInputLayoutViewModel: InputTextLayoutViewModel =
+        PlainTextInputTextLayoutViewModel()
+    val lastNameInputLayoutViewModel: InputTextLayoutViewModel =
+        PlainTextInputTextLayoutViewModel()
+    val addressInputTextLayoutViewModel: InputTextLayoutViewModel =
+        PlainTextInputTextLayoutViewModel()
 
     suspend fun register() {
             userRegisterResponseDto = userRepository.registerUser(
@@ -72,7 +82,7 @@ class RegisterViewModel () : ViewModel() {
         passwordInputTextLayoutViewModel.validate(errorMessages)
     }
 
-    fun validateConfirmPassword(errorMessages: Map<String, String>, password: String){
+    fun validateConfirmPassword(errorMessages: Map<String, String>){
         confirmPasswordInputTextLayoutViewModel.validate(errorMessages,passwordInputTextLayoutViewModel.textContent.value?:"")
     }
 

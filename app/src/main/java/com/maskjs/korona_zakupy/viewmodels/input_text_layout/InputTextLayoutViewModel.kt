@@ -1,4 +1,4 @@
-package com.maskjs.korona_zakupy.helpers
+package com.maskjs.korona_zakupy.viewmodels.input_text_layout
 
 import androidx.lifecycle.MutableLiveData
 
