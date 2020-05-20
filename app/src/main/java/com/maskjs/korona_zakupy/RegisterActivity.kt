@@ -7,7 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.maskjs.korona_zakupy.register_ui.RegisterPart1Fragment
 import com.maskjs.korona_zakupy.register_ui.RegisterPart2Fragment
 import com.maskjs.korona_zakupy.register_ui.RegisterPart3Fragment
-import com.maskjs.korona_zakupy.viewmodels.register.RegisterViewModel
+import com.maskjs.korona_zakupy.viewmodels.register.RegisterPartOneViewModel
 
 import kotlinx.android.synthetic.main.activity_register_part.*
 
@@ -18,7 +18,7 @@ class RegisterActivity : AppCompatActivity(),RegisterNavigation{
     private val regFragment2 = RegisterPart2Fragment()
     private val regFragment3 = RegisterPart3Fragment()
 
-    val registerViewModel: RegisterViewModel by viewModels()
+    val registerViewModel: RegisterPartOneViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

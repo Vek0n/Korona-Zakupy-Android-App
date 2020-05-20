@@ -9,16 +9,18 @@ import androidx.activity.addCallback
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.maskjs.korona_zakupy.R
 import com.maskjs.korona_zakupy.RegisterNavigation
 import com.maskjs.korona_zakupy.databinding.FragmentRegisterPart2Binding
+import com.maskjs.korona_zakupy.viewmodels.register.RegisterPartTwoViewModel
 import com.maskjs.korona_zakupy.viewmodels.register.RegisterViewModel
 
 class RegisterPart2Fragment : Fragment() {
 
     private var registerNavigation: RegisterNavigation? = null
-    private val registerViewModel: RegisterViewModel by activityViewModels()
+    private val registerViewModel: RegisterPartTwoViewModel by viewModels()
     private lateinit var uiDataBinding: FragmentRegisterPart2Binding
     private lateinit var errorsText: Map<String,String>
 
@@ -42,9 +44,7 @@ class RegisterPart2Fragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         initialize(inflater,container)
-
         observeUiElements()
-
         setUiListener()
 
         return uiDataBinding.root
@@ -53,8 +53,7 @@ class RegisterPart2Fragment : Fragment() {
     private fun initialize(inflater: LayoutInflater,container: ViewGroup?){
         errorsText = mapOf(
             Pair("emptyError",getString(R.string.global_empty_field_error)),
-            Pair("userNameIsAlreadyTaken",getString(R.string.reg_error_user_name_is_already_taken)),
-            Pair("emailNameIsAlreadyTaken",getString(R.string.reg_error_email_is_already_taken)),
+            Pair("isAlreadyTaken",getString(R.string.reg_error_is_already_taken)),
             Pair("errorRegexMessage",getString(R.string.reg_error_password_regex)),
             Pair("notMatchError",getString(R.string.reg_error_password_match))
         )
@@ -91,7 +90,7 @@ class RegisterPart2Fragment : Fragment() {
 
     private  fun observeConfirmPassword(){
         registerViewModel.confirmPasswordInputTextLayoutViewModel.textContent.observe(viewLifecycleOwner, Observer {
-            registerViewModel.validateConfirmPassword(errorsText,registerViewModel.passwordInputTextLayoutViewModel.textContent.value?:"")
+            registerViewModel.validateConfirmPassword(errorsText)
         })
     }
 
@@ -105,8 +104,10 @@ class RegisterPart2Fragment : Fragment() {
         }
     }
     private fun checkValidation(){
-        if(registerViewModel.checkValidationForPartOne(errorsText))
+        if(registerViewModel.checkValidation(errorsText)) {
+            registerViewModel.save()
             registerNavigation?.goToReg3Fragment()
+        }
     }
 
 }
