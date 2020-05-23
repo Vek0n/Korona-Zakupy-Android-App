@@ -6,6 +6,37 @@
     <string name="user_id_key"></string>
     <string name="user_token_key"></string>
     <string name="user_role_key"></string>
+    <!--    -->
+    <string name="text_view_add_new_product">Add new product</string>
+    <string name="dialog_hint_add_product">Type product name</string>
+    <string-array name="dialog_number_picker_values">
+        <item>0</item>
+        <item>0.25</item>
+        <item>0.5</item>
+        <item>0.75</item>
+        <item>1</item>
+        <item>1.5</item>
+        <item>2</item>
+        <item>2.5</item>
+        <item>3</item>
+        <item>3.5</item>
+        <item>4</item>
+        <item>4.5</item>
+        <item>5</item>
+    </string-array>
+    <string-array name="dialog_number_picker_unit">
+        <item>pieces</item>
+        <item>shrinkwrap</item>
+        <item>packages</item>
+        <item>cartons</item>
+        <item>bottles</item>
+        <item>cans</item>
+        <item>g</item>
+        <item>dag</item>
+        <item>kg</item>
+        <item>l</item>
+    </string-array>
+
     <!-- RegistrationActivity -->
     <string name="reg_hint_username">User Name</string>
     <string name="reg_hint_password">Password</string>
