@@ -5,8 +5,10 @@ import androidx.databinding.BindingAdapter
 import androidx.databinding.InverseBindingAdapter
 import androidx.databinding.InverseBindingListener
 import androidx.databinding.InverseMethod
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.textfield.TextInputLayout
 import com.maskjs.korona_zakupy.viewmodels.add_product_dialog.AddProductDialogViewModel
+import com.maskjs.korona_zakupy.viewmodels.new_order.NewOrderViewModel
 
 
 class DataBindingAdapters {
@@ -16,6 +18,12 @@ class DataBindingAdapters {
         @BindingAdapter("app:errorText")
         fun bindErrorText(textInputLayout: TextInputLayout, errorText: String?) {
             textInputLayout.error = errorText
+        }
+
+        @JvmStatic
+        @BindingAdapter("app:recyclerViewAdapter")
+        fun setRecyclerViewAdapter(recyclerView: RecyclerView, newOrderViewModel: NewOrderViewModel?){
+            recyclerView.adapter = newOrderViewModel?.productRecyclerViewAdapter
         }
 
         @JvmStatic

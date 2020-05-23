@@ -36,7 +36,7 @@ class AddProductDialogViewModel(displayNumber: Array<String>, displayUnit: Array
         val minValue = 0
         val maxValue = displayValues.size - 1
         val wrapSelectorWheel = true
-        var pickerValue = "default"
+        var pickerValue = displayValues[0]
 
         fun getPickerValue(index : Int){
             pickerValue = displayValues[index]

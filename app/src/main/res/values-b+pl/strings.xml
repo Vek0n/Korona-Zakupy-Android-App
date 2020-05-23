@@ -2,12 +2,16 @@
     <string name="app_name">Korona-Zakupy</string>
     <string name="title_activity_register_part1">Rejestracja</string>
     <string name="logo">Logo</string>
+    <string name="dialog_positive_button_text">Dodaj</string>
+    <string name="dialog_negative_button_text">ANULUJ</string>
     <string name="text_view_add_new_product">Dodaj nowy produkt</string>
     <string name="dialog_hint_add_product">Wpisz nazwe produktu</string>
     <!-- Shared Preference -->
     <string name="user_id_key"></string>
     <string name="user_token_key"></string>
     <string name="user_role_key"></string>
+    <string name="menu_product_edit">Edytuj</string>
+    <string name="menu_product_delete">Usuń</string>
     <!-- RegistrationActivity -->
     <string name="reg_hint_username">Username</string>
     <string name="reg_hint_password">Hasło</string>

@@ -3,6 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+        <variable
+            name="newOrderViewModel"
+            type="com.maskjs.korona_zakupy.viewmodels.new_order.NewOrderViewModel" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout android:layout_height="match_parent"
         android:layout_width="match_parent">
 
@@ -10,11 +16,12 @@
             android:id="@+id/recycler_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:listitem="@layout/view_holder_new_order" />
+            tools:listitem="@layout/view_holder_product" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/floatingActionButton2"
