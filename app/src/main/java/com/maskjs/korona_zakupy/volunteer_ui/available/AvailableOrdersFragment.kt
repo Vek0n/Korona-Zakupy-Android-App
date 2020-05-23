@@ -40,7 +40,8 @@ class AvailableOrdersFragment : Fragment() {
 
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
        // val userId = sharedPreferences.getString(R.string.user_id_key.toString(),"")
-        val userId = "85b68f59-02ff-456b-b502-cf9830f10b1f"
+        val userId = "17d4fb4e-d252-4154-9d44-88693b07e99e"
+        val token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ0ZXN0MTEyMUB0ZXN0LmNvbSIsImp0aSI6IjVjMWU1NGM3LTVjZGUtNGUzZS1hMWIwLTM3MDEyMzU4M2U2ZSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWVpZGVudGlmaWVyIjoiMTdkNGZiNGUtZDI1Mi00MTU0LTlkNDQtODg2OTNiMDdlOTllIiwiZXhwIjoxNjIxMDk2MTQ5LCJpc3MiOiJodHRwOi8veW91cmRvbWFpbi5jb20iLCJhdWQiOiJodHRwOi8veW91cmRvbWFpbi5jb20ifQ.s_KyGQ0PuxBs0Z_WiBBPYGtCAigBRW4JF6Tl9lBFyws"
 
         listView = root.findViewById(R.id.listViewAvailableOrders) as ListView
         progressBar = root.findViewById(R.id.pBar) as ProgressBar
@@ -49,7 +50,7 @@ class AvailableOrdersFragment : Fragment() {
             LoadingSpinner().showLoadingDialog(progressBar)
             supervisorScope {
                 try{
-                    val data = availableOrdersViewModel.getAvailableOrdersFromRepository()
+                    val data = availableOrdersViewModel.getAvailableOrdersFromRepository(token)
                     setListViewAdapterOnMainThread(context, data)
                 }catch (ex: Exception){
                     val data = arrayListOf<GetOrderDto>()
@@ -60,7 +61,7 @@ class AvailableOrdersFragment : Fragment() {
         }
 
         listView.setOnItemClickListener { _, _, position, _ ->
-            showAvailableOrderDetailDialog(position, userId)
+            showAvailableOrderDetailDialog(position, userId, token)
         }
         return root
     }
@@ -77,7 +78,7 @@ class AvailableOrdersFragment : Fragment() {
     }
 
     @SuppressLint("InflateParams")
-    private fun showAvailableOrderDetailDialog(position: Int, userId: String){
+    private fun showAvailableOrderDetailDialog(position: Int, userId: String, token: String){
         val dialogView = LayoutInflater.from(context).inflate(R.layout.available_order_details_popup, null)
         val builder = AlertDialog.Builder(context)
             .setView(dialogView)
@@ -118,7 +119,7 @@ class AvailableOrdersFragment : Fragment() {
 
         dialogView.accept_button.setOnClickListener {
             CoroutineScope(Dispatchers.IO).launch {
-                availableOrdersViewModel.acceptOrder(userId, orderId)
+                availableOrdersViewModel.acceptOrder(userId, orderId, token)
             }
             refreshFragment()
             alertDialog.dismiss()

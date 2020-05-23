@@ -78,7 +78,7 @@ class VolunteerOrdersListAdapter(private val context: Context,
     }
 
     private fun getTypeOfOrderAvatar(order: LinkedTreeMap<*, *>): Int {
-        val typeOfOrder = order["typeOfOrder"] as String
+        val typeOfOrder = order["orderType"] as String
         return LABEL_TYPE_OF_ORDER[typeOfOrder]!!
     }
 
@@ -144,8 +144,8 @@ class VolunteerOrdersListAdapter(private val context: Context,
             ContextCompat.getColor(context, LABEL_COLORS[getOrderStatus(order)] ?: R.color.secondaryTextColor))
 
         Picasso.get()
-//            .load(getTypeOfOrderAvatar(order)) //DEBUG
-            .load(R.drawable.groceries_avatar) //DEBUG
+            .load(getTypeOfOrderAvatar(order)) //DEBUG
+//            .load(R.drawable.groceries_avatar) //DEBUG
             .into(thumbnailImageView)
 
         return view

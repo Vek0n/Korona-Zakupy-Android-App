@@ -11,13 +11,13 @@ import okhttp3.OkHttpClient
 class AvailableOrdersViewModel : ViewModel() {
 
 
-    suspend fun getAvailableOrdersFromRepository(): ArrayList<GetOrderDto>{
+    suspend fun getAvailableOrdersFromRepository(token: String): ArrayList<GetOrderDto>{
         return OrderRepository<GetOrderDto>(OrderDao(OkHttpClient()))
-            .getActiveOrders()
+            .getActiveOrders(token)
     }
 
-    suspend fun acceptOrder(userId:String, orderId: Long): String{
+    suspend fun acceptOrder(userId:String, orderId: Long, token: String): String{
         return OrderRepository<Any>(OrderDao(OkHttpClient()))
-            .acceptOrder(userId, orderId)
+            .acceptOrder(userId, orderId, token)
     }
 }

@@ -4,39 +4,39 @@ import okhttp3.OkHttpClient
 
 class OrderDao(private val client: OkHttpClient) : IDataAccessObject{
 
-    suspend fun getActiveOrders(): String
-        = APIGetRequest("http://korona-zakupy.hostingasp.pl/api/orders/active", client)
+    suspend fun getActiveOrders(token: String): String
+        = APIGetRequestAuth("http://korona-zakupy.hostingasp.pl/api/orders/active",token ,client)
 
 
-    suspend fun getAllActiveOrdersOfUser(id:String):String
-        = APIGetRequest("http://korona-zakupy.hostingasp.pl/api/orders/active/$id", client)
+    suspend fun getAllActiveOrdersOfUser(id:String, token: String):String
+        = APIGetRequestAuth("http://korona-zakupy.hostingasp.pl/api/orders/active/$id",token, client)
 
 
-    suspend fun getAllOrdersOfUser(id:String):String
-        = APIGetRequest("http://korona-zakupy.hostingasp.pl/api/orders/all/$id", client)
+    suspend fun getAllOrdersOfUser(id:String, token: String):String
+        = APIGetRequestAuth("http://korona-zakupy.hostingasp.pl/api/orders/all/$id",token,client)
 
 
-    suspend fun placeOrder(orderString: String): String
-        = APIPostRequest(orderString,"http://korona-zakupy.hostingasp.pl/api/orders/add",client)
+    suspend fun placeOrder(orderString: String,token: String): String
+        = APIPostRequestAuth(orderString,"http://korona-zakupy.hostingasp.pl/api/orders/add",token,client)
 
 
-    suspend fun acceptOrder(orderId:Long, userId:String):String
-        = APIPostRequest("","http://korona-zakupy.hostingasp.pl/api/orders/accept/$orderId/$userId", client)
+    suspend fun acceptOrder(orderId:Long, userId:String,token: String):String
+        = APIPostRequestAuth("","http://korona-zakupy.hostingasp.pl/api/orders/accept/$orderId/$userId",token, client)
 
 
-    suspend fun unAcceptOrder(orderId: Long, userId: String): String
-        = APIPostRequest("","http://korona-zakupy.hostingasp.pl/api/orders/accept/cancel/$orderId/$userId", client)
+    suspend fun unAcceptOrder(orderId: Long, userId: String, token: String): String
+        = APIPostRequestAuth("","http://korona-zakupy.hostingasp.pl/api/orders/accept/cancel/$orderId/$userId",token, client)
 
 
-    suspend fun confirmOrder(orderId: Long, userId: String):String
-        = APIPostRequest("","http://korona-zakupy.hostingasp.pl/api/orders/confirm/$orderId/$userId", client)
+    suspend fun confirmOrder(orderId: Long, userId: String, token: String):String
+        = APIPostRequestAuth("","http://korona-zakupy.hostingasp.pl/api/orders/confirm/$orderId/$userId",token, client)
 
 
-    suspend fun cancelConfirmOrder(orderId: Long, userId: String):String
-        = APIPostRequest("","http://korona-zakupy.hostingasp.pl/api/orders/confirm/cancel/$orderId/$userId", client)
+    suspend fun cancelConfirmOrder(orderId: Long, userId: String, token: String):String
+        = APIPostRequestAuth("","http://korona-zakupy.hostingasp.pl/api/orders/confirm/cancel/$orderId/$userId",token, client)
 
 
-    suspend fun checkConfirmation(orderId: Long):String
-        = APIGetRequest("http://korona-zakupy.hostingasp.pl/api/orders/confirm/check/$orderId", client)
+    suspend fun checkConfirmation(orderId: Long, token: String):String
+        = APIGetRequestAuth("http://korona-zakupy.hostingasp.pl/api/orders/confirm/check/$orderId",token, client)
 
 }
