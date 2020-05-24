@@ -21,10 +21,9 @@ class ProductViewHolder(val view : View) : RecyclerView.ViewHolder(view) {
     fun  bind(product: ProductDto,productClickListener: NewOrderViewModel.OnProductClickListener) {
         this.product.text = product.product
         this.quantity.text = product.quantity
-        if (product.canAddProduct) {
-            view.setOnClickListener {
+        view.setOnClickListener {
+            if (product.canAddProduct)
                 productClickListener.onProductClicked(product)
-            }
         }
     }
 }

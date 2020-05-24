@@ -7,6 +7,7 @@ import com.maskjs.korona_zakupy.data.orders.PlaceOrderDto
 import com.maskjs.korona_zakupy.data.orders.ProductDto
 import com.maskjs.korona_zakupy.helpers.ProductRecyclerViewAdapter
 import com.maskjs.korona_zakupy.viewmodels.add_product_dialog.AddProductDialogViewModel
+import kotlinx.coroutines.*
 import okhttp3.OkHttpClient
 
 class NewOrderViewModel(): ViewModel() {
@@ -28,13 +29,25 @@ class NewOrderViewModel(): ViewModel() {
         addProductDialogViewModel = AddProductDialogViewModel(quantity,unit)
     }
 
-    suspend fun placeOrder(userId : String){
-        orderRepository.placeOrder(PlaceOrderDto(userId,joinQuantityAndUnit()))
+  suspend fun tryPlaceOrder(userId:String,token:String,orderType: String) : Boolean{
+       if(!checkValidation())
+           return false
+       placeOrder(userId,token,orderType)
+
+       return true
+   }
+
+    private fun checkValidation() : Boolean{
+        return products.size >= 2
     }
 
-    suspend private fun joinQuantityAndUnit(): ArrayList<String>{
+    private suspend fun placeOrder(userId: String, token:String, orderType: String){
+        orderRepository.placeOrder(PlaceOrderDto(userId,orderType,joinQuantityAndUnit()),token)
+    }
+
+    private fun joinQuantityAndUnit(): ArrayList<String>{
         val closedListOfProduct = ArrayList<String>()
-        products.forEach() { p -> closedListOfProduct.add(p.product + p.quantity ) }
+        products.forEach() { p -> if(!p.canAddProduct)closedListOfProduct.add(p.product + " " + p.quantity ) }
         return closedListOfProduct
 
     }

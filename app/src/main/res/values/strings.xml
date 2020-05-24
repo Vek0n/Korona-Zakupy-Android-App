@@ -6,6 +6,7 @@
     <string name="user_id_key"></string>
     <string name="user_token_key"></string>
     <string name="user_role_key"></string>
+    <string name="new_order_type" translatable="false"></string>
     <!--    -->
     <string name="dialog_positive_button_text">ADD</string>
     <string name="dialog_negative_button_text">CANCEL</string>

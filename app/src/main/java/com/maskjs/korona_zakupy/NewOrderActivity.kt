@@ -1,12 +1,15 @@
 package com.maskjs.korona_zakupy
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.ContextMenu
 import android.view.LayoutInflater
 import android.view.View
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.edit
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -14,11 +17,9 @@ import com.maskjs.korona_zakupy.data.orders.ProductDto
 import com.maskjs.korona_zakupy.databinding.ActivityNewOrderBinding
 import com.maskjs.korona_zakupy.databinding.DialogAddProductBinding
 import com.maskjs.korona_zakupy.viewmodels.new_order.NewOrderViewModel
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import org.jetbrains.anko.defaultSharedPreferences
-
+import java.lang.Exception
 
 class NewOrderActivity : AppCompatActivity(), NewOrderViewModel.OnProductClickListener {
     private lateinit var layoutDataBinding: ActivityNewOrderBinding
@@ -28,12 +29,10 @@ class NewOrderActivity : AppCompatActivity(), NewOrderViewModel.OnProductClickLi
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContentView(R.layout.activity_new_order)
         setLayoutDataBinding()
-
-        layoutDataBinding.floatingActionButton2.setOnClickListener{
-            placeOrder(getUserId())
-        }
+        setOnClickListeners()
     }
     private fun setLayoutDataBinding(){
         newOrderViewModel.initializeRecyclerView(getString(R.string.text_view_add_new_product),this)
@@ -41,16 +40,61 @@ class NewOrderActivity : AppCompatActivity(), NewOrderViewModel.OnProductClickLi
         layoutDataBinding.recyclerView.adapter = newOrderViewModel.productRecyclerViewAdapter
     }
 
-    private fun placeOrder(userId: String){
-        CoroutineScope(Dispatchers.IO).launch {
-            newOrderViewModel.placeOrder(userId)
+    private fun setOnClickListeners(){
+        layoutDataBinding.floatingActionButton2.setOnClickListener{
+            placeOrder(getUserId(),getUserToken(),getNewOrderType())
         }
+    }
 
+    private fun placeOrder(userId: String,token:String,orderType: String){
+        CoroutineScope(Dispatchers.IO).launch {
+            try{
+               if(newOrderViewModel.tryPlaceOrder(userId, token, orderType))
+                   goToPersonInQuarantineActivity()
+                else {
+                   withContext(Dispatchers.Main) {
+                       showToast("Please add at least one product")
+                   }
+               }
+            }catch (ex : Exception){
+                withContext(Dispatchers.Main){
+                    showToast("Server error, please wait a couple minutes and try again")
+                }
+            }
+        }
     }
 
     private fun getUserId(): String{
         val sharedPreferences = defaultSharedPreferences
         return  sharedPreferences.getString(R.string.user_id_key.toString(),"")
+    }
+
+    private fun getUserToken(): String{
+        val sharedPreferences = defaultSharedPreferences
+        return  sharedPreferences.getString(R.string.user_token_key.toString(),"")
+    }
+
+    private fun getNewOrderType(): String{
+        val sharedPreferences = defaultSharedPreferences
+        val editor= sharedPreferences.edit(){
+            putString(R.string.new_order_type.toString(), "Grocery")
+            commit()
+        }
+        return sharedPreferences.getString(R.string.new_order_type.toString(),"Dog")
+    }
+
+    private fun goToPersonInQuarantineActivity(){
+        val intent = Intent(this, PersonInQuarantineActivity::class.java)
+        startActivity(intent)
+    }
+
+    private  fun showToast(toastMessage: String){
+        val toast = Toast.makeText(this, toastMessage,Toast.LENGTH_SHORT )
+        toast.show()
+    }
+
+    override fun onProductClicked(productDto: ProductDto) {
+        showProductDialog()
     }
 
     private fun showProductDialog(){
@@ -87,18 +131,5 @@ class NewOrderActivity : AppCompatActivity(), NewOrderViewModel.OnProductClickLi
 
     private fun onPositiveDialogButtonClickedListener(){
        newOrderViewModel.addProduct(mapOf(Pair("emptyError",getString(R.string.global_empty_field_error))))
-    }
-
-    override fun onProductClicked(productDto: ProductDto) {
-        showProductDialog()
-    }
-
-    override fun onCreateContextMenu(
-        menu: ContextMenu?,
-        v: View?,
-        menuInfo: ContextMenu.ContextMenuInfo?
-    ) {
-        super.onCreateContextMenu(menu, v, menuInfo)
-        val inflater = menuInflater.inflate(R.menu.menu_product,menu)
     }
 }
