@@ -4,7 +4,7 @@
     <data>
         <variable
             name="addProductDialogViewModel"
-            type="com.maskjs.korona_zakupy.viewmodels.add_product_dialog.AddProductDialogViewModel" />
+            type="com.maskjs.korona_zakupy.ui.new_order.add_product_dialog.AddProductDialogViewModel" />
     </data>
 
     <LinearLayout

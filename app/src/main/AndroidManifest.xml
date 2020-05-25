@@ -12,22 +12,22 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".NewOrderActivity"></activity>
+        <activity android:name=".ui.new_order.NewOrderActivity"></activity>
         <activity
-            android:name=".PersonInQuarantineActivity"
+            android:name=".ui.person_in_quarantine.PersonInQuarantineActivity"
             android:label="@string/title_activity_person_in_quarantine" />
         <activity
-            android:name=".LoginActivity"
+            android:name=".ui.login.LoginActivity"
             android:label="@string/title_activity_login"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".VolunteerActivity"
+            android:name=".ui.volunteer.VolunteerActivity"
             android:label="@string/title_activity_volunteer" />
         <activity
-            android:name=".RegisterActivity"
+            android:name=".ui.register.RegisterActivity"
             android:label="@string/title_activity_register_part1"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".ui.main.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

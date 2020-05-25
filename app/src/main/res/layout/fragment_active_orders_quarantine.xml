@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".person_in_quarantine_ui.active.ActiveOrdersFragment">
+    tools:context=".ui.person_in_quarantine.active.ActiveOrdersFragment">
 
     <ListView
         android:id="@+id/listViewActiveOrders"

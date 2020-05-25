@@ -6,7 +6,7 @@
     <data>
         <variable
             name="registerViewModel"
-            type="com.maskjs.korona_zakupy.viewmodels.register.RegisterPartThreeViewModel" />
+            type="com.maskjs.korona_zakupy.ui.register.part3.RegisterPartThreeViewModel" />
     </data>
 
     <LinearLayout
@@ -37,7 +37,7 @@
             app:errorTextColor="#F44336"
             app:errorEnabled="true"
             app:hintEnabled="true"
-            app:errorText="@{registerViewModel.firstNameInputLayoutViewModel.errorContent}">
+            app:errorText="@{registerViewModel.firstNameInputLayoutModel.errorContent}">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/first_name_edit_text"
@@ -45,7 +45,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/reg_hint_first_name"
                 android:inputType="textPersonName"
-                android:text="@={registerViewModel.firstNameInputLayoutViewModel.textContent}"
+                android:text="@={registerViewModel.firstNameInputLayoutModel.textContent}"
                 android:textColor="@color/primaryTextColor" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -61,7 +61,7 @@
             app:errorTextColor="#F44336"
             app:errorEnabled="true"
             app:hintEnabled="true"
-            app:errorText="@{registerViewModel.lastNameInputLayoutViewModel.errorContent}">
+            app:errorText="@{registerViewModel.lastNameInputLayoutModel.errorContent}">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/last_name_edit_text"
@@ -69,7 +69,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/reg_hint_last_name"
                 android:inputType="textPersonName"
-                android:text="@={registerViewModel.lastNameInputLayoutViewModel.textContent}"
+                android:text="@={registerViewModel.lastNameInputLayoutModel.textContent}"
                 android:textColor="@color/primaryTextColor" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -85,7 +85,7 @@
             app:errorTextColor="#F44336"
             app:errorEnabled="true"
             app:hintEnabled="true"
-            app:errorText="@{registerViewModel.addressInputTextLayoutViewModel.errorContent}">
+            app:errorText="@{registerViewModel.addressInputTextLayoutModel.errorContent}">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/address_edit_text"
@@ -93,7 +93,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/reg_hint_address"
                 android:inputType="textPersonName"
-                android:text="@={registerViewModel.addressInputTextLayoutViewModel.textContent}"
+                android:text="@={registerViewModel.addressInputTextLayoutModel.textContent}"
                 android:textColor="@color/primaryTextColor" />
         </com.google.android.material.textfield.TextInputLayout>
 

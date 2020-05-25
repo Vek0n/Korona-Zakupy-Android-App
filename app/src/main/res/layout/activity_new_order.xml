@@ -6,7 +6,7 @@
     <data>
         <variable
             name="newOrderViewModel"
-            type="com.maskjs.korona_zakupy.viewmodels.new_order.NewOrderViewModel" />
+            type="com.maskjs.korona_zakupy.ui.new_order.NewOrderViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout android:layout_height="match_parent"

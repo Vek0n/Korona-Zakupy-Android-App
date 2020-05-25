@@ -3,13 +3,13 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".LoginActivity"
+    tools:context=".ui.login.LoginActivity"
     app:title="@string/title_activity_login">
 
     <data>
         <variable
             name="loginViewModel"
-            type="com.maskjs.korona_zakupy.viewmodels.login.LoginViewModel" />
+            type="com.maskjs.korona_zakupy.ui.login.LoginViewModel" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -65,14 +65,14 @@
                     app:errorTextColor="#F44336"
                     app:errorEnabled="true"
                     app:hintEnabled="true"
-                    app:errorText="@{loginViewModel.emailInputTextLayoutViewModel.errorContent}">
+                    app:errorText="@{loginViewModel.emailInputTextLayoutModel.errorContent}">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/email_text_edit_text"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/reg_hint_email"
-                        android:text="@={loginViewModel.emailInputTextLayoutViewModel.textContent}" />
+                        android:text="@={loginViewModel.emailInputTextLayoutModel.textContent}" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -87,7 +87,7 @@
                     app:errorTextColor="#F44336"
                     app:errorEnabled="true"
                     app:hintEnabled="true"
-                    app:errorText="@{loginViewModel.passwordInputTextLayoutViewModel.errorContent}">
+                    app:errorText="@{loginViewModel.passwordInputTextLayoutModel.errorContent}">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/password_edit_text"
@@ -95,7 +95,7 @@
                         android:layout_height="wrap_content"
                         android:hint="@string/reg_hint_password"
                         android:inputType="textPassword"
-                        android:text="@={loginViewModel.passwordInputTextLayoutViewModel.textContent}" />
+                        android:text="@={loginViewModel.passwordInputTextLayoutModel.textContent}" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <LinearLayout

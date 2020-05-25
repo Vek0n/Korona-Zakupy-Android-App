@@ -1,6 +1,9 @@
 package com.maskjs.korona_zakupy.data.users
 
 import com.maskjs.korona_zakupy.data.interfaces.IRepository
+import com.maskjs.korona_zakupy.data.users.api_communication.LoginResponseDto
+import com.maskjs.korona_zakupy.data.users.api_communication.RegisterResponseDto
+import com.maskjs.korona_zakupy.data.users.api_communication.UserDao
 
 class UserRepository<T: Any>(private  val userDao: UserDao): IRepository<T> {
 
@@ -13,7 +16,7 @@ class UserRepository<T: Any>(private  val userDao: UserDao): IRepository<T> {
         return parseJsonToRegisterResponseDto(registerJsonResponse)
     }
 
-   suspend fun loginUser(loginUserDto: T): LoginResponseDto{
+   suspend fun loginUser(loginUserDto: T): LoginResponseDto {
        val loginJsonResponse = userDao.userLogin(
            parseObjectToJson(loginUserDto))
 

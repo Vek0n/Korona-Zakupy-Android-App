@@ -7,19 +7,19 @@
 
     <fragment
         android:id="@+id/navigation_available"
-        android:name="com.maskjs.korona_zakupy.volunteer_ui.available.AvailableOrdersFragment"
+        android:name="com.maskjs.korona_zakupy.ui.volunteer.available.AvailableOrdersFragment"
         android:label="@string/title_available"
         tools:layout="@layout/fragment_available_orders" />
 
     <fragment
         android:id="@+id/navigation_active"
-        android:name="com.maskjs.korona_zakupy.volunteer_ui.active.ActiveOrdersFragment"
+        android:name="com.maskjs.korona_zakupy.ui.volunteer.active.ActiveOrdersFragment"
         android:label="@string/title_active"
         tools:layout="@layout/fragment_active_orders" />
 
     <fragment
         android:id="@+id/navigation_history"
-        android:name="com.maskjs.korona_zakupy.volunteer_ui.history.HistoryFragment"
+        android:name="com.maskjs.korona_zakupy.ui.volunteer.history.HistoryFragment"
         android:label="@string/title_history"
         tools:layout="@layout/fragment_history" />
 </navigation>

@@ -7,13 +7,13 @@
 
     <fragment
         android:id="@+id/navigation_active_quarantine"
-        android:name="com.maskjs.korona_zakupy.person_in_quarantine_ui.active.ActiveOrdersFragment"
+        android:name="com.maskjs.korona_zakupy.ui.person_in_quarantine.active.ActiveOrdersFragment"
         android:label="@string/my_orders"
         tools:layout="@layout/fragment_active_orders_quarantine" />
 
     <fragment
         android:id="@+id/navigation_history_quarantine"
-        android:name="com.maskjs.korona_zakupy.person_in_quarantine_ui.history.HistoryFragment"
+        android:name="com.maskjs.korona_zakupy.ui.person_in_quarantine.history.HistoryFragment"
         android:label="@string/title_history"
         tools:layout="@layout/fragment_history_quarantine" />
 

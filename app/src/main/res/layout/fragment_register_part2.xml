@@ -6,7 +6,7 @@
     <data>
         <variable
             name="registerViewModel"
-            type="com.maskjs.korona_zakupy.viewmodels.register.RegisterPartTwoViewModel" />
+            type="com.maskjs.korona_zakupy.ui.register.part2.RegisterPartTwoViewModel" />
     </data>
 
     <LinearLayout
@@ -40,7 +40,7 @@
             app:errorTextColor="#F44336"
             app:errorEnabled="true"
             app:hintEnabled="true"
-            app:errorText="@{registerViewModel.userNameInputTextLayoutViewModel.errorContent}">
+            app:errorText="@{registerViewModel.userNameInputTextLayoutModel.errorContent}">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/user_name_edit_text"
@@ -48,7 +48,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/reg_hint_username"
                 android:inputType="textPersonName"
-                android:text="@={registerViewModel.userNameInputTextLayoutViewModel.textContent}"
+                android:text="@={registerViewModel.userNameInputTextLayoutModel.textContent}"
                 android:textColor="@color/primaryTextColor" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -66,7 +66,7 @@
             app:errorEnabled="true"
             app:errorTextColor="#F44336"
             app:hintEnabled="true"
-            app:errorText="@{registerViewModel.emailInputTextLayoutViewModel.errorContent}">
+            app:errorText="@{registerViewModel.emailInputTextLayoutModel.errorContent}">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/email_edit_text"
@@ -74,7 +74,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/reg_hint_email"
                 android:inputType="textWebEmailAddress"
-                android:text="@={registerViewModel.emailInputTextLayoutViewModel.textContent}"
+                android:text="@={registerViewModel.emailInputTextLayoutModel.textContent}"
                 android:textColor="@color/primaryTextColor" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -91,7 +91,7 @@
             app:errorEnabled="true"
             app:errorTextColor="#F44336"
             app:hintEnabled="true"
-            app:errorText="@{registerViewModel.passwordInputTextLayoutViewModel.errorContent}">
+            app:errorText="@{registerViewModel.passwordInputTextLayoutModel.errorContent}">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/password_edit_text"
@@ -99,7 +99,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/reg_hint_password"
                 android:inputType="textPassword"
-                android:text="@={registerViewModel.passwordInputTextLayoutViewModel.textContent}"
+                android:text="@={registerViewModel.passwordInputTextLayoutModel.textContent}"
                 android:textColor="@color/primaryTextColor" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -116,7 +116,7 @@
             app:errorEnabled="true"
             app:errorTextColor="#F44336"
             app:hintEnabled="true"
-            app:errorText="@{registerViewModel.confirmPasswordInputTextLayoutViewModel.errorContent}">
+            app:errorText="@{registerViewModel.confirmPasswordInputTextLayoutModel.errorContent}">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/confirm_password_edit_text"
@@ -124,7 +124,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/reg_hint_confirmPassword"
                 android:inputType="textPassword"
-                android:text="@={registerViewModel.confirmPasswordInputTextLayoutViewModel.textContent}"
+                android:text="@={registerViewModel.confirmPasswordInputTextLayoutModel.textContent}"
                 android:textColor="@color/primaryTextColor" />
         </com.google.android.material.textfield.TextInputLayout>
 
