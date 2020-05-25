@@ -11,7 +11,7 @@ import kotlinx.coroutines.*
 import okhttp3.OkHttpClient
 
 class NewOrderViewModel(): ViewModel() {
-    lateinit var addProductDialogViewModel: AddProductDialogViewModel
+   // lateinit var addProductDialogViewModel: AddProductDialogViewModel
     lateinit var productRecyclerViewAdapter : ProductRecyclerViewAdapter
     private lateinit var onProductClickListener : OnProductClickListener
     private lateinit var products : MutableList<ProductDto>
@@ -25,9 +25,9 @@ class NewOrderViewModel(): ViewModel() {
         }
     }
 
-    fun initializeAddProductViewModel(quantity : Array<String>, unit : Array<String>){
-        addProductDialogViewModel = AddProductDialogViewModel(quantity,unit)
-    }
+//    fun initializeAddProductViewModel(quantity : Array<String>, unit : Array<String>){
+//        addProductDialogViewModel = AddProductDialogViewModel(quantity,unit)
+//    }
 
   suspend fun tryPlaceOrder(userId:String,token:String,orderType: String) : Boolean{
        if(!checkValidation())
@@ -52,20 +52,25 @@ class NewOrderViewModel(): ViewModel() {
 
     }
 
-    fun addProduct(errorMessages: Map<String, String>){
+//    fun addProduct(errorMessages: Map<String, String>){
+//        if(addProductDialogViewModel.checkValidation(errorMessages))
+//            addProductToList()
+//    }
+
+    fun addProduct(errorMessages: Map<String, String>, addProductDialogViewModel: AddProductDialogViewModel){
         if(addProductDialogViewModel.checkValidation(errorMessages))
-            addProductToList()
+            addProductToList(addProductDialogViewModel)
     }
 
-    private fun addProductToList(){
+    private fun addProductToList(addProductDialogViewModel: AddProductDialogViewModel){
         products.add(addProductDialogViewModel.getProductDto())
         products.sortBy { p -> p.canAddProduct}
         productRecyclerViewAdapter.notifyDataSetChanged()
     }
 
-    fun validateProduct(errorMessages: Map<String,String>){
-        addProductDialogViewModel.validate(errorMessages)
-    }
+//    fun validateProduct(errorMessages: Map<String,String>){
+//        addProductDialogViewModel.validate(errorMessages)
+//    }
 
     interface OnProductClickListener{
         fun onProductClicked(productDto: ProductDto)

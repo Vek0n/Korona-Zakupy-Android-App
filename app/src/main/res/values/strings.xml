@@ -8,6 +8,8 @@
     <string name="user_role_key"></string>
     <string name="new_order_type" translatable="false"></string>
     <!--    -->
+    <string name="toast_add_order_validation">Please add at least one product</string>
+    <string name="toast_add_order_error">"Server error, please wait a couple minutes and try again"</string>
     <string name="dialog_positive_button_text">ADD</string>
     <string name="dialog_negative_button_text">CANCEL</string>
     <string name="text_view_add_new_product"><u>Add product</u></string>

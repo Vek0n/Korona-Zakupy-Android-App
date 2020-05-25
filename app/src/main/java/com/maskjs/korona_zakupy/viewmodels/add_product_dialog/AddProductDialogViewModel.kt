@@ -1,10 +1,11 @@
 package com.maskjs.korona_zakupy.viewmodels.add_product_dialog
 
+import androidx.lifecycle.ViewModel
 import com.maskjs.korona_zakupy.data.orders.ProductDto
 import com.maskjs.korona_zakupy.viewmodels.input_text_layout.InputTextLayoutViewModel
 import com.maskjs.korona_zakupy.viewmodels.input_text_layout.PlainTextInputTextLayoutViewModel
 
-class AddProductDialogViewModel(displayNumber: Array<String>, displayUnit: Array<String> ) {
+class AddProductDialogViewModel(displayNumber: Array<String>, displayUnit: Array<String> ) : ViewModel() {
     val quantityNumberPickerViewModel : NumberPickerViewModel =  NumberPickerViewModel(displayNumber)
     val unitNumberPickerViewModel: NumberPickerViewModel= NumberPickerViewModel(displayUnit)
     val productTextInputLayout : InputTextLayoutViewModel = PlainTextInputTextLayoutViewModel()
@@ -17,9 +18,7 @@ class AddProductDialogViewModel(displayNumber: Array<String>, displayUnit: Array
 
 
      fun checkValidation(errorMessages: Map<String,String>) : Boolean{
-         validate(errorMessages)
-
-        return isCorrectValidation()
+        return validateVer2(errorMessages)
     }
 
     private fun isCorrectValidation(): Boolean{
@@ -28,8 +27,9 @@ class AddProductDialogViewModel(displayNumber: Array<String>, displayUnit: Array
         return true
     }
 
-    fun validate(errorMessages: Map<String,String>){
+    fun validateVer2(errorMessages: Map<String,String>): Boolean{
         productTextInputLayout.validate(errorMessages)
+        return  isCorrectValidation()
     }
 
     inner class NumberPickerViewModel( val displayValues : Array<String>){
