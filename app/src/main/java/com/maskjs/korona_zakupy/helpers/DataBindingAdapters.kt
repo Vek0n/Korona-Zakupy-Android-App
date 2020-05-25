@@ -2,9 +2,6 @@ package com.maskjs.korona_zakupy.helpers
 
 import android.widget.NumberPicker
 import androidx.databinding.BindingAdapter
-import androidx.databinding.InverseBindingAdapter
-import androidx.databinding.InverseBindingListener
-import androidx.databinding.InverseMethod
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.textfield.TextInputLayout
 import com.maskjs.korona_zakupy.viewmodels.add_product_dialog.AddProductDialogViewModel
@@ -35,32 +32,32 @@ class DataBindingAdapters {
 
         @JvmStatic
         @BindingAdapter("app:maxValue")
-         fun customSetMaxValue(numberPicker: NumberPicker,numberPickerViewModel: AddProductDialogViewModel.NumberPickerViewModel){
-            numberPicker.maxValue = numberPickerViewModel.maxValue
+         fun customSetMaxValue(numberPicker: NumberPicker, numberPickerModel: AddProductDialogViewModel.NumberPickerModel){
+            numberPicker.maxValue = numberPickerModel.maxValue
         }
         @JvmStatic
         @BindingAdapter("app:minValue")
-        fun customSetMinMaxValue(numberPicker: NumberPicker,numberPickerViewModel: AddProductDialogViewModel.NumberPickerViewModel){
-            numberPicker.minValue = numberPickerViewModel.minValue
+        fun customSetMinMaxValue(numberPicker: NumberPicker, numberPickerModel: AddProductDialogViewModel.NumberPickerModel){
+            numberPicker.minValue = numberPickerModel.minValue
         }
 
         @JvmStatic
         @BindingAdapter("app:displayedValues")
-        fun customSetDisplayedValue(numberPicker: NumberPicker,numberPickerViewModel: AddProductDialogViewModel.NumberPickerViewModel){
-            numberPicker.displayedValues = numberPickerViewModel.displayValues
+        fun customSetDisplayedValue(numberPicker: NumberPicker, numberPickerModel: AddProductDialogViewModel.NumberPickerModel){
+            numberPicker.displayedValues = numberPickerModel.displayValues
         }
 
         @JvmStatic
         @BindingAdapter("app:wrapSelectorWheel")
-        fun setwrapSelectorWheel(numberPicker: NumberPicker, numberPickerViewModel: AddProductDialogViewModel.NumberPickerViewModel){
-            numberPicker.wrapSelectorWheel = numberPickerViewModel.wrapSelectorWheel
+        fun setwrapSelectorWheel(numberPicker: NumberPicker, numberPickerModel: AddProductDialogViewModel.NumberPickerModel){
+            numberPicker.wrapSelectorWheel = numberPickerModel.wrapSelectorWheel
         }
 
         @JvmStatic
         @BindingAdapter("app:onValueChangedListenerNumberPicker")
-        fun setOnValueChangedListenerNumberPicker(numberPicker: NumberPicker, numberPickerViewModel: AddProductDialogViewModel.NumberPickerViewModel){
+        fun setOnValueChangedListenerNumberPicker(numberPicker: NumberPicker, numberPickerModel: AddProductDialogViewModel.NumberPickerModel){
             numberPicker.setOnValueChangedListener { _, _, newVal ->
-                numberPickerViewModel.getPickerValue(newVal)
+                numberPickerModel.getPickerValue(newVal)
             }
         }
     }

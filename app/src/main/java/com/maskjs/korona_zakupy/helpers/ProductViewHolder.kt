@@ -1,17 +1,14 @@
 package com.maskjs.korona_zakupy.helpers
 
 import android.view.ContextMenu
-import android.view.Menu
 import android.view.View
 import android.widget.LinearLayout
-import android.widget.TextView
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.maskjs.korona_zakupy.R
 import com.maskjs.korona_zakupy.data.orders.ProductDto
 import com.maskjs.korona_zakupy.databinding.ViewHolderProductBinding
 import com.maskjs.korona_zakupy.viewmodels.new_order.NewOrderViewModel
-import kotlinx.android.synthetic.main.view_holder_product.view.*
 
 class ProductViewHolder(val view : View) : RecyclerView.ViewHolder(view), View.OnCreateContextMenuListener { //
     private var productViewHolder : ViewHolderProductBinding = DataBindingUtil.bind(view)!!
@@ -24,10 +21,10 @@ class ProductViewHolder(val view : View) : RecyclerView.ViewHolder(view), View.O
 
         this.productClickListener = productClickListener
         this.product.text = product.product
-        this.quantity.text = product.quantity
+        this.quantity.text = product.quantity + " " + product.unit
 
         view.setOnClickListener {
-            if (product.canAddProduct)
+            if (product.clickingCanAddNewProduct)
                 this.productClickListener.onProductClicked(product)
         }
         viewHolderView.setOnCreateContextMenuListener(this)

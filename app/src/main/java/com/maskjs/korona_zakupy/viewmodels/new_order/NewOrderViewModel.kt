@@ -9,21 +9,14 @@ import com.maskjs.korona_zakupy.helpers.ProductRecyclerViewAdapter
 import com.maskjs.korona_zakupy.viewmodels.add_product_dialog.AddProductDialogViewModel
 import okhttp3.OkHttpClient
 
-class NewOrderViewModel(): ViewModel() {
-   // lateinit var addProductDialogViewModel: AddProductDialogViewModel
-    lateinit var productRecyclerViewAdapter : ProductRecyclerViewAdapter
-    private lateinit var products : MutableList<ProductDto>
+class NewOrderViewModel(initialText: String,onProductClickListener: OnProductClickListener?): ViewModel() {
+
     private val orderRepository = OrderRepository<PlaceOrderDto>(orderDao = OrderDao(OkHttpClient()))
+    private var products : MutableList<ProductDto> = mutableListOf(ProductDto(initialText,"","",false,true))
+    val productRecyclerViewAdapter =
+        ProductRecyclerViewAdapter(products, onProductClickListener!!)
 
-    fun initializeRecyclerView(initialText: String,onProductClickListener: OnProductClickListener){
-        products = mutableListOf(ProductDto(initialText,"",true))
-
-        onProductClickListener?.let {
-            productRecyclerViewAdapter = ProductRecyclerViewAdapter(products, onProductClickListener)
-        }
-    }
-
-  suspend fun tryPlaceOrder(userId:String,token:String,orderType: String) : Boolean{
+    suspend fun tryPlaceOrder(userId:String,token:String,orderType: String) : Boolean{
        if(!checkValidation())
            return false
        placeOrder(userId,token,orderType)
@@ -41,21 +34,15 @@ class NewOrderViewModel(): ViewModel() {
 
     private fun joinQuantityAndUnit(): ArrayList<String>{
         val closedListOfProduct = ArrayList<String>()
-        products.forEach() { p -> if(!p.canAddProduct)closedListOfProduct.add(p.product + " " + p.quantity ) }
+        products.forEach() { p -> if(!p.clickingCanAddNewProduct)closedListOfProduct.add(p.product + " " + p.quantity ) }
         return closedListOfProduct
 
     }
 
-    fun addProduct(errorMessages: Map<String, String>, addProductDialogViewModel: AddProductDialogViewModel){
-        if(addProductDialogViewModel.checkValidation(errorMessages))
-            addProductToList(addProductDialogViewModel)
-    }
-
-    private fun addProductToList(addProductDialogViewModel: AddProductDialogViewModel){
-            products.add(addProductDialogViewModel.getProductDto())
-            products.sortBy { p -> p.canAddProduct }
+    fun addProduct(addedProductDto: ProductDto){
+            products.add(addedProductDto)
+            products.sortBy { p -> p.clickingCanAddNewProduct }
             productRecyclerViewAdapter.notifyDataSetChanged()
-
     }
 
     fun deleteProduct(position: Int){
@@ -63,16 +50,21 @@ class NewOrderViewModel(): ViewModel() {
         productRecyclerViewAdapter.notifyDataSetChanged()
     }
 
+    fun editProduct(editedProductDto: ProductDto){
+        products.find { p -> p.isSendToEdit }?.edit(editedProductDto)
+        productRecyclerViewAdapter.notifyDataSetChanged()
+    }
+
+    fun intendToEdit(position: Int){
+        products[position].isSendToEdit = true
+    }
+
     fun getEditedProduct(position: Int) : Triple<String, String, String> {
         val editedProduct = products.get(position)
         val productName = editedProduct.product
         val quantity =editedProduct.quantity.substringBefore(" ")
-        val unit = editedProduct.quantity.substringAfter(" ")
+        val unit = editedProduct.quantity.substringAfter(" ") // unvalid value
         return  Triple(productName, quantity, unit )
-    }
-
-    fun editProduct(position: Int){
-
     }
 
     interface OnProductClickListener{

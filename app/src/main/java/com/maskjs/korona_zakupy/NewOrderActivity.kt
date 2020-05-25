@@ -12,6 +12,7 @@ import androidx.core.content.edit
 import androidx.databinding.DataBindingUtil
 import com.maskjs.korona_zakupy.data.orders.ProductDto
 import com.maskjs.korona_zakupy.databinding.ActivityNewOrderBinding
+import com.maskjs.korona_zakupy.helpers.NewOrderViewModelFactory
 import com.maskjs.korona_zakupy.new_order.AddProductDialogFragment
 import com.maskjs.korona_zakupy.viewmodels.add_product_dialog.AddProductDialogViewModel
 import com.maskjs.korona_zakupy.viewmodels.new_order.NewOrderViewModel
@@ -19,22 +20,29 @@ import kotlinx.coroutines.*
 import java.lang.Exception
 
 class NewOrderActivity : AppCompatActivity(), NewOrderViewModel.OnProductClickListener,
-AddProductDialogFragment.OnAddProductClickListener{
+AddProductDialogFragment.OnAddProductClickListener, AddProductDialogFragment.OnEditProductClickListener{
     private lateinit var layoutDataBinding: ActivityNewOrderBinding
-    private val newOrderViewModel : NewOrderViewModel by viewModels()
+    private val newOrderViewModel : NewOrderViewModel by viewModels(){
+        NewOrderViewModelFactory("Add Product",this)
+    } //resources.getString(R.string.text_view_add_new_product) -> EXCEPTION
     private var sharedPreferences: SharedPreferences? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.activity_new_order)
+        setSharedPreferences()
         setLayoutDataBinding()
         setOnClickListeners()
     }
-    private fun setLayoutDataBinding(){
+
+    private fun setSharedPreferences(){
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
-        newOrderViewModel.initializeRecyclerView(getString(R.string.text_view_add_new_product),this)
+    }
+
+    private fun setLayoutDataBinding(){
         layoutDataBinding = DataBindingUtil.setContentView(this,R.layout.activity_new_order)
-        layoutDataBinding.recyclerView.adapter = newOrderViewModel.productRecyclerViewAdapter
+        layoutDataBinding.newOrderViewModel = newOrderViewModel
     }
 
     private fun setOnClickListeners(){
@@ -106,7 +114,7 @@ AddProductDialogFragment.OnAddProductClickListener{
 
     private fun showEditProductDialog(
         product: Triple<String, String, String>){
-        val addProductDialogFragment = AddProductDialogFragment.newInstance(product.first, product.second, product.third)
+        val addProductDialogFragment = AddProductDialogFragment.dialogToEdit(product.first, product.second, product.third)
         val fragmentTransaction = supportFragmentManager.beginTransaction()
         val prev = supportFragmentManager.findFragmentByTag("dialog")
         if (prev != null)
@@ -117,15 +125,17 @@ AddProductDialogFragment.OnAddProductClickListener{
         addProductDialogFragment.show(fragmentTransaction, "dialog")
     }
 
-    override fun addProduct(sendAddProductDialogViewModel: AddProductDialogViewModel) {
-        newOrderViewModel.addProduct(mapOf(Pair("emptyError",getString(R.string.global_empty_field_error))),
-        sendAddProductDialogViewModel)
+    override fun addProduct(addedProduct: ProductDto) {
+        newOrderViewModel.addProduct(addedProduct)
     }
 
+    override fun editProduct(editedProduct: ProductDto) {
+        newOrderViewModel.editProduct(editedProduct)
+    }
     override fun onContextItemSelected(item: MenuItem?): Boolean {
         return when(item?.itemId){
             1 ->{
-
+                newOrderViewModel.intendToEdit(item.groupId)
                 showEditProductDialog(newOrderViewModel.getEditedProduct(item.groupId))
                 true
             }

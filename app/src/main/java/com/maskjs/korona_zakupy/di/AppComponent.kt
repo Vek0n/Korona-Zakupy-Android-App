@@ -1,4 +1,4 @@
-package com.maskjs.korona_zakupy.Dagger
+package com.maskjs.korona_zakupy.di
 
 import dagger.Component
 

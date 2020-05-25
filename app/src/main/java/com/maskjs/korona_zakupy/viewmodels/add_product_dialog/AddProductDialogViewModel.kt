@@ -1,32 +1,34 @@
 package com.maskjs.korona_zakupy.viewmodels.add_product_dialog
 
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.maskjs.korona_zakupy.data.orders.ProductDto
 import com.maskjs.korona_zakupy.viewmodels.input_text_layout.InputTextLayoutViewModel
 import com.maskjs.korona_zakupy.viewmodels.input_text_layout.PlainTextInputTextLayoutViewModel
-import kotlin.properties.Delegates
 
 class AddProductDialogViewModel(displayNumber: Array<String>, displayUnit: Array<String> ) : ViewModel() {
-    val quantityNumberPickerViewModel : NumberPickerViewModel =  NumberPickerViewModel(displayNumber)
-    val unitNumberPickerViewModel: NumberPickerViewModel= NumberPickerViewModel(displayUnit)
+    val quantityNumberPickerModel : NumberPickerModel =  NumberPickerModel(displayNumber)
+    val unitNumberPickerModel: NumberPickerModel= NumberPickerModel(displayUnit)
     val productTextInputLayout : InputTextLayoutViewModel = PlainTextInputTextLayoutViewModel()
-    var isToEdit = false
-    fun setInitValuesToEdit(product: String?, quantity: String?, unit: String?,isToEdit: Boolean?){
+    var isSendToEdit =false
+
+    fun setInitValuesToEdit(product: String?, quantity: String?, unit: String?,sendToEdit: Boolean?){
         product?.let { productTextInputLayout.textContent.value = it }
-        quantity?.let { quantityNumberPickerViewModel.pickerValue = it }
-        unit?.let { unitNumberPickerViewModel.pickerValue = it }
-        this.isToEdit = isToEdit ?: false
+        quantity?.let { quantityNumberPickerModel.pickerValue = it }
+        unit?.let { unitNumberPickerModel.pickerValue = it }
+        sendToEdit?.let { isSendToEdit = sendToEdit }
     }
 
     fun getProductDto() : ProductDto{
         return ProductDto(
-            product = productTextInputLayout.textContent.value!!,
-            quantity = quantityNumberPickerViewModel.pickerValue + " " + unitNumberPickerViewModel.pickerValue)
+            product = productTextInputLayout.textContent.value ?: "product",
+            quantity = quantityNumberPickerModel.pickerValue,
+            unit = unitNumberPickerModel.pickerValue,
+            isSendToEdit = isSendToEdit )
     }
 
      fun checkValidation(errorMessages: Map<String,String>) : Boolean{
-        return validateVer2(errorMessages)
+         productTextInputLayout.validate(errorMessages)
+         return  isCorrectValidation()
     }
 
     private fun isCorrectValidation(): Boolean{
@@ -35,12 +37,7 @@ class AddProductDialogViewModel(displayNumber: Array<String>, displayUnit: Array
         return true
     }
 
-    private fun validateVer2(errorMessages: Map<String,String>): Boolean{
-        productTextInputLayout.validate(errorMessages)
-        return  isCorrectValidation()
-    }
-
-    inner class NumberPickerViewModel( val displayValues : Array<String>){
+    inner class NumberPickerModel(val displayValues : Array<String>){
         val minValue = 0
         val maxValue = displayValues.size - 1
         val wrapSelectorWheel = true

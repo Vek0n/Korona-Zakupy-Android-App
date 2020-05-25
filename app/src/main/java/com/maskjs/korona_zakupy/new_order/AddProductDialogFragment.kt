@@ -12,6 +12,7 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.maskjs.korona_zakupy.R
+import com.maskjs.korona_zakupy.data.orders.ProductDto
 import com.maskjs.korona_zakupy.databinding.FragmentDialogAddProductBinding
 import com.maskjs.korona_zakupy.helpers.AddProductDialogViewModelFactory
 import com.maskjs.korona_zakupy.viewmodels.add_product_dialog.AddProductDialogViewModel
@@ -20,6 +21,7 @@ import com.maskjs.korona_zakupy.viewmodels.add_product_dialog.AddProductDialogVi
 class AddProductDialogFragment : DialogFragment() {
 
     private  var onAddProductClickListener : OnAddProductClickListener? = null
+    private  var onEditProductClickListener: OnEditProductClickListener? = null
     private lateinit var dialogBinding: FragmentDialogAddProductBinding
     private val addProductDialogViewModel: AddProductDialogViewModel by viewModels{
         AddProductDialogViewModelFactory(resources.getStringArray(R.array.dialog_number_picker_values),
@@ -29,16 +31,11 @@ class AddProductDialogFragment : DialogFragment() {
         super.onAttach(context)
 
         onAddProductClickListener = (context as? OnAddProductClickListener)
-
-        if(onAddProductClickListener == null)
-            throw ClassCastException("Error!")
+        onEditProductClickListener =(context as? OnEditProductClickListener)
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        addProductDialogViewModel.setInitValuesToEdit(arguments?.getString("EDITED_PRODUCT"),
-            arguments?.getString("EDITED_QUANTITY"),arguments?.getString("EDITED_UNIT"),
-        arguments?.getBoolean("IS_TO_EDIT"))
-
+        setValuesToEdit()
         setProductObserver()
         activity?.layoutInflater?.let { setLayoutBinding(it,  null)}
 
@@ -47,6 +44,12 @@ class AddProductDialogFragment : DialogFragment() {
         setDialogClickListeners(addProductDialog)
 
         return addProductDialog
+    }
+
+    private fun setValuesToEdit(){
+        addProductDialogViewModel.setInitValuesToEdit(arguments?.getString("EDITED_PRODUCT"),
+            arguments?.getString("EDITED_QUANTITY"),arguments?.getString("EDITED_UNIT"),
+            arguments?.getBoolean("IS_SEND_TO_EDIT"))
     }
 
     private fun setLayoutBinding(inflater: LayoutInflater,container: ViewGroup?){
@@ -66,11 +69,11 @@ class AddProductDialogFragment : DialogFragment() {
     }
 
     private fun setDialogClickListeners(addProductDialog: AlertDialog){
-        dialogBinding.dialogAcceptAddProduct.setOnClickListener {
+        dialogBinding.dialogPostiveTextToClick.setOnClickListener {
             onPositiveDialogButtonClickedListener(addProductDialog)
         }
 
-        dialogBinding.dialogCancelAddProduct.setOnClickListener {
+        dialogBinding.dialogNegativeTextToClick.setOnClickListener {
             dismiss()
         }
     }
@@ -88,13 +91,22 @@ class AddProductDialogFragment : DialogFragment() {
             dialogBinding.dialogLayoutTextInputProductName.error = getString(R.string.global_empty_field_error)
         }
         else{
-            onAddProductClickListener?.addProduct(addProductDialogViewModel)
+            val productToSend = addProductDialogViewModel.getProductDto()
+            if(addProductDialogViewModel.isSendToEdit)
+                    onEditProductClickListener?.editProduct(productToSend)
+            else
+                onAddProductClickListener?.addProduct(productToSend)
+
             addProductDialog.dismiss()
         }
     }
 
     interface OnAddProductClickListener{
-        fun addProduct(sendAddProductDialogViewModel: AddProductDialogViewModel)
+        fun addProduct(addedProduct: ProductDto)
+    }
+
+    interface OnEditProductClickListener{
+        fun editProduct(editedProduct: ProductDto)
     }
 
     override fun onCreateView(
@@ -105,20 +117,17 @@ class AddProductDialogFragment : DialogFragment() {
     }
 
     companion object{
-        fun newInstance(product: String, quantity: String, unit: String): AddProductDialogFragment{
+        fun dialogToEdit(product: String, quantity: String, unit: String): AddProductDialogFragment{
             val addProductDialogFragment = AddProductDialogFragment()
             val addProductFragmentBundle = Bundle(4)
             addProductFragmentBundle.putString("EDITED_PRODUCT", product)
             addProductFragmentBundle.putString("EDITED_QUANTITY",quantity)
             addProductFragmentBundle.putString("EDITED_UNIT", unit)
-            addProductFragmentBundle.putBoolean("IS_TO_EDIT",true)
-
-
+            addProductFragmentBundle.putBoolean("IS_SEND_TO_EDIT",true)
             addProductDialogFragment.arguments = addProductFragmentBundle
 
             return addProductDialogFragment
         }
     }
-
 }
 

@@ -48,11 +48,11 @@
                 android:layout_height="100dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                app:displayedValues="@{addProductDialogViewModel.quantityNumberPickerViewModel}"
-                app:maxValue="@{addProductDialogViewModel.quantityNumberPickerViewModel}"
-                app:minValue="@{addProductDialogViewModel.quantityNumberPickerViewModel}"
-                app:onValueChangedListenerNumberPicker="@{addProductDialogViewModel.quantityNumberPickerViewModel}"
-                app:wrapSelectorWheel="@{addProductDialogViewModel.quantityNumberPickerViewModel}" />
+                app:displayedValues="@{addProductDialogViewModel.quantityNumberPickerModel}"
+                app:maxValue="@{addProductDialogViewModel.quantityNumberPickerModel}"
+                app:minValue="@{addProductDialogViewModel.quantityNumberPickerModel}"
+                app:onValueChangedListenerNumberPicker="@{addProductDialogViewModel.quantityNumberPickerModel}"
+                app:wrapSelectorWheel="@{addProductDialogViewModel.quantityNumberPickerModel}" />
 
             <NumberPicker
                 android:id="@+id/dialog_unit_picker"
@@ -60,11 +60,11 @@
                 android:layout_height="100dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                app:displayedValues="@{addProductDialogViewModel.unitNumberPickerViewModel}"
-                app:maxValue="@{addProductDialogViewModel.unitNumberPickerViewModel}"
-                app:minValue="@{addProductDialogViewModel.unitNumberPickerViewModel}"
-                app:onValueChangedListenerNumberPicker="@{addProductDialogViewModel.unitNumberPickerViewModel}"
-                app:wrapSelectorWheel="@{addProductDialogViewModel.unitNumberPickerViewModel}" />
+                app:displayedValues="@{addProductDialogViewModel.unitNumberPickerModel}"
+                app:maxValue="@{addProductDialogViewModel.unitNumberPickerModel}"
+                app:minValue="@{addProductDialogViewModel.unitNumberPickerModel}"
+                app:onValueChangedListenerNumberPicker="@{addProductDialogViewModel.unitNumberPickerModel}"
+                app:wrapSelectorWheel="@{addProductDialogViewModel.unitNumberPickerModel}" />
 
         </LinearLayout>
 
@@ -76,7 +76,7 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/dialog_cancel_add_product"
+                android:id="@+id/dialog_negative_text_to_click"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -85,7 +85,7 @@
                 android:textAlignment="center" />
 
             <TextView
-                android:id="@+id/dialog_accept_add_product"
+                android:id="@+id/dialog_postive_text_to_click"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
