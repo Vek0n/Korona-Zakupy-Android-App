@@ -35,8 +35,12 @@ class AddProductDialogFragment : DialogFragment() {
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        activity?.layoutInflater?.let { setLayoutBinding(it,  null)}
+        addProductDialogViewModel.setInitValuesToEdit(arguments?.getString("EDITED_PRODUCT"),
+            arguments?.getString("EDITED_QUANTITY"),arguments?.getString("EDITED_UNIT"),
+        arguments?.getBoolean("IS_TO_EDIT"))
+
         setProductObserver()
+        activity?.layoutInflater?.let { setLayoutBinding(it,  null)}
 
         val addProductDialog = buildDialog()
 
@@ -89,7 +93,6 @@ class AddProductDialogFragment : DialogFragment() {
         }
     }
 
-
     interface OnAddProductClickListener{
         fun addProduct(sendAddProductDialogViewModel: AddProductDialogViewModel)
     }
@@ -100,5 +103,22 @@ class AddProductDialogFragment : DialogFragment() {
     ): View? {
             return dialogBinding.root
     }
+
+    companion object{
+        fun newInstance(product: String, quantity: String, unit: String): AddProductDialogFragment{
+            val addProductDialogFragment = AddProductDialogFragment()
+            val addProductFragmentBundle = Bundle(4)
+            addProductFragmentBundle.putString("EDITED_PRODUCT", product)
+            addProductFragmentBundle.putString("EDITED_QUANTITY",quantity)
+            addProductFragmentBundle.putString("EDITED_UNIT", unit)
+            addProductFragmentBundle.putBoolean("IS_TO_EDIT",true)
+
+
+            addProductDialogFragment.arguments = addProductFragmentBundle
+
+            return addProductDialogFragment
+        }
+    }
+
 }
 

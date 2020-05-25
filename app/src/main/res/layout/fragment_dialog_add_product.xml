@@ -28,7 +28,7 @@
                 android:layout_marginRight="10dp"
                 android:textColorHint="@color/secondaryTextColor"
                 app:errorEnabled="true"
-                app:errorText="@{addProductDialogViewModel.productTextInputLayout.errorContent}"
+                app:errorTextVersion2="@{addProductDialogViewModel.productTextInputLayout}"
                 app:errorTextColor="#F44336"
                 app:hintEnabled="true">
 

@@ -4,9 +4,9 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.preference.PreferenceManager
+import android.view.MenuItem
 import android.widget.Toast
 import androidx.activity.viewModels
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.edit
 import androidx.databinding.DataBindingUtil
@@ -16,7 +16,6 @@ import com.maskjs.korona_zakupy.new_order.AddProductDialogFragment
 import com.maskjs.korona_zakupy.viewmodels.add_product_dialog.AddProductDialogViewModel
 import com.maskjs.korona_zakupy.viewmodels.new_order.NewOrderViewModel
 import kotlinx.coroutines.*
-import org.jetbrains.anko.defaultSharedPreferences
 import java.lang.Exception
 
 class NewOrderActivity : AppCompatActivity(), NewOrderViewModel.OnProductClickListener,
@@ -103,45 +102,39 @@ AddProductDialogFragment.OnAddProductClickListener{
         }
         fragmentTransaction.addToBackStack(null)
         addProductDialogFragment.show(fragmentTransaction, "dialog")
-
-        //initializeDialogBinding()
-       // setProductObserver()
-       // buildDialog()
-       // showDialog()
     }
 
-//    private fun initializeDialogBinding(){
-//        newOrderViewModel.initializeAddProductViewModel(resources.getStringArray(R.array.dialog_number_picker_values),
-//        resources.getStringArray(R.array.dialog_number_picker_unit))
-//        addProductDialogDataBinding = DataBindingUtil.inflate(LayoutInflater.from(this),R.layout.fragment_dialog_add_product,null,false)
-//        addProductDialogDataBinding.addProductDialogViewModel = newOrderViewModel.addProductDialogViewModel
-//    }
-
-//    private fun setProductObserver(){
-//        newOrderViewModel.addProductDialogViewModel.productTextInputLayout.textContent.observe(this, Observer {
-//            newOrderViewModel.validateProduct(mapOf(Pair("emptyError",getString(R.string.global_empty_field_error))))
-//        })
-//    }
-
-//    private fun buildDialog(){
-//        addProductDialogBuilder = AlertDialog.Builder(this)
-//        addProductDialogBuilder.setView(addProductDialogDataBinding.root)
-//        addProductDialogBuilder.setTitle(getString(R.string.text_view_add_new_product))
-//        addProductDialogBuilder.setPositiveButton(getString(R.string.dialog_positive_button_text)) { dialog, xd ->
-//            onPositiveDialogButtonClickedListener() }
-//        addProductDialogBuilder.setNegativeButton(getString(R.string.dialog_negative_button_text)){_,_-> }
-//    }
-
-//    private fun showDialog(){
-//        addProductDialogBuilder.create().show()
-//    }
-
-//    private fun onPositiveDialogButtonClickedListener(){
-//       newOrderViewModel.addProduct(mapOf(Pair("emptyError",getString(R.string.global_empty_field_error))))
-//    }
+    private fun showEditProductDialog(
+        product: Triple<String, String, String>){
+        val addProductDialogFragment = AddProductDialogFragment.newInstance(product.first, product.second, product.third)
+        val fragmentTransaction = supportFragmentManager.beginTransaction()
+        val prev = supportFragmentManager.findFragmentByTag("dialog")
+        if (prev != null)
+        {
+            fragmentTransaction.remove(prev)
+        }
+        fragmentTransaction.addToBackStack(null)
+        addProductDialogFragment.show(fragmentTransaction, "dialog")
+    }
 
     override fun addProduct(sendAddProductDialogViewModel: AddProductDialogViewModel) {
         newOrderViewModel.addProduct(mapOf(Pair("emptyError",getString(R.string.global_empty_field_error))),
         sendAddProductDialogViewModel)
     }
+
+    override fun onContextItemSelected(item: MenuItem?): Boolean {
+        return when(item?.itemId){
+            1 ->{
+
+                showEditProductDialog(newOrderViewModel.getEditedProduct(item.groupId))
+                true
+            }
+            2 ->{
+                newOrderViewModel.deleteProduct(item.groupId)
+                true
+            }
+            else -> super.onContextItemSelected(item)
+        }
+    }
+
 }
