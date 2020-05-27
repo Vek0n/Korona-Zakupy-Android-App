@@ -5,25 +5,26 @@ import com.maskjs.korona_zakupy.data.orders.data_transfer_object.ProductDto
 import com.maskjs.korona_zakupy.data.layoutModels.InputTextLayoutModel
 import com.maskjs.korona_zakupy.data.layoutModels.PlainTextInputTextLayoutModel
 
-class AddProductDialogViewModel(displayNumber: Array<String>, displayUnit: Array<String> ) : ViewModel() {
+class AddProductDialogViewModel(private val displayNumber: Array<String>, private val displayUnit: Array<String> ) : ViewModel() {
     val quantityNumberPickerModel : NumberPickerModel =  NumberPickerModel(displayNumber)
     val unitNumberPickerModel: NumberPickerModel = NumberPickerModel(displayUnit)
     val productTextInputLayout : InputTextLayoutModel =
         PlainTextInputTextLayoutModel()
     var isSendToEdit =false
 
-    fun setInitValuesToEdit(product: String?, quantity: String?, unit: String?,sendToEdit: Boolean?){
+    fun setInitValuesToEdit(product: String?, quantity: String?, unit: String?, sendToEdit: Boolean?){
         product?.let { productTextInputLayout.textContent.value = it }
-        quantity?.let { quantityNumberPickerModel.pickerValue = it }
-        unit?.let { unitNumberPickerModel.pickerValue = it }
         sendToEdit?.let { isSendToEdit = sendToEdit }
+        quantity?.let { quantityNumberPickerModel.pickerValue = displayNumber.indexOf(quantity)}
+        unit?.let { unitNumberPickerModel.pickerValue = displayUnit.indexOf(unit) }
+
     }
 
     fun getProductDto() : ProductDto {
         return ProductDto(
-            product = productTextInputLayout.textContent.value ?: "product",
-            quantity = quantityNumberPickerModel.pickerValue,
-            unit = unitNumberPickerModel.pickerValue,
+            product = productTextInputLayout.textContent.value ?: "null",
+            quantity = quantityNumberPickerModel.getDisplayValue() ?: "null", //selectedValue
+            unit = unitNumberPickerModel.getDisplayValue() ?: "null", //selectedValue
             isSendToEdit = isSendToEdit
         )
     }
@@ -43,10 +44,15 @@ class AddProductDialogViewModel(displayNumber: Array<String>, displayUnit: Array
         val minValue = 0
         val maxValue = displayValues.size - 1
         val wrapSelectorWheel = true
-        var pickerValue = displayValues[0]
+        var pickerValue = 0
+        var selectedValue = displayValues[0]
+
+        fun getDisplayValue(): String?{
+            return  displayValues[pickerValue]
+        }
 
         fun getPickerValue(index : Int){
-            pickerValue = displayValues[index]
+            selectedValue = displayValues[index]
         }
     }
 }

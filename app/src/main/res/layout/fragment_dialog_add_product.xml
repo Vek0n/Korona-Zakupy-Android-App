@@ -51,7 +51,7 @@
                 app:displayedValues="@{addProductDialogViewModel.quantityNumberPickerModel}"
                 app:maxValue="@{addProductDialogViewModel.quantityNumberPickerModel}"
                 app:minValue="@{addProductDialogViewModel.quantityNumberPickerModel}"
-                app:onValueChangedListenerNumberPicker="@{addProductDialogViewModel.quantityNumberPickerModel}"
+                app:pickerValue="@={addProductDialogViewModel.quantityNumberPickerModel.pickerValue}"
                 app:wrapSelectorWheel="@{addProductDialogViewModel.quantityNumberPickerModel}" />
 
             <NumberPicker
@@ -63,7 +63,7 @@
                 app:displayedValues="@{addProductDialogViewModel.unitNumberPickerModel}"
                 app:maxValue="@{addProductDialogViewModel.unitNumberPickerModel}"
                 app:minValue="@{addProductDialogViewModel.unitNumberPickerModel}"
-                app:onValueChangedListenerNumberPicker="@{addProductDialogViewModel.unitNumberPickerModel}"
+                app:pickerValue="@={addProductDialogViewModel.unitNumberPickerModel.pickerValue}"
                 app:wrapSelectorWheel="@{addProductDialogViewModel.unitNumberPickerModel}" />
 
         </LinearLayout>
@@ -97,4 +97,4 @@
     </LinearLayout>
 </layout>
 
-<!---->
+<!--  app:onValueChangedListenerNumberPicker="@{addProductDialogViewModel.quantityNumberPickerModel}"   app:onValueChangedListenerNumberPicker="@{addProductDialogViewModel.unitNumberPickerModel}" -->

@@ -116,7 +116,7 @@ class AddProductDialogFragment : DialogFragment() {
     }
 
     companion object{
-        fun dialogToEdit(product: String, quantity: String, unit: String): AddProductDialogFragment {
+        fun dialogToEdit(product: String, quantity: String?, unit: String?): AddProductDialogFragment {
             val addProductDialogFragment =
                 AddProductDialogFragment()
             val addProductFragmentBundle = Bundle(4)

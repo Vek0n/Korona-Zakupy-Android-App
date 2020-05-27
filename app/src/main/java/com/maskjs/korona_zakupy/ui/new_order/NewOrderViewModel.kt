@@ -74,10 +74,10 @@ class NewOrderViewModel(initialText: String,onProductClickListener: OnProductCli
     }
 
     fun getEditedProduct(position: Int) : Triple<String, String, String> {
-        val editedProduct = products.get(position)
+        val editedProduct = products[position]
         val productName = editedProduct.product
-        val quantity =editedProduct.quantity.substringBefore(" ")
-        val unit = editedProduct.quantity.substringAfter(" ") // unvalid value
+        val quantity =editedProduct.quantity
+        val unit = editedProduct.unit
         return  Triple(productName, quantity, unit )
     }
 
