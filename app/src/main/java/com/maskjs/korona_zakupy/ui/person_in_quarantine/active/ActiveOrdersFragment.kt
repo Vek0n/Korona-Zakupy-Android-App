@@ -3,7 +3,6 @@ package com.maskjs.korona_zakupy.ui.person_in_quarantine.active
 import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.view.LayoutInflater
@@ -15,10 +14,8 @@ import android.widget.ProgressBar
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.maskjs.korona_zakupy.ui.new_order.NewOrderActivity
 import com.maskjs.korona_zakupy.R
 import com.maskjs.korona_zakupy.data.orders.data_transfer_object.GetOrderDto
-import com.maskjs.korona_zakupy.ui.new_order.add_product_dialog.AddProductDialogFragment
 import com.maskjs.korona_zakupy.utils.LoadingSpinner
 import com.maskjs.korona_zakupy.ui.person_in_quarantine.QuarantineOrdersListAdapter
 import kotlinx.android.synthetic.main.quarantine_active_order_details_popup.view.*

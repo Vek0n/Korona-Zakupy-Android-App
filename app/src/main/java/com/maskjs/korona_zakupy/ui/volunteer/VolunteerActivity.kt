@@ -8,8 +8,9 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.maskjs.korona_zakupy.R
+import com.maskjs.korona_zakupy.ui.base.UserBaseActivity
 
-class VolunteerActivity : AppCompatActivity() {
+class VolunteerActivity : UserBaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

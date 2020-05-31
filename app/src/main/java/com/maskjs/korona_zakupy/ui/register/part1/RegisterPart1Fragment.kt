@@ -14,11 +14,11 @@ import androidx.fragment.app.activityViewModels
 
 import com.maskjs.korona_zakupy.R
 import com.maskjs.korona_zakupy.databinding.FragmentRegisterPart1Binding
-import com.maskjs.korona_zakupy.ui.register.RegisterNavigation
+import com.maskjs.korona_zakupy.ui.register.IRegisterNavigation
 
 
 class RegisterPart1Fragment : Fragment() {
-    private var registerNavigation: RegisterNavigation? = null
+    private var registerNavigation: IRegisterNavigation? = null
     private val registerViewModel: RegisterPartOneViewModel by activityViewModels()
     private lateinit var uiDataBinding: FragmentRegisterPart1Binding
     private lateinit var sharedPreferences: SharedPreferences
@@ -26,7 +26,7 @@ class RegisterPart1Fragment : Fragment() {
     override fun onAttach(context: Context) {
         super.onAttach(context)
 
-        registerNavigation = (context as? RegisterNavigation)
+        registerNavigation = (context as? IRegisterNavigation)
 
         if(registerNavigation == null)
             throw ClassCastException("Error!")

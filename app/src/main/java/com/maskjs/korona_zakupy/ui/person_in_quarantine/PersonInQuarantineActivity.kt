@@ -2,16 +2,16 @@ package com.maskjs.korona_zakupy.ui.person_in_quarantine
 
 import android.os.Bundle
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.maskjs.korona_zakupy.R
+import com.maskjs.korona_zakupy.ui.base.UserBaseActivity
 import com.maskjs.korona_zakupy.ui.person_in_quarantine.active.ActiveOrdersFragment
 import com.maskjs.korona_zakupy.ui.person_in_quarantine.active.ChooseOrderTypeDialogFragment
 
-class PersonInQuarantineActivity : AppCompatActivity(), ActiveOrdersFragment.OnAddOrderButtonClickListener {
+class PersonInQuarantineActivity : UserBaseActivity(),ActiveOrdersFragment.OnAddOrderButtonClickListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,6 +30,7 @@ class PersonInQuarantineActivity : AppCompatActivity(), ActiveOrdersFragment.OnA
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
     }
+
 
     override fun showChooseOrderTypeDialog(){
         val chooseOrderTypeDialogFragment = ChooseOrderTypeDialogFragment()

@@ -7,19 +7,18 @@ import android.preference.PreferenceManager
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.edit
 import androidx.databinding.DataBindingUtil
 import com.maskjs.korona_zakupy.R
 import com.maskjs.korona_zakupy.data.orders.data_transfer_object.ProductDto
 import com.maskjs.korona_zakupy.databinding.ActivityNewOrderBinding
+import com.maskjs.korona_zakupy.ui.base.UserBaseActivity
 import com.maskjs.korona_zakupy.utils.NewOrderViewModelFactory
 import com.maskjs.korona_zakupy.ui.new_order.add_product_dialog.AddProductDialogFragment
 import com.maskjs.korona_zakupy.ui.person_in_quarantine.PersonInQuarantineActivity
 import kotlinx.coroutines.*
 import java.lang.Exception
 
-class NewOrderActivity : AppCompatActivity(), NewOrderViewModel.OnProductClickListener,
+class NewOrderActivity : UserBaseActivity(), NewOrderViewModel.OnProductClickListener,
 AddProductDialogFragment.OnAddProductClickListener, AddProductDialogFragment.OnEditProductClickListener{
     private lateinit var layoutDataBinding: ActivityNewOrderBinding
     private val newOrderViewModel : NewOrderViewModel by viewModels(){
@@ -83,11 +82,6 @@ AddProductDialogFragment.OnAddProductClickListener, AddProductDialogFragment.OnE
     private fun getNewOrderType(): String?{
 
         return sharedPreferences?.getString(R.string.new_order_type.toString(),"")
-    }
-
-    private fun goToPersonInQuarantineActivity(){
-        val intent = Intent(this, PersonInQuarantineActivity::class.java)
-        startActivity(intent)
     }
 
     private  fun showToast(toastMessage: String){

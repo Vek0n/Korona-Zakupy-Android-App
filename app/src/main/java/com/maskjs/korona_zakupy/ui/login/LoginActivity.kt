@@ -1,17 +1,14 @@
 package com.maskjs.korona_zakupy.ui.login
 
-import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.preference.PreferenceManager
 import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import com.maskjs.korona_zakupy.R
 import com.maskjs.korona_zakupy.databinding.ActivityLoginBinding
-import com.maskjs.korona_zakupy.ui.register.RegisterActivity
-import com.maskjs.korona_zakupy.ui.volunteer.VolunteerActivity
+import com.maskjs.korona_zakupy.ui.base.NonUserBaseActivity
 
 import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.coroutines.CoroutineScope
@@ -20,7 +17,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import kotlin.Exception
 
-class LoginActivity : AppCompatActivity() {
+class LoginActivity : NonUserBaseActivity() {
     private val loginViewModel : LoginViewModel by viewModels()
     private lateinit var uiDataBinding: ActivityLoginBinding
     private lateinit var sharedPreferences: SharedPreferences
@@ -91,13 +88,7 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    private fun goToRegisterActivity(){
-        val intent = Intent(this, RegisterActivity::class.java)
-        startActivity(intent)
-    }
-
     private fun checkUiValidation() =  loginViewModel.checkValidation(errorMessages)
-
 
     private suspend fun login(){
         try {
@@ -114,7 +105,7 @@ class LoginActivity : AppCompatActivity() {
 
     private fun handleLoginResponse(){
         saveResponse()
-        goToUserActivity()
+        goToUserActivity(loginViewModel.loginResponseDto.roleName)
     }
 
     private fun saveResponse(){
@@ -123,11 +114,6 @@ class LoginActivity : AppCompatActivity() {
         editor.putString(getString(R.string.user_token_key),loginViewModel.loginResponseDto.token)
         editor.putString(getString(R.string.user_role_key),loginViewModel.loginResponseDto.roleName)
         editor.commit()
-    }
-
-    private fun goToUserActivity(){
-        val intent = Intent(this, VolunteerActivity::class.java)
-        this.startActivity(intent)
     }
 
     private fun handleException(){

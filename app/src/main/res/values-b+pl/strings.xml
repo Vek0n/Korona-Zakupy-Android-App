@@ -19,8 +19,7 @@
     <string name="user_id_key"></string>
     <string name="user_token_key"></string>
     <string name="user_role_key"></string>
-    <string name="menu_product_edit">Edytuj</string>
-    <string name="menu_product_delete">Usuń</string>
+    <string name="global_menu_logout">Wylogawanie</string>
     <!-- RegistrationActivity -->
     <string name="reg_hint_username">Username</string>
     <string name="reg_hint_password">Hasło</string>

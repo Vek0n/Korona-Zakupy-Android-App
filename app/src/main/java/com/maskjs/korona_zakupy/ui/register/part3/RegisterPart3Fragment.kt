@@ -15,12 +15,12 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.maskjs.korona_zakupy.R
 import com.maskjs.korona_zakupy.databinding.FragmentRegisterPart3Binding
-import com.maskjs.korona_zakupy.ui.register.RegisterNavigation
+import com.maskjs.korona_zakupy.ui.register.IRegisterNavigation
 import kotlinx.coroutines.*
 
 class RegisterPart3Fragment : Fragment() {
 
-    private var registerNavigation: RegisterNavigation? = null
+    private var registerNavigation: IRegisterNavigation? = null
     private val registerViewModel: RegisterPartThreeViewModel by viewModels()
     private lateinit var uiDataBinding: FragmentRegisterPart3Binding
     private lateinit var sharedPreferences: SharedPreferences
@@ -29,7 +29,7 @@ class RegisterPart3Fragment : Fragment() {
     override fun onAttach(context: Context) {
         super.onAttach(context)
 
-        registerNavigation = (context as? RegisterNavigation)
+        registerNavigation = (context as? IRegisterNavigation)
 
         if(registerNavigation == null)
             throw ClassCastException("Error!")
@@ -97,7 +97,7 @@ class RegisterPart3Fragment : Fragment() {
 
     private fun setOnToLoginActivityListener(){
         uiDataBinding.textViewToLogin.setOnClickListener {
-            registerNavigation?.goToLoginActivity()
+            registerNavigation?.goToLoginActivityInRegFragment()
         }
     }
     private fun setOnFabListener(){
@@ -121,7 +121,7 @@ class RegisterPart3Fragment : Fragment() {
 
     private fun handleRegisterResponse(){
         saveResponse()
-        registerNavigation?.goToUserActivity()
+        registerNavigation?.goToUserActivityInRegFragment()
     }
 
     private  fun saveResponse(){

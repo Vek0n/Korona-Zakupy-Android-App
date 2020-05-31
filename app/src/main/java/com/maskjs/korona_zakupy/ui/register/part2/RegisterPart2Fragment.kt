@@ -12,11 +12,11 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.maskjs.korona_zakupy.R
 import com.maskjs.korona_zakupy.databinding.FragmentRegisterPart2Binding
-import com.maskjs.korona_zakupy.ui.register.RegisterNavigation
+import com.maskjs.korona_zakupy.ui.register.IRegisterNavigation
 
 class RegisterPart2Fragment : Fragment() {
 
-    private var registerNavigation: RegisterNavigation? = null
+    private var registerNavigation: IRegisterNavigation? = null
     private val registerViewModel: RegisterPartTwoViewModel by viewModels()
     private lateinit var uiDataBinding: FragmentRegisterPart2Binding
     private lateinit var errorsText: Map<String,String>
@@ -24,7 +24,7 @@ class RegisterPart2Fragment : Fragment() {
     override fun onAttach(context: Context) {
         super.onAttach(context)
 
-        registerNavigation = context as? RegisterNavigation
+        registerNavigation = context as? IRegisterNavigation
 
         if(registerNavigation == null)
             throw ClassCastException("Error!")
@@ -93,7 +93,7 @@ class RegisterPart2Fragment : Fragment() {
 
     private  fun setUiListener(){
         uiDataBinding.textViewToLogin.setOnClickListener {
-            registerNavigation?.goToLoginActivity()
+            registerNavigation?.goToLoginActivityInRegFragment()
         }
 
         uiDataBinding.fabReg1.setOnClickListener {

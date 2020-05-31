@@ -18,8 +18,7 @@
     <string name="dialog_negative_button_text">CANCEL</string>
     <string name="text_view_add_new_product"><u>Add product</u></string>
     <string name="dialog_hint_add_product">Type product name</string>
-    <string name="menu_product_edit">Edit</string>
-    <string name="menu_product_delete">Delete</string>
+    <string name="global_menu_logout">Log out</string>
     <string-array name="dialog_number_picker_values">
         <item>0</item>
         <item>0.25</item>
