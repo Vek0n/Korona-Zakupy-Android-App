@@ -8,6 +8,13 @@
     <string name="dialog_hint_add_product">Wpisz nazwe produktu</string>
     <string name="toast_add_order_validation">Proszę, dodać co najmniej jeden produkt</string>
     <string name="toast_add_order_error">"Błąd serwera, proszę odczekać chwilę i spróbować ponownie"</string>
+    <string name="choose_order_type_text">Wybierz typ zlecenia:</string>
+    <string name="choose_order_type_cancel">Anuluj</string>
+    <string name="choose_order_type_accept">Akceptuj</string>
+    <string name="order_type_dog">Dog</string>
+    <string name="order_type_grocery">Grocery</string>
+    <string name="order_type_grocery18">Grocery 18+</string>
+    <string name="order_type_pharmacy">Pharmacy</string>
     <!-- Shared Preference -->
     <string name="user_id_key"></string>
     <string name="user_token_key"></string>

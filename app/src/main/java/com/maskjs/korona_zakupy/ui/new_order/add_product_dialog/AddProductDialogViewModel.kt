@@ -23,8 +23,8 @@ class AddProductDialogViewModel(private val displayNumber: Array<String>, privat
     fun getProductDto() : ProductDto {
         return ProductDto(
             product = productTextInputLayout.textContent.value ?: "null",
-            quantity = quantityNumberPickerModel.getDisplayValue() ?: "null", //selectedValue
-            unit = unitNumberPickerModel.getDisplayValue() ?: "null", //selectedValue
+            quantity = quantityNumberPickerModel.getDisplayValue() ?: "null",
+            unit = unitNumberPickerModel.getDisplayValue() ?: "null",
             isSendToEdit = isSendToEdit
         )
     }
@@ -40,19 +40,13 @@ class AddProductDialogViewModel(private val displayNumber: Array<String>, privat
         return true
     }
 
-    inner class NumberPickerModel(val displayValues : Array<String>){
+    inner class NumberPickerModel(val displayValues : Array<String>,val wrapSelectorWheel: Boolean = true){
         val minValue = 0
         val maxValue = displayValues.size - 1
-        val wrapSelectorWheel = true
         var pickerValue = 0
-        var selectedValue = displayValues[0]
 
         fun getDisplayValue(): String?{
             return  displayValues[pickerValue]
-        }
-
-        fun getPickerValue(index : Int){
-            selectedValue = displayValues[index]
         }
     }
 }

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout
+        android:id="@+id/choose_order_type_linear_layout_root"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/text_view_choose_order_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/choose_order_type_text"
+            android:textColor="@color/secondaryTextColor" />
+
+        <LinearLayout
+            android:id="@+id/choose_order_type_linear_layout_images"
+            android:layout_width="wrap_content"
+            android:layout_height="60dp"
+            android:layout_margin="10dp"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/choose_dog"
+                android:layout_width="60dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:contentDescription="@string/order_type_dog"
+                android:scaleType="centerInside"
+                android:src="@drawable/dog_avatar" />
+
+            <ImageButton
+                android:id="@+id/choose_grocery"
+                android:layout_width="60dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:contentDescription="@string/order_type_grocery"
+                android:scaleType="centerInside"
+                android:src="@drawable/groceries_avatar" />
+
+            <ImageButton
+                android:id="@+id/choose_grocery_plus"
+                android:layout_width="60dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:contentDescription="@string/order_type_grocery18"
+                android:scaleType="centerInside"
+                android:src="@drawable/groceries_avatar_18plus" />
+
+            <ImageButton
+                android:id="@+id/choose_pharmacy"
+                android:layout_width="60dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:contentDescription="@string/order_type_pharmacy"
+                android:scaleType="centerInside"
+                android:src="@drawable/pharmacy_avatar" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/choose_order_type_linear_layout_texts"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:gravity="fill">
+
+            <TextView
+                android:id="@+id/choose_cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:text="@string/choose_order_type_cancel"
+                android:textColor="@color/secondaryTextColor" />
+
+            <TextView
+                android:id="@+id/choose_accept"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="250dp"
+                android:text="@string/choose_order_type_accept"
+                android:textColor="@color/secondaryTextColor" />
+
+        </LinearLayout>
+    </LinearLayout>
+</layout>

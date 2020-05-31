@@ -2,7 +2,7 @@ package com.maskjs.korona_zakupy.ui.new_order
 
 import android.view.ContextMenu
 import android.view.View
-import android.widget.LinearLayout
+import android.widget.ImageButton
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.maskjs.korona_zakupy.R
@@ -13,7 +13,7 @@ class ProductViewHolder(val view : View) : RecyclerView.ViewHolder(view), View.O
     private var productViewHolder : ViewHolderProductBinding = DataBindingUtil.bind(view)!!
     private val product =  productViewHolder.textViewProduct
     private val quantity = productViewHolder.textViewQuantity
-    private val viewHolderView = view.findViewById(R.id.linear_layout_product) as LinearLayout // bardzo brzydkie
+    private val openMenus: ImageButton = view.findViewById(R.id.imageButton2) as ImageButton//
     private lateinit var productClickListener: NewOrderViewModel.OnProductClickListener
 
     fun  bind(product: ProductDto, productClickListener: NewOrderViewModel.OnProductClickListener) {
@@ -26,7 +26,8 @@ class ProductViewHolder(val view : View) : RecyclerView.ViewHolder(view), View.O
             if (product.clickingCanAddNewProduct)
                 this.productClickListener.onProductClicked(product)
         }
-        viewHolderView.setOnCreateContextMenuListener(this)
+        openMenus.setOnCreateContextMenuListener(this)
+
     }
 
     override fun onCreateContextMenu(

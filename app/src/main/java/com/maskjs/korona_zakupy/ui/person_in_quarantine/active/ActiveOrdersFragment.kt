@@ -18,6 +18,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.maskjs.korona_zakupy.ui.new_order.NewOrderActivity
 import com.maskjs.korona_zakupy.R
 import com.maskjs.korona_zakupy.data.orders.data_transfer_object.GetOrderDto
+import com.maskjs.korona_zakupy.ui.new_order.add_product_dialog.AddProductDialogFragment
 import com.maskjs.korona_zakupy.utils.LoadingSpinner
 import com.maskjs.korona_zakupy.ui.person_in_quarantine.QuarantineOrdersListAdapter
 import kotlinx.android.synthetic.main.quarantine_active_order_details_popup.view.*
@@ -29,6 +30,13 @@ class ActiveOrdersFragment : Fragment() {
     private lateinit var listView: ListView
     private lateinit var progressBar: ProgressBar
     private lateinit var adapterQuarantineOrders: QuarantineOrdersListAdapter
+    private  var onAddOrderButtonClickListener: OnAddOrderButtonClickListener? = null
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+
+        onAddOrderButtonClickListener =  (context as? OnAddOrderButtonClickListener)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -39,10 +47,10 @@ class ActiveOrdersFragment : Fragment() {
             ViewModelProviders.of(this).get(ActiveOrdersViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_active_orders_quarantine, container, false)
         val context = requireContext()
+
         val addNewOrderButton = root.findViewById(R.id.addNewOrderButton) as FloatingActionButton
         addNewOrderButton.setOnClickListener {
-            val intent = Intent(context, NewOrderActivity::class.java)
-            startActivity(intent)
+            showChooseOrderTypeDialog()
         }
 
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
@@ -70,6 +78,10 @@ class ActiveOrdersFragment : Fragment() {
             showActiveOrderDetailDialog(position,userId, token)
         }
         return root
+    }
+
+    private fun showChooseOrderTypeDialog(){
+        onAddOrderButtonClickListener?.showChooseOrderTypeDialog()
     }
 
     private suspend fun setListViewAdapterOnMainThread(
@@ -140,4 +152,9 @@ class ActiveOrdersFragment : Fragment() {
         f?.attach(this)
         f?.commit()
     }
+
+    interface OnAddOrderButtonClickListener{
+        fun showChooseOrderTypeDialog()
+    }
+
 }

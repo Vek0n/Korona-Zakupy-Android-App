@@ -34,14 +34,6 @@ class NumberPickerBindingAdapters {
         }
 
         @JvmStatic
-        @BindingAdapter("app:onValueChangedListenerNumberPicker")
-        fun setOnValueChangedListenerNumberPicker(numberPicker: NumberPicker, numberPickerModel: AddProductDialogViewModel.NumberPickerModel){
-            numberPicker.setOnValueChangedListener { _, _, newVal ->
-                numberPickerModel.getPickerValue(newVal)
-            }
-        }
-
-        @JvmStatic
         @BindingAdapter("app:pickerValue")
         fun setPickerValue(numberPicker: NumberPicker, value: Int){
                 if(numberPicker.value != value)

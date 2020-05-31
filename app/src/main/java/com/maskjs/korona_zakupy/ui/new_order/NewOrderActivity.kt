@@ -81,11 +81,8 @@ AddProductDialogFragment.OnAddProductClickListener, AddProductDialogFragment.OnE
     }
 
     private fun getNewOrderType(): String?{
-        val editor= sharedPreferences?.edit(){
-            putString(R.string.new_order_type.toString(), "Grocery")
-            commit()
-        }
-        return sharedPreferences?.getString(R.string.new_order_type.toString(),"Dog")
+
+        return sharedPreferences?.getString(R.string.new_order_type.toString(),"")
     }
 
     private fun goToPersonInQuarantineActivity(){

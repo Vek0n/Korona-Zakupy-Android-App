@@ -7,6 +7,10 @@
     <string name="user_token_key"></string>
     <string name="user_role_key"></string>
     <string name="new_order_type" translatable="false"></string>
+    <string name="order_type_dog">Dog</string>
+    <string name="order_type_grocery">Grocery</string>
+    <string name="order_type_grocery18">Grocery 18+</string>
+    <string name="order_type_pharmacy">Pharmacy</string>
     <!--    -->
     <string name="toast_add_order_validation">Please add at least one product</string>
     <string name="toast_add_order_error">"Server error, please wait a couple minutes and try again"</string>
@@ -43,7 +47,9 @@
         <item>kg</item>
         <item>l</item>
     </string-array>
-
+    <string name="choose_order_type_text">Choose  order type:</string>
+    <string name="choose_order_type_cancel">Cancel</string>
+    <string name="choose_order_type_accept">Accept</string>
     <!-- RegistrationActivity -->
     <string name="reg_hint_username">User Name</string>
     <string name="reg_hint_password">Password</string>

@@ -16,12 +16,12 @@
             android:id="@+id/recycler_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            app:recyclerViewAdapter="@{newOrderViewModel}"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="4dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:recyclerViewAdapter="@{newOrderViewModel}"
             tools:listitem="@layout/view_holder_product" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
