@@ -29,6 +29,7 @@ class RegisterActivity :NonUserBaseActivity(),
 
     val registerViewModel: RegisterPartOneViewModel by viewModels()
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register_part)

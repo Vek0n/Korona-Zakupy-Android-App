@@ -1,6 +1,7 @@
 package com.maskjs.korona_zakupy.utils.BindingUtils
 
 import android.widget.NumberPicker
+import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.textfield.TextInputLayout
@@ -29,5 +30,12 @@ class BindingUtils {
         fun setRecyclerViewAdapter(recyclerView: RecyclerView, newOrderViewModel: NewOrderViewModel?){
             recyclerView.adapter = newOrderViewModel?.productRecyclerViewAdapter
         }
+
+        @JvmStatic
+        @BindingAdapter("app:text")
+        fun bindtext(textView: TextView, text: String){
+            textView.text = text
+        }
+
     }
 }

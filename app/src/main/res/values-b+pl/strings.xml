@@ -4,7 +4,7 @@
     <string name="logo">Logo</string>
     <string name="dialog_positive_button_text">Dodaj</string>
     <string name="dialog_negative_button_text">ANULUJ</string>
-    <string name="text_view_add_new_product">Dodaj nowy produkt</string>
+    <string name="text_view_add_new_product"><u><font fgcolor='#ce93d8'>Dodaj nowy produkt</font></u></string>
     <string name="dialog_hint_add_product">Wpisz nazwe produktu</string>
     <string name="toast_add_order_validation">Proszę, dodać co najmniej jeden produkt</string>
     <string name="toast_add_order_error">"Błąd serwera, proszę odczekać chwilę i spróbować ponownie"</string>

@@ -9,7 +9,7 @@ import androidx.navigation.ui.setupWithNavController
 import com.maskjs.korona_zakupy.R
 import com.maskjs.korona_zakupy.ui.base.UserBaseActivity
 import com.maskjs.korona_zakupy.ui.person_in_quarantine.active.ActiveOrdersFragment
-import com.maskjs.korona_zakupy.ui.person_in_quarantine.active.ChooseOrderTypeDialogFragment
+import com.maskjs.korona_zakupy.ui.person_in_quarantine.active.choose_order_type.ChooseOrderTypeDialogFragment
 
 class PersonInQuarantineActivity : UserBaseActivity(),ActiveOrdersFragment.OnAddOrderButtonClickListener {
 
@@ -33,7 +33,8 @@ class PersonInQuarantineActivity : UserBaseActivity(),ActiveOrdersFragment.OnAdd
 
 
     override fun showChooseOrderTypeDialog(){
-        val chooseOrderTypeDialogFragment = ChooseOrderTypeDialogFragment()
+        val chooseOrderTypeDialogFragment =
+            ChooseOrderTypeDialogFragment()
         val fragmentTransaction = supportFragmentManager.beginTransaction()
         val prev = supportFragmentManager.findFragmentByTag("ChooseOrderDialog")
         if (prev != null)

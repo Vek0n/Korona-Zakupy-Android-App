@@ -68,11 +68,11 @@ class AddProductDialogFragment : DialogFragment() {
     }
 
     private fun setDialogClickListeners(addProductDialog: AlertDialog){
-        dialogBinding.dialogPostiveTextToClick.setOnClickListener {
+        dialogBinding.dialogAddProductAccept.setOnClickListener {
             onPositiveDialogButtonClickedListener(addProductDialog)
         }
 
-        dialogBinding.dialogNegativeTextToClick.setOnClickListener {
+        dialogBinding.dialogAddProductCancel.setOnClickListener {
             dismiss()
         }
     }

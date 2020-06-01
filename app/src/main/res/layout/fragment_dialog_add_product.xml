@@ -75,26 +75,26 @@
             android:layout_marginBottom="20dp"
             android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/dialog_negative_text_to_click"
+            <Button
+                android:id="@+id/dialog_add_product_cancel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
                 android:layout_weight="1"
-                android:clickable="true"
+                android:background="#FF8585"
                 android:text="@string/dialog_negative_button_text"
-                android:textAlignment="center" />
+                android:textColor="@color/primaryTextColor" />
 
-            <TextView
-                android:id="@+id/dialog_postive_text_to_click"
+            <Button
+                android:id="@+id/dialog_add_product_accept"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
                 android:layout_weight="1"
-                android:clickable="true"
+                android:background="#58C031"
                 android:text="@string/dialog_positive_button_text"
-                android:textAlignment="center" />
+                android:textColor="@color/primaryTextColor" />
         </LinearLayout>
 
     </LinearLayout>
 </layout>
-
-<!--  app:onValueChangedListenerNumberPicker="@{addProductDialogViewModel.quantityNumberPickerModel}"   app:onValueChangedListenerNumberPicker="@{addProductDialogViewModel.unitNumberPickerModel}" -->

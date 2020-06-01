@@ -1,4 +1,4 @@
-package com.maskjs.korona_zakupy.ui.person_in_quarantine.active
+package com.maskjs.korona_zakupy.ui.person_in_quarantine.active.choose_order_type
 
 import android.app.Dialog
 import android.content.Intent
@@ -34,6 +34,7 @@ class ChooseOrderTypeDialogFragment : DialogFragment() {
 
     private fun setLayoutBinding(inflater: LayoutInflater,container: ViewGroup?){
         layoutBinding = DataBindingUtil.inflate(inflater,R.layout.fragment_dialog_choose_order_type,container,false)
+        layoutBinding.chooseOrderTypeViewModel = chooseOrderTypeViewModel
     }
 
 
@@ -63,13 +64,15 @@ class ChooseOrderTypeDialogFragment : DialogFragment() {
 
     private fun setOnTextViewClickListeners(
         alertDialog: AlertDialog) {
-        layoutBinding.chooseCancel.setOnClickListener {
+        layoutBinding.chooseOrderButtonCancel.setOnClickListener {
             alertDialog.dismiss()
         }
 
-        layoutBinding.chooseAccept.setOnClickListener {
-            saveOrderType()
-            goToNewOrderActivity()
+        layoutBinding.chooseOrderButtonAccept.setOnClickListener {
+           if(chooseOrderTypeViewModel.validateOrderType()){
+                saveOrderType()
+                goToNewOrderActivity()
+           }
         }
     }
 
@@ -90,7 +93,6 @@ class ChooseOrderTypeDialogFragment : DialogFragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_dialog_choose_order_type, container, false)
     }
 

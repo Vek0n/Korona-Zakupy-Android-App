@@ -13,7 +13,7 @@ class MainActivityViewModel : ViewModel() {
         userRole = savedData.third
     }
 
-   fun chooseActivity() : Activities{
+    fun chooseActivity() : Activities{
        return validateSavedData()
    }
 
