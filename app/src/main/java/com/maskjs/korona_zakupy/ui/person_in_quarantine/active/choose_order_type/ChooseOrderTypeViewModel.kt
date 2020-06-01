@@ -6,15 +6,9 @@ import java.util.*
 
 class ChooseOrderTypeViewModel : ViewModel() {
     var orderType = "unDefined"
-    val response = MutableLiveData<String>()
-
-    init {
-        response.value =""
-    }
 
     fun chooseOrderType(orderType: OrderType){
         this.orderType = orderType.toString().toLowerCase(Locale.ROOT).capitalize()
-        response.value = "Selected: $orderType"
     }
 
     fun validateOrderType() : Boolean{

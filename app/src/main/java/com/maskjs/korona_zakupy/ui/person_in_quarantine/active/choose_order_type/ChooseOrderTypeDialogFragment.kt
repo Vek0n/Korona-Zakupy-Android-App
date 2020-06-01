@@ -34,24 +34,31 @@ class ChooseOrderTypeDialogFragment : DialogFragment() {
 
     private fun setLayoutBinding(inflater: LayoutInflater,container: ViewGroup?){
         layoutBinding = DataBindingUtil.inflate(inflater,R.layout.fragment_dialog_choose_order_type,container,false)
-        layoutBinding.chooseOrderTypeViewModel = chooseOrderTypeViewModel
     }
 
 
     private fun setOnImageButtonClickListeners(){
         layoutBinding.chooseDog.setOnClickListener{
             chooseOrderTypeViewModel.chooseOrderType(ChooseOrderTypeViewModel.OrderType.DOG)
+            setSelectInfo(getString(R.string.chose_order_type_selected_dog))
         }
 
         layoutBinding.chooseGrocery.setOnClickListener{
             chooseOrderTypeViewModel.chooseOrderType(ChooseOrderTypeViewModel.OrderType.GROCERY)
+            setSelectInfo(getString(R.string.chose_order_type_selected_grocery))
         }
         layoutBinding.chooseGroceryPlus.setOnClickListener{
             chooseOrderTypeViewModel.chooseOrderType(ChooseOrderTypeViewModel.OrderType.GROCERY18PLUS)
+            setSelectInfo(getString(R.string.chose_order_type_selected_grocery_18))
         }
         layoutBinding.choosePharmacy.setOnClickListener {
             chooseOrderTypeViewModel.chooseOrderType(ChooseOrderTypeViewModel.OrderType.PHARMACY)
+            setSelectInfo(getString(R.string.chose_order_type_selected_pharmacy))
         }
+    }
+
+    private  fun setSelectInfo(text: String){
+        layoutBinding.selectedTypeInfo.text = text
     }
 
     private fun buildDialog(): AlertDialog {
@@ -73,6 +80,8 @@ class ChooseOrderTypeDialogFragment : DialogFragment() {
                 saveOrderType()
                 goToNewOrderActivity()
            }
+            else
+               setSelectInfo(getString(R.string.chose_order_type_selected_nothing))
         }
     }
 

@@ -1,4 +1,11 @@
 <resources>
+    <!-- POTRZEBNNE TLUMACZENIE -->
+    <string name="chose_order_type_selected_dog">Selected the walking the dog </string>
+    <string name="chose_order_type_selected_grocery">Selected shopping in grocery</string>
+    <string name="chose_order_type_selected_grocery_18">Selected shopping in grocery (18+ articles)</string>
+    <string name="chose_order_type_selected_pharmacy">Selected shopping in pharmacy</string>
+    <string name="chose_order_type_selected_nothing">Please select order type</string>
+    <!-- -->
     <string name="app_name">Korona-Zakupy</string>
     <string name="title_activity_register_part1">Rejestracja</string>
     <string name="logo">Logo</string>
