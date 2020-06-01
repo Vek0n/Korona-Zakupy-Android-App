@@ -3,6 +3,8 @@
     <string name="title_activity_register_part1">Registration</string>
     <string name="logo">Logo</string>
     <!-- Shared Preference -->
+    <string name="global_cancel">CANCEL</string>
+    <string name="global_accept">ACCEPT</string>
     <string name="user_id_key"></string>
     <string name="user_token_key"></string>
     <string name="user_role_key"></string>
@@ -17,7 +19,8 @@
     <string name="chose_order_type_selected_grocery_18">Selected shopping in grocery (18+ articles)</string>
     <string name="chose_order_type_selected_pharmacy">Selected shopping in pharmacy</string>
     <string name="chose_order_type_selected_nothing">Please select order type</string>
-
+    <string name="dog_describe_title">Describe walking the dog</string>
+    <string name="dog_describe_hint">Type additional information</string>
     <!-- -->
     <string name="toast_add_order_validation">Please add at least one product</string>
     <string name="toast_add_order_error">"Server error, please wait a couple minutes and try again"</string>

@@ -10,8 +10,10 @@ import com.maskjs.korona_zakupy.R
 import com.maskjs.korona_zakupy.ui.base.UserBaseActivity
 import com.maskjs.korona_zakupy.ui.person_in_quarantine.active.ActiveOrdersFragment
 import com.maskjs.korona_zakupy.ui.person_in_quarantine.active.choose_order_type.ChooseOrderTypeDialogFragment
+import com.maskjs.korona_zakupy.ui.person_in_quarantine.active.choose_order_type.WalkingDogDescriptionDialogFragment
 
-class PersonInQuarantineActivity : UserBaseActivity(),ActiveOrdersFragment.OnAddOrderButtonClickListener {
+class PersonInQuarantineActivity : UserBaseActivity(),ActiveOrdersFragment.OnAddOrderButtonClickListener,
+    ChooseOrderTypeDialogFragment.OnWalkingDogDescriptionClickListener, WalkingDogDescriptionDialogFragment.OnAddOrder {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,5 +45,22 @@ class PersonInQuarantineActivity : UserBaseActivity(),ActiveOrdersFragment.OnAdd
         }
         fragmentTransaction.addToBackStack(null)
        chooseOrderTypeDialogFragment.show(fragmentTransaction, "ChooseOrderDialog")
+    }
+
+    override fun showWalkingDogDescription() {
+        val walkingDogDescriptionDialogFragment =
+          WalkingDogDescriptionDialogFragment()
+        val fragmentTransaction = supportFragmentManager.beginTransaction()
+        val prev = supportFragmentManager.findFragmentByTag("WalkingDogDescriptionDialog")
+        if (prev != null)
+        {
+            fragmentTransaction.remove(prev)
+        }
+        fragmentTransaction.addToBackStack(null)
+        walkingDogDescriptionDialogFragment.show(fragmentTransaction, "WalkingDogDescriptionDialog")
+    }
+
+    override fun restart() {
+        goToPersonInQuarantineActivity()
     }
 }

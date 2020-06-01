@@ -9,6 +9,8 @@ class ChooseOrderTypeViewModel : ViewModel() {
 
     fun chooseOrderType(orderType: OrderType){
         this.orderType = orderType.toString().toLowerCase(Locale.ROOT).capitalize()
+        if(orderType == OrderType.GROCERY18PLUS)
+            this.orderType = "Grocery18Plus" //awful, but it works
     }
 
     fun validateOrderType() : Boolean{

@@ -1,6 +1,7 @@
 package com.maskjs.korona_zakupy.ui.person_in_quarantine.active.choose_order_type
 
 import android.app.Dialog
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.preference.PreferenceManager
@@ -22,6 +23,14 @@ class ChooseOrderTypeDialogFragment : DialogFragment() {
 
     private lateinit var layoutBinding: FragmentDialogChooseOrderTypeBinding
     private val chooseOrderTypeViewModel: ChooseOrderTypeViewModel by viewModels()
+    private var onWalkingDogDescriptionClickListener : OnWalkingDogDescriptionClickListener? = null
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+
+        onWalkingDogDescriptionClickListener = context as? OnWalkingDogDescriptionClickListener
+    }
+
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog{
         activity?.layoutInflater?.let { setLayoutBinding(it,  null)}
 
@@ -78,7 +87,10 @@ class ChooseOrderTypeDialogFragment : DialogFragment() {
         layoutBinding.chooseOrderButtonAccept.setOnClickListener {
            if(chooseOrderTypeViewModel.validateOrderType()){
                 saveOrderType()
-                goToNewOrderActivity()
+               if(chooseOrderTypeViewModel.orderType == "Dog")
+                   showChooseOrderTypeDialog()
+               else
+                    goToNewOrderActivity()
            }
             else
                setSelectInfo(getString(R.string.chose_order_type_selected_nothing))
@@ -93,6 +105,11 @@ class ChooseOrderTypeDialogFragment : DialogFragment() {
         }
     }
 
+
+    private fun showChooseOrderTypeDialog(){
+      onWalkingDogDescriptionClickListener?.showWalkingDogDescription()
+    }
+
     private fun goToNewOrderActivity(){
         val intent = Intent(context, NewOrderActivity::class.java)
          startActivity(intent)
@@ -105,4 +122,7 @@ class ChooseOrderTypeDialogFragment : DialogFragment() {
         return inflater.inflate(R.layout.fragment_dialog_choose_order_type, container, false)
     }
 
+    interface OnWalkingDogDescriptionClickListener{
+       fun showWalkingDogDescription()
+    }
 }

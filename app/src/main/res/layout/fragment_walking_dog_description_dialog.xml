@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".ui.person_in_quarantine.active.choose_order_type.WalkingDogDescriptionDialogFragment">
+
+    <data>
+        <variable
+            name="walkingDogDescriptionViewModel"
+            type="com.maskjs.korona_zakupy.ui.person_in_quarantine.active.choose_order_type.WalkingDodDescriptionViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColorHint="@color/secondaryTextColor"
+            app:hintEnabled="true">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="0dp"
+                android:hint="@string/dog_describe_hint"
+                android:inputType="textShortMessage|textLongMessage"
+                android:text="@={walkingDogDescriptionViewModel.walkingTheDogDescription}" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/dog_button_cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_weight="1"
+                android:background="#FF8585"
+                android:text="@string/global_cancel"
+                android:textColor="@color/secondaryTextColor" />
+
+            <Button
+                android:id="@+id/dog_button_accept"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_weight="1"
+                android:background="#58C031"
+                android:text="@string/global_accept"
+                android:textColor="@color/secondaryTextColor"
+                android:textColorHighlight="#FFFFFF" />
+        </LinearLayout>
+
+    </LinearLayout>
+</layout>

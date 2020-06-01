@@ -5,6 +5,10 @@
     <string name="chose_order_type_selected_grocery_18">Selected shopping in grocery (18+ articles)</string>
     <string name="chose_order_type_selected_pharmacy">Selected shopping in pharmacy</string>
     <string name="chose_order_type_selected_nothing">Please select order type</string>
+    <string name="dog_describe_title">Describe walking the dog</string>
+    <string name="dog_describe_hint">Type additional information</string>
+    <string name="global_cancel">CANCEL</string>
+    <string name="global_accept">ACCEPT</string>
     <!-- -->
     <string name="app_name">Korona-Zakupy</string>
     <string name="title_activity_register_part1">Rejestracja</string>
