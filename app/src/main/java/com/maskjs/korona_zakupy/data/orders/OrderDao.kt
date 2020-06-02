@@ -39,4 +39,7 @@ class OrderDao(private val client: OkHttpClient) : IDataAccessObject{
     suspend fun checkConfirmation(orderId: Long, token: String):String
         = APIGetRequestAuth("http://korona-zakupy.hostingasp.pl/api/orders/confirm/check/$orderId",token, client)
 
+    suspend fun deleteOrder(orderId: Long, token: String): String
+            = APIDeleteRequestAuth("http://korona-zakupy.hostingasp.pl/api/orders/$orderId",token,client)
+
 }

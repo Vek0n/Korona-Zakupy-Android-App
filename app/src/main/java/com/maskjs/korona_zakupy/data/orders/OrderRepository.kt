@@ -41,4 +41,7 @@ class OrderRepository<T: Any>(private val orderDao: OrderDao): IRepository<T>{
     suspend fun checkConfirmation(orderId: Long,token: String): Boolean
             = orderDao.checkConfirmation(orderId, token)
                 .toBoolean()
+
+    suspend fun deleteOrder(orderId: Long,token: String): String
+            = orderDao.deleteOrder(orderId, token)
 }

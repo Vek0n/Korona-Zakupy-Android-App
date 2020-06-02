@@ -64,4 +64,17 @@ interface IDataAccessObject{
             return response.body!!.string()
         }
     }
+
+    suspend fun APIDeleteRequestAuth(urlString: String, headerToken: String, client: OkHttpClient):String{
+        val request = Request.Builder()
+            .url(urlString)
+            .addHeader("Content-Type","application/json")
+            .addHeader("Authorization", "Bearer $headerToken")
+            .delete()
+            .build()
+
+        val response = client.newCall(request).execute()
+
+        return response.body!!.string()
+    }
 }

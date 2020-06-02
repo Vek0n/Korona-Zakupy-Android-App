@@ -22,7 +22,7 @@ import com.maskjs.korona_zakupy.ui.person_in_quarantine.QuarantineOrdersListAdap
 import kotlinx.android.synthetic.main.quarantine_active_order_details_popup.view.*
 import kotlinx.coroutines.*
 
-class ActiveOrdersFragment : BaseFragment() {
+class ActiveOrdersFragment :BaseFragment() {
 
     private lateinit var activeOrdersViewModel: ActiveOrdersViewModel
     private lateinit var listView: ListView
@@ -145,6 +145,9 @@ class ActiveOrdersFragment : BaseFragment() {
 
         dialogView.cancel_order_q.setOnClickListener {
             refreshFragment()
+            CoroutineScope(Dispatchers.IO).launch {
+                activeOrdersViewModel.deleteOrder(orderId, token)
+            }
             alertDialog.dismiss()
         }
 

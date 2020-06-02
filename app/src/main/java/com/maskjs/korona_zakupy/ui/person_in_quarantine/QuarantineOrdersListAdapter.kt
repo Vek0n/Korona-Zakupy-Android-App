@@ -159,7 +159,7 @@ class QuarantineOrdersListAdapter(private val context: Context,
 
         private val LABEL_TYPE_OF_ORDER = hashMapOf(
             "Grocery" to R.drawable.groceries_avatar,
-            "Grocery18plus" to R.drawable.groceries_avatar_18plus,
+            "Grocery18Plus" to R.drawable.groceries_avatar_18plus,
             "Pharmacy" to R.drawable.pharmacy_avatar,
             "Dog" to R.drawable.dog_avatar
         )

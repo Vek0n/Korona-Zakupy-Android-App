@@ -26,4 +26,9 @@ class ActiveOrdersViewModel : ViewModel() {
         return OrderRepository<Any>(OrderDao(OkHttpClient()))
             .confirmOrder(userId, orderId, token)
     }
+
+    suspend fun deleteOrder(orderId: Long, token: String): String{
+        return OrderRepository<Any>(OrderDao(OkHttpClient()))
+            .deleteOrder(orderId, token)
+    }
 }
