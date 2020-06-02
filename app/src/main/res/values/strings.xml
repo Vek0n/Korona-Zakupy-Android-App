@@ -14,12 +14,12 @@
     <string name="order_type_grocery18">Grocery 18+</string>
     <string name="order_type_pharmacy">Pharmacy</string>
     <!--    -->
-    <string name="chose_order_type_selected_dog">Selected the walking the dog </string>
-    <string name="chose_order_type_selected_grocery">Selected shopping in grocery shop</string>
-    <string name="chose_order_type_selected_grocery_18">Selected shopping in grocery shop (18+ articles)</string>
-    <string name="chose_order_type_selected_pharmacy">Selected shopping in pharmacy </string>
+    <string name="chose_order_type_selected_dog">Walking a dog</string>
+    <string name="chose_order_type_selected_grocery">Grocery shopping</string>
+    <string name="chose_order_type_selected_grocery_18">Grocery shopping (18+ articles)</string>
+    <string name="chose_order_type_selected_pharmacy">Pharmacy</string>
     <string name="chose_order_type_selected_nothing">Please select order type</string>
-    <string name="dog_describe_title">Describe walking the dog</string>
+    <string name="dog_describe_title">Few words about your doggie</string>
     <string name="dog_describe_hint">Type additional information</string>
     <!-- -->
     <string name="toast_add_order_validation">Please add at least one product</string>
@@ -119,7 +119,7 @@
     <string name="review_of_volunteer_title">Rate the volunteer: </string>
     <string name="please_review">Please rate the orderer first</string>
     <string name="nothing_here_active_quarantine">Nothing\'s here, feel free to add an order</string>
-    <string name="nothing_here_history">You don\'t have any finished orders</string>
+    <string name="nothing_here_history">Your finished orders will be listed here</string>
     <string name="nothing_here_active_volunteer">You haven\'t accepted any order</string>
     <string name="nothing_here_available_volunteer">There are no available orders</string>
 
