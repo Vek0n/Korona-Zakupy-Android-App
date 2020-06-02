@@ -42,9 +42,7 @@ class LoginActivity : BaseActivity() {
         setContentView(R.layout.activity_login)
         setSupportActionBar(toolbar)
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
-        uiDataBinding = DataBindingUtil.setContentView(this,
-            R.layout.activity_login
-        )
+        uiDataBinding = DataBindingUtil.setContentView(this, R.layout.activity_login)
         uiDataBinding.loginViewModel = loginViewModel
         uiDataBinding.lifecycleOwner = this
     }

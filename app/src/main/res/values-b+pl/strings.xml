@@ -9,6 +9,8 @@
     <string name="dog_describe_hint">Podaj dodatkowe informacje</string>
     <string name="global_cancel">ANULUJ</string>
     <string name="global_accept">OK</string>
+    <string name="global_login">Logowanie</string>
+    <string name="global_register">Rejestracja</string>
     <!-- -->
     <string name="app_name">Korona-Zakupy</string>
     <string name="title_activity_register_part1">Rejestracja</string>

@@ -3,6 +3,8 @@
     <string name="title_activity_register_part1">Registration</string>
     <string name="logo">Logo</string>
     <!-- Shared Preference -->
+    <string name="global_login">Login</string>
+    <string name="global_register">Register</string>
     <string name="global_cancel">CANCEL</string>
     <string name="global_accept">ACCEPT</string>
     <string name="user_id_key"></string>
