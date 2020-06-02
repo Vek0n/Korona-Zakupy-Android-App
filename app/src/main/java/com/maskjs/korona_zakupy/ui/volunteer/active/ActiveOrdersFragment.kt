@@ -26,7 +26,7 @@ class ActiveOrdersFragment : BaseFragment() {
     private  lateinit var listView: ListView
     private lateinit var progressBar: ProgressBar
     private lateinit var adapterOrders: VolunteerOrdersListAdapter
-
+    private lateinit var nothingsHere: TextView
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -48,6 +48,7 @@ class ActiveOrdersFragment : BaseFragment() {
 
         listView = root.findViewById(R.id.listViewActiveOrders) as ListView
         progressBar = root.findViewById(R.id.pBar) as ProgressBar
+        nothingsHere = root.findViewById(R.id.nothingHereActiveVolunteer)
 
         CoroutineScope(IO).launch {
             LoadingSpinner().showLoadingDialog(progressBar)
@@ -55,6 +56,11 @@ class ActiveOrdersFragment : BaseFragment() {
                 try {
                     val data = activeOrdersViewModel.getActiveOrdersFromRepository(userId, token)
                     setListViewAdapterOnMainThread(data, context)
+                    if (data.size == 0){
+                        withContext(Dispatchers.Main){
+                            nothingsHere.visibility = View.VISIBLE
+                        }
+                    }
                 }catch (ex: Exception){
                     val data = arrayListOf<GetOrderDto>()
                     setListViewAdapterOnMainThread(data, context)

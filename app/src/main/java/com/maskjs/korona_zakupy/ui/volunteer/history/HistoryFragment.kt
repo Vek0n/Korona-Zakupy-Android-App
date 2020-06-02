@@ -28,6 +28,7 @@ class HistoryFragment : BaseFragment() {
     private lateinit var progressBar: ProgressBar
     private lateinit var adapterOrders: VolunteerOrdersListAdapter
     private lateinit var ratingBar: RatingBar
+    private lateinit var nothingsHere: TextView
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -43,10 +44,23 @@ class HistoryFragment : BaseFragment() {
         val root = inflater.inflate(R.layout.fragment_history, container, false)
         val context = requireContext()
 
+<<<<<<< HEAD
         val userId = getUserId()?: ""
         val token = getUserToken()?: ""
          listView = root.findViewById(R.id.listViewHistory) as ListView
+||||||| 144dd81
+        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
+        val userId = sharedPreferences.getString(R.string.user_id_key.toString(),"")
+        val token = sharedPreferences.getString(R.string.user_token_key.toString(),"")
+         listView = root.findViewById(R.id.listViewHistory) as ListView
+=======
+        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
+        val userId = sharedPreferences.getString(R.string.user_id_key.toString(),"")
+        val token = sharedPreferences.getString(R.string.user_token_key.toString(),"")
+        listView = root.findViewById(R.id.listViewHistory) as ListView
+>>>>>>> af5afeea3e3227abbd8c696127597c27bacd3916
         progressBar = root.findViewById(R.id.pBar) as ProgressBar
+        nothingsHere = root.findViewById(R.id.nothingHereHistory) as TextView
 
         CoroutineScope(Dispatchers.IO).launch {
             LoadingSpinner().showLoadingDialog(progressBar)
@@ -54,6 +68,11 @@ class HistoryFragment : BaseFragment() {
                 try {
                     val data = historyViewModel.getHistoryOrdersFromRepository(userId, token)
                     setListViewAdapterOnMainThread(context, data)
+                    if (data.size == 0){
+                        withContext(Dispatchers.Main){
+                            nothingsHere.visibility = View.VISIBLE
+                        }
+                    }
                 }catch (ex: Exception){
                     val data = arrayListOf<GetOrderDto>()
                     setListViewAdapterOnMainThread(context, data)

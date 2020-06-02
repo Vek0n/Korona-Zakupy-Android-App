@@ -27,5 +27,20 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:visibility="gone"/>
+
+    <TextView
+        android:id="@+id/nothingHereActiveVolunteer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal|center_vertical"
+        android:text="@string/nothing_here_active_volunteer"
+        android:textColor="#434343"
+        android:textSize="25sp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
 
