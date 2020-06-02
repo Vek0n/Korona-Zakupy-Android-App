@@ -27,6 +27,20 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
+    <TextView
+        android:id="@+id/nothingHereActiveQuarantine"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal|center_vertical"
+        android:text="@string/nothing_here_active_quarantine"
+        android:textColor="#434343"
+        android:textSize="25sp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/listViewActiveOrders"
+        app:layout_constraintEnd_toEndOf="@+id/listViewActiveOrders"
+        app:layout_constraintStart_toStartOf="@+id/listViewActiveOrders"
+        app:layout_constraintTop_toTopOf="@+id/listViewActiveOrders" />
+
     <ProgressBar
         android:id="@+id/pBar"
         style="?android:attr/progressBarStyleLarge"
@@ -38,4 +52,5 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:visibility="gone"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

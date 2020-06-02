@@ -27,6 +27,7 @@ class HistoryFragment : UserBaseFragment() {
     private lateinit var progressBar: ProgressBar
     private lateinit var adapterQuarantineOrders: QuarantineOrdersListAdapter
     private lateinit var ratingBar: RatingBar
+    private lateinit var nothingsHere: TextView
 
 
     override fun onCreateView(
@@ -50,6 +51,7 @@ class HistoryFragment : UserBaseFragment() {
         val token = sharedPreferences.getString(R.string.user_token_key.toString(),"")
         listView = root.findViewById(R.id.listViewHistory) as ListView
         progressBar = root.findViewById(R.id.pBar) as ProgressBar
+        nothingsHere = root.findViewById(R.id.nothingHereHistory) as TextView
 
         CoroutineScope(Dispatchers.IO).launch {
             LoadingSpinner().showLoadingDialog(progressBar)
@@ -57,10 +59,16 @@ class HistoryFragment : UserBaseFragment() {
                 try {
                     val data = historyViewModel.getHistoryOrdersFromRepository(userId, token)
                     setListViewAdapterOnMainThread(context, data)
+                    if (data.size == 0){
+                        withContext(Dispatchers.Main){
+                            nothingsHere.visibility = View.VISIBLE
+                        }
+                    }
                 }catch (ex: Exception){
                     val data = arrayListOf<GetOrderDto>()
                     setListViewAdapterOnMainThread(context, data)
                 }
+
             }
             LoadingSpinner().hideLoadingDialog(progressBar)
         }

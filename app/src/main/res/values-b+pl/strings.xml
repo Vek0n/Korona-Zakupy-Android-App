@@ -89,6 +89,10 @@
     <string name="review_of_person_in_quarantine_title">Oceń zleceniodawcę: </string>
     <string name="review_of_volunteer_title">Oceń wolontariusza: </string>
     <string name="please_review">Najpierw wystaw ocenę</string>
+    <string name="nothing_here_active_quarantine">Nie dodałeś jeszcze żadnego zlecenia</string>
+    <string name="nothing_here_history">Tutaj wyświetlą się wszystkie Twoje zakończone zlecenia</string>
+    <string name="nothing_here_active_volunteer">Nie przyjąłeś jeszcze żadnego zlecenia</string>
+    <string name="nothing_here_available_volunteer">Obecnie nie ma dostępnych zleceń</string>
 
 
 </resources>

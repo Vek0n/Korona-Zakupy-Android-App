@@ -118,6 +118,10 @@
     <string name="review_of_person_in_quarantine_title">Rate the orderer:</string>
     <string name="review_of_volunteer_title">Rate the volunteer: </string>
     <string name="please_review">Please rate the orderer first</string>
+    <string name="nothing_here_active_quarantine">Nothing\'s here, feel free to add an order</string>
+    <string name="nothing_here_history">You don\'t have any finished orders</string>
+    <string name="nothing_here_active_volunteer">You haven\'t accepted any order</string>
+    <string name="nothing_here_available_volunteer">There are no available orders</string>
 
 
 </resources>

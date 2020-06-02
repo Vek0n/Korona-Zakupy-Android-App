@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.ListView
 import android.widget.ProgressBar
+import android.widget.TextView
 import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
@@ -29,7 +30,9 @@ class ActiveOrdersFragment : UserBaseFragment() {
     private lateinit var listView: ListView
     private lateinit var progressBar: ProgressBar
     private lateinit var adapterQuarantineOrders: QuarantineOrdersListAdapter
+    private lateinit var nothingHereTV: TextView
     private  var onAddOrderButtonClickListener: OnAddOrderButtonClickListener? = null
+
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -63,6 +66,7 @@ class ActiveOrdersFragment : UserBaseFragment() {
         val token = sharedPreferences.getString(R.string.user_token_key.toString(),"")
         listView = root.findViewById(R.id.listViewActiveOrders) as ListView
         progressBar = root.findViewById(R.id.pBar) as ProgressBar
+        nothingHereTV = root.findViewById(R.id.nothingHereActiveQuarantine) as TextView
 
         CoroutineScope(Dispatchers.IO).launch {
             LoadingSpinner().showLoadingDialog(progressBar)
@@ -70,6 +74,11 @@ class ActiveOrdersFragment : UserBaseFragment() {
                 try {
                     val data = activeOrdersViewModel.getActiveOrdersFromRepository(userId, token)
                     setListViewAdapterOnMainThread(data, context)
+                    if (data.size == 0){
+                        withContext(Dispatchers.Main){
+                            nothingHereTV.visibility = View.VISIBLE
+                        }
+                    }
                 }catch (ex: Exception){
                     val data = arrayListOf<GetOrderDto>()
                     setListViewAdapterOnMainThread(data, context)
