@@ -48,7 +48,7 @@
                 android:layout_weight="1"
                 android:background="#FF8585"
                 android:text="@string/global_cancel"
-                android:textColor="@color/secondaryTextColor" />
+                android:textColor="@color/primaryTextColor" />
 
             <Button
                 android:id="@+id/dog_button_accept"
@@ -60,7 +60,7 @@
                 android:layout_weight="1"
                 android:background="#58C031"
                 android:text="@string/global_accept"
-                android:textColor="@color/secondaryTextColor"
+                android:textColor="@color/primaryTextColor"
                 android:textColorHighlight="#FFFFFF" />
         </LinearLayout>
 

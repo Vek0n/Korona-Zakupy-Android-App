@@ -87,13 +87,13 @@ class ChooseOrderTypeDialogFragment : DialogFragment() {
         layoutBinding.chooseOrderButtonAccept.setOnClickListener {
            if(chooseOrderTypeViewModel.validateOrderType()){
                 saveOrderType()
-               if(chooseOrderTypeViewModel.orderType == "Dog")
+               if(chooseOrderTypeViewModel.orderType == "Dog"){
                    showChooseOrderTypeDialog()
-               else
+               } else
                     goToNewOrderActivity()
-           }
-            else
+           } else {
                setSelectInfo(getString(R.string.chose_order_type_selected_nothing))
+           }
         }
     }
 

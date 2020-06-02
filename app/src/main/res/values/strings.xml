@@ -15,9 +15,9 @@
     <string name="order_type_pharmacy">Pharmacy</string>
     <!--    -->
     <string name="chose_order_type_selected_dog">Selected the walking the dog </string>
-    <string name="chose_order_type_selected_grocery">Selected shopping in grocery</string>
-    <string name="chose_order_type_selected_grocery_18">Selected shopping in grocery (18+ articles)</string>
-    <string name="chose_order_type_selected_pharmacy">Selected shopping in pharmacy</string>
+    <string name="chose_order_type_selected_grocery">Selected shopping in grocery shop</string>
+    <string name="chose_order_type_selected_grocery_18">Selected shopping in grocery shop (18+ articles)</string>
+    <string name="chose_order_type_selected_pharmacy">Selected shopping in pharmacy </string>
     <string name="chose_order_type_selected_nothing">Please select order type</string>
     <string name="dog_describe_title">Describe walking the dog</string>
     <string name="dog_describe_hint">Type additional information</string>
@@ -26,7 +26,7 @@
     <string name="toast_add_order_error">"Server error, please wait a couple minutes and try again"</string>
     <string name="dialog_positive_button_text">ADD</string>
     <string name="dialog_negative_button_text">CANCEL</string>
-    <string name="text_view_add_new_product"><u><font fgcolor='#ce93d8'>Add product</font></u></string>
+    <string name="text_view_add_new_product"><u>Add product</u></string>
     <string name="dialog_hint_add_product">Type product name</string>
     <string name="global_menu_logout">Log out</string>
     <string-array name="dialog_number_picker_values">

@@ -7,11 +7,13 @@ import android.os.Bundle
 import android.preference.PreferenceManager
 import android.view.*
 import android.widget.*
+import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.ViewModelProviders
 import com.maskjs.korona_zakupy.R
 import com.maskjs.korona_zakupy.data.orders.data_transfer_object.GetOrderDto
+import com.maskjs.korona_zakupy.ui.base.UserBaseFragment
 import com.maskjs.korona_zakupy.utils.LoadingSpinner
 import com.maskjs.korona_zakupy.ui.volunteer.VolunteerOrdersListAdapter
 import kotlinx.android.synthetic.main.active_order_details_popup.view.*
@@ -20,7 +22,7 @@ import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
 import kotlin.Exception
 
-class ActiveOrdersFragment : Fragment() {
+class ActiveOrdersFragment : UserBaseFragment() {
 
     private lateinit var activeOrdersViewModel: ActiveOrdersViewModel
     private  lateinit var listView: ListView
@@ -33,6 +35,10 @@ class ActiveOrdersFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        val callback = requireActivity().onBackPressedDispatcher.addCallback(this) {
+            onBackPress?.leaveApp()
+        }
+
         activeOrdersViewModel =
             ViewModelProviders.of(this).get(ActiveOrdersViewModel::class.java)
 

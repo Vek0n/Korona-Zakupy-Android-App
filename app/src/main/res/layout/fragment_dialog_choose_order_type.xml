@@ -79,7 +79,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="#FF8585"
-                android:text="@string/global_cancel" />
+                android:text="@string/global_cancel"
+                android:textColor="@color/primaryTextColor" />
 
             <Button
                 android:id="@+id/choose_order_button_accept"
@@ -87,7 +88,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="#58C031"
-                android:text="@string/global_accept" />
+                android:text="@string/global_accept"
+                android:textColor="@color/primaryTextColor" />
         </LinearLayout>
     </LinearLayout>
 

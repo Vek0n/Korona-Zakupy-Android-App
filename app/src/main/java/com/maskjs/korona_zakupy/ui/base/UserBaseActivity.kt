@@ -13,8 +13,9 @@ import com.maskjs.korona_zakupy.ui.new_order.NewOrderActivity
 import com.maskjs.korona_zakupy.ui.person_in_quarantine.PersonInQuarantineActivity
 import com.maskjs.korona_zakupy.ui.register.RegisterActivity
 import com.maskjs.korona_zakupy.ui.volunteer.VolunteerActivity
+import kotlin.system.exitProcess
 
-abstract class UserBaseActivity : AppCompatActivity() {
+abstract class UserBaseActivity : AppCompatActivity(), UserBaseFragment.OnBackPress {
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         val inflater: MenuInflater = menuInflater
@@ -54,23 +55,8 @@ abstract class UserBaseActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
-     protected fun goToLoginActivity(){
-         val intent = Intent(this, LoginActivity::class.java)
-         startActivity(intent)
-     }
-
-     protected fun goToNewOrderActivity(){
-         val intent = Intent(this, NewOrderActivity::class.java)
-         startActivity(intent)
-     }
-
-     protected fun goToRegisterActivity(){
-         val intent = Intent(this, RegisterActivity::class.java)
-         startActivity(intent)
-     }
-
-     protected fun goToVolunteerActivity(){
-         val intent = Intent(this, VolunteerActivity::class.java)
-         startActivity(intent)
-     }
+    override fun leaveApp(){
+        moveTaskToBack(true)
+        this.finishAndRemoveTask()
+    }
 }

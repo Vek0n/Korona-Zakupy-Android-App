@@ -49,6 +49,11 @@ class MainActivity : NonUserBaseActivity() {
 
     }
 
+    override fun onRestart() {
+        super.onRestart()
+        navigateBetweenActivities()
+    }
+
     private fun navigateBetweenActivities(){
         readSavedData()
         chooseActivity()

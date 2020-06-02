@@ -9,10 +9,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import com.maskjs.korona_zakupy.R
 import com.maskjs.korona_zakupy.data.orders.data_transfer_object.GetOrderDto
+import com.maskjs.korona_zakupy.ui.base.UserBaseFragment
 import com.maskjs.korona_zakupy.utils.LoadingSpinner
 import com.maskjs.korona_zakupy.ui.volunteer.VolunteerOrdersListAdapter
 import kotlinx.android.synthetic.main.available_order_details_popup.view.*
@@ -20,7 +22,7 @@ import kotlinx.android.synthetic.main.available_order_details_popup.view.cancel_
 import kotlinx.coroutines.*
 import kotlin.Exception
 
-class AvailableOrdersFragment : Fragment() {
+class AvailableOrdersFragment : UserBaseFragment() {
 
     private lateinit var availableOrdersViewModel: AvailableOrdersViewModel
     private lateinit var listView: ListView
@@ -32,6 +34,10 @@ class AvailableOrdersFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        val callback = requireActivity().onBackPressedDispatcher.addCallback(this) {
+            onBackPress?.leaveApp()
+        }
+
         availableOrdersViewModel =
             ViewModelProviders.of(this).get(AvailableOrdersViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_available_orders, container, false)

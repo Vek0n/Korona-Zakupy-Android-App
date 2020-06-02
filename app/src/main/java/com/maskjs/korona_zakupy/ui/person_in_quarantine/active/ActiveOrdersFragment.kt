@@ -11,17 +11,19 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.ListView
 import android.widget.ProgressBar
+import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.maskjs.korona_zakupy.R
 import com.maskjs.korona_zakupy.data.orders.data_transfer_object.GetOrderDto
+import com.maskjs.korona_zakupy.ui.base.UserBaseFragment
 import com.maskjs.korona_zakupy.utils.LoadingSpinner
 import com.maskjs.korona_zakupy.ui.person_in_quarantine.QuarantineOrdersListAdapter
 import kotlinx.android.synthetic.main.quarantine_active_order_details_popup.view.*
 import kotlinx.coroutines.*
 
-class ActiveOrdersFragment : Fragment() {
+class ActiveOrdersFragment : UserBaseFragment() {
 
     private lateinit var activeOrdersViewModel: ActiveOrdersViewModel
     private lateinit var listView: ListView
@@ -40,6 +42,12 @@ class ActiveOrdersFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
+        val callback = requireActivity().onBackPressedDispatcher.addCallback(this) {
+            onBackPress?.leaveApp()
+        }
+
+
         activeOrdersViewModel =
             ViewModelProviders.of(this).get(ActiveOrdersViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_active_orders_quarantine, container, false)

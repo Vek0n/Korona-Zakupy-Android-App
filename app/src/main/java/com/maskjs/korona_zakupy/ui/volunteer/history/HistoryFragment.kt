@@ -10,10 +10,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import android.widget.RatingBar.OnRatingBarChangeListener
-import androidx.fragment.app.Fragment
+import androidx.activity.addCallback
 import androidx.lifecycle.ViewModelProviders
 import com.maskjs.korona_zakupy.R
 import com.maskjs.korona_zakupy.data.orders.data_transfer_object.GetOrderDto
+import com.maskjs.korona_zakupy.ui.base.UserBaseFragment
 import com.maskjs.korona_zakupy.utils.LoadingSpinner
 import com.maskjs.korona_zakupy.ui.volunteer.VolunteerOrdersListAdapter
 import kotlinx.android.synthetic.main.history_order_details_popup_volunteer.view.*
@@ -21,7 +22,7 @@ import kotlinx.android.synthetic.main.rating_popup.view.*
 import kotlinx.coroutines.*
 
 
-class HistoryFragment : Fragment() {
+class HistoryFragment : UserBaseFragment() {
 
     private lateinit var historyViewModel: HistoryViewModel
     private lateinit var listView: ListView
@@ -34,6 +35,10 @@ class HistoryFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        val callback = requireActivity().onBackPressedDispatcher.addCallback(this) {
+            onBackPress?.leaveApp()
+        }
+
         historyViewModel =
             ViewModelProviders.of(this).get(HistoryViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_history, container, false)
