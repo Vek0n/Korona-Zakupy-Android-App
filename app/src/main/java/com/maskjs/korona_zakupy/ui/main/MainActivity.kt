@@ -59,9 +59,7 @@ class MainActivity : BaseActivity() {
     }
 
     private fun readSavedData(){
-        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
-        val savedData = Triple(sharedPreferences.getString(R.string.user_id_key.toString(),""),
-            sharedPreferences.getString(R.string.user_token_key.toString(),""),sharedPreferences.getString(R.string.user_role_key.toString(),""))
+        val savedData = Triple(getUserId()!!,getUserToken()!!,getUserRole()!!)
         mainActivityViewModel.readSavedData(savedData)
     }
 

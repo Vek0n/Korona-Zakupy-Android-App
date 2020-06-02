@@ -52,6 +52,10 @@ abstract class BaseActivity : AppCompatActivity() {
         return  sharedPreferences?.getString(R.string.user_token_key.toString(),"")
     }
 
+    protected fun getUserRole(): String?{
+        return sharedPreferences?.getString(R.string.user_role_key.toString(),"")
+    }
+
     protected fun getNewOrderType(): String?{
 
         return sharedPreferences?.getString(R.string.new_order_type.toString(),"")

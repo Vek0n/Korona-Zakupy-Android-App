@@ -48,7 +48,6 @@ class ActiveOrdersFragment : BaseFragment() {
             onBackPress?.leaveApp()
         }
 
-
         activeOrdersViewModel =
             ViewModelProviders.of(this).get(ActiveOrdersViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_active_orders_quarantine, container, false)
