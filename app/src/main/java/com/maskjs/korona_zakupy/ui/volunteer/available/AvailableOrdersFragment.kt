@@ -4,17 +4,15 @@ import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Context
 import android.os.Bundle
-import android.preference.PreferenceManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.activity.addCallback
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import com.maskjs.korona_zakupy.R
 import com.maskjs.korona_zakupy.data.orders.data_transfer_object.GetOrderDto
-import com.maskjs.korona_zakupy.ui.base.UserBaseFragment
+import com.maskjs.korona_zakupy.ui.base.BaseFragment
 import com.maskjs.korona_zakupy.utils.LoadingSpinner
 import com.maskjs.korona_zakupy.ui.volunteer.VolunteerOrdersListAdapter
 import kotlinx.android.synthetic.main.available_order_details_popup.view.*
@@ -22,7 +20,7 @@ import kotlinx.android.synthetic.main.available_order_details_popup.view.cancel_
 import kotlinx.coroutines.*
 import kotlin.Exception
 
-class AvailableOrdersFragment : UserBaseFragment() {
+class AvailableOrdersFragment : BaseFragment() {
 
     private lateinit var availableOrdersViewModel: AvailableOrdersViewModel
     private lateinit var listView: ListView
@@ -43,9 +41,8 @@ class AvailableOrdersFragment : UserBaseFragment() {
         val root = inflater.inflate(R.layout.fragment_available_orders, container, false)
         val context = requireContext()
 
-        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
-        val userId = sharedPreferences.getString(R.string.user_id_key.toString(),"")
-        val token = sharedPreferences.getString(R.string.user_token_key.toString(),"")
+        val userId = getUserId()?: ""
+        val token = getUserToken()?: ""
 
         listView = root.findViewById(R.id.listViewAvailableOrders) as ListView
         progressBar = root.findViewById(R.id.pBar) as ProgressBar

@@ -15,15 +15,15 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.maskjs.korona_zakupy.R
 import com.maskjs.korona_zakupy.databinding.FragmentRegisterPart3Binding
+import com.maskjs.korona_zakupy.ui.base.BaseFragment
 import com.maskjs.korona_zakupy.ui.register.IRegisterNavigation
 import kotlinx.coroutines.*
 
-class RegisterPart3Fragment : Fragment() {
+class RegisterPart3Fragment : BaseFragment() {
 
     private var registerNavigation: IRegisterNavigation? = null
     private val registerViewModel: RegisterPartThreeViewModel by viewModels()
     private lateinit var uiDataBinding: FragmentRegisterPart3Binding
-    private lateinit var sharedPreferences: SharedPreferences
     private lateinit var errorMessages: Map<String,String>
 
     override fun onAttach(context: Context) {
@@ -125,11 +125,7 @@ class RegisterPart3Fragment : Fragment() {
     }
 
     private  fun saveResponse(){
-        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
-        sharedPreferences.edit(){
-            putString(R.string.user_id_key.toString(), registerViewModel.userRegisterResponseDto.userId)
-            putString(R.string.user_token_key.toString(),registerViewModel.userRegisterResponseDto.token)
-            commit()
-        }
+        setUserId(registerViewModel.userRegisterResponseDto.userId)
+        setUserToken(registerViewModel.userRegisterResponseDto.token)
     }
 }

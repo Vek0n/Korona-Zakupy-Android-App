@@ -12,9 +12,10 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.maskjs.korona_zakupy.R
 import com.maskjs.korona_zakupy.databinding.FragmentRegisterPart2Binding
+import com.maskjs.korona_zakupy.ui.base.BaseFragment
 import com.maskjs.korona_zakupy.ui.register.IRegisterNavigation
 
-class RegisterPart2Fragment : Fragment() {
+class RegisterPart2Fragment : BaseFragment() {
 
     private var registerNavigation: IRegisterNavigation? = null
     private val registerViewModel: RegisterPartTwoViewModel by viewModels()

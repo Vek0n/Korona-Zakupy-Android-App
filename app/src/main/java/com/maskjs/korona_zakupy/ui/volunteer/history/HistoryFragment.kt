@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Context
 import android.os.Bundle
-import android.preference.PreferenceManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,7 +13,7 @@ import androidx.activity.addCallback
 import androidx.lifecycle.ViewModelProviders
 import com.maskjs.korona_zakupy.R
 import com.maskjs.korona_zakupy.data.orders.data_transfer_object.GetOrderDto
-import com.maskjs.korona_zakupy.ui.base.UserBaseFragment
+import com.maskjs.korona_zakupy.ui.base.BaseFragment
 import com.maskjs.korona_zakupy.utils.LoadingSpinner
 import com.maskjs.korona_zakupy.ui.volunteer.VolunteerOrdersListAdapter
 import kotlinx.android.synthetic.main.history_order_details_popup_volunteer.view.*
@@ -22,7 +21,7 @@ import kotlinx.android.synthetic.main.rating_popup.view.*
 import kotlinx.coroutines.*
 
 
-class HistoryFragment : UserBaseFragment() {
+class HistoryFragment : BaseFragment() {
 
     private lateinit var historyViewModel: HistoryViewModel
     private lateinit var listView: ListView
@@ -44,9 +43,8 @@ class HistoryFragment : UserBaseFragment() {
         val root = inflater.inflate(R.layout.fragment_history, container, false)
         val context = requireContext()
 
-        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
-        val userId = sharedPreferences.getString(R.string.user_id_key.toString(),"")
-        val token = sharedPreferences.getString(R.string.user_token_key.toString(),"")
+        val userId = getUserId()?: ""
+        val token = getUserToken()?: ""
          listView = root.findViewById(R.id.listViewHistory) as ListView
         progressBar = root.findViewById(R.id.pBar) as ProgressBar
 

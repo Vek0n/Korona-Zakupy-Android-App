@@ -14,14 +14,14 @@ import androidx.fragment.app.activityViewModels
 
 import com.maskjs.korona_zakupy.R
 import com.maskjs.korona_zakupy.databinding.FragmentRegisterPart1Binding
+import com.maskjs.korona_zakupy.ui.base.BaseFragment
 import com.maskjs.korona_zakupy.ui.register.IRegisterNavigation
 
 
-class RegisterPart1Fragment : Fragment() {
+class RegisterPart1Fragment : BaseFragment() {
     private var registerNavigation: IRegisterNavigation? = null
     private val registerViewModel: RegisterPartOneViewModel by activityViewModels()
     private lateinit var uiDataBinding: FragmentRegisterPart1Binding
-    private lateinit var sharedPreferences: SharedPreferences
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -47,7 +47,6 @@ class RegisterPart1Fragment : Fragment() {
             R.layout.fragment_register_part1,container,false)
         uiDataBinding.lifecycleOwner = this@RegisterPart1Fragment
         uiDataBinding.registerViewModel = registerViewModel
-        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
     }
 
     private fun setUiListener(){
@@ -66,10 +65,7 @@ class RegisterPart1Fragment : Fragment() {
 
     private fun saveRoleName(roleName: String){
         registerViewModel.save()
-        sharedPreferences.edit(){
-            putString(R.string.user_role_key.toString(), roleName)
-            commit()
-        }
+        setUserRole(roleName)
     }
 
 }

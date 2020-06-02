@@ -8,7 +8,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import com.maskjs.korona_zakupy.R
 import com.maskjs.korona_zakupy.databinding.ActivityLoginBinding
-import com.maskjs.korona_zakupy.ui.base.NonUserBaseActivity
+import com.maskjs.korona_zakupy.ui.base.BaseActivity
 
 import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.coroutines.CoroutineScope
@@ -17,10 +17,9 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import kotlin.Exception
 
-class LoginActivity : NonUserBaseActivity() {
+class LoginActivity : BaseActivity() {
     private val loginViewModel : LoginViewModel by viewModels()
     private lateinit var uiDataBinding: ActivityLoginBinding
-    private lateinit var sharedPreferences: SharedPreferences
     private lateinit var errorMessages: Map<String,String>
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -109,11 +108,10 @@ class LoginActivity : NonUserBaseActivity() {
     }
 
     private fun saveResponse(){
-        val editor= sharedPreferences.edit()
-        editor.putString(R.string.user_id_key.toString(), loginViewModel.loginResponseDto.userId)
-        editor.putString(getString(R.string.user_token_key),loginViewModel.loginResponseDto.token)
-        editor.putString(getString(R.string.user_role_key),loginViewModel.loginResponseDto.roleName)
-        editor.commit()
+
+        setUserId( loginViewModel.loginResponseDto.userId)
+        setUserToken( loginViewModel.loginResponseDto.token)
+        setUserRole(loginViewModel.loginResponseDto.roleName)
     }
 
     private fun handleException(){

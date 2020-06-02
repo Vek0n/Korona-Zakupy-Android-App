@@ -24,19 +24,13 @@ AddProductDialogFragment.OnAddProductClickListener, AddProductDialogFragment.OnE
     private val newOrderViewModel : NewOrderViewModel by viewModels(){
         NewOrderViewModelFactory("Add Product",this)
     } //resources.getString(R.string.text_view_add_new_product) -> EXCEPTION
-    private var sharedPreferences: SharedPreferences? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.activity_new_order)
-        setSharedPreferences()
         setLayoutDataBinding()
         setOnClickListeners()
-    }
-
-    private fun setSharedPreferences(){
-        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
     }
 
     private fun setLayoutDataBinding(){
@@ -68,20 +62,6 @@ AddProductDialogFragment.OnAddProductClickListener, AddProductDialogFragment.OnE
                 }
             }
         }
-    }
-
-    private fun getUserId(): String?{
-        return  sharedPreferences?.getString(R.string.user_id_key.toString(),"")
-    }
-
-    private fun getUserToken(): String?{
-
-        return  sharedPreferences?.getString(R.string.user_token_key.toString(),"")
-    }
-
-    private fun getNewOrderType(): String?{
-
-        return sharedPreferences?.getString(R.string.new_order_type.toString(),"")
     }
 
     private  fun showToast(toastMessage: String){
@@ -140,5 +120,4 @@ AddProductDialogFragment.OnAddProductClickListener, AddProductDialogFragment.OnE
             else -> super.onContextItemSelected(item)
         }
     }
-
 }

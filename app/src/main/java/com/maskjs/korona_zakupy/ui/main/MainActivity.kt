@@ -5,16 +5,15 @@ import android.os.Bundle
 import android.preference.PreferenceManager
 import android.widget.Button
 import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
 import com.maskjs.korona_zakupy.R
-import com.maskjs.korona_zakupy.ui.base.NonUserBaseActivity
+import com.maskjs.korona_zakupy.ui.base.BaseActivity
 import com.maskjs.korona_zakupy.ui.person_in_quarantine.PersonInQuarantineActivity
 import com.maskjs.korona_zakupy.ui.register.RegisterActivity
 import com.maskjs.korona_zakupy.ui.volunteer.VolunteerActivity
 import com.maskjs.korona_zakupy.ui.login.LoginActivity
 
 
-class MainActivity : NonUserBaseActivity() {
+class MainActivity : BaseActivity() {
     private val mainActivityViewModel : MainActivityViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
