@@ -34,12 +34,12 @@ abstract class BaseActivity : AppCompatActivity() {
     }
 
     protected fun setUserToken(userToken: String?){
-        sharedPreferencesEditor.putString(getString(R.string.user_token_key),userToken)
+        sharedPreferencesEditor.putString(R.string.user_token_key.toString(),userToken)
         sharedPreferencesEditor.commit()
     }
 
     protected fun setUserRole(userRole: String?){
-        sharedPreferencesEditor.putString(getString(R.string.user_role_key),userRole)
+        sharedPreferencesEditor.putString(R.string.user_role_key.toString(),userRole)
         sharedPreferencesEditor.commit()
     }
 
