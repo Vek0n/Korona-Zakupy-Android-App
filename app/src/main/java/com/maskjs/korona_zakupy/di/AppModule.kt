@@ -4,6 +4,9 @@ import com.maskjs.korona_zakupy.data.layoutModels.ConfirmPasswordTextInputLayout
 import com.maskjs.korona_zakupy.data.layoutModels.InputTextLayoutModel
 import com.maskjs.korona_zakupy.data.layoutModels.PasswordTextInputLayoutModel
 import com.maskjs.korona_zakupy.data.layoutModels.PlainTextInputTextLayoutModel
+import com.maskjs.korona_zakupy.data.orders.OrderDao
+import com.maskjs.korona_zakupy.data.orders.OrderRepository
+import com.maskjs.korona_zakupy.data.orders.data_transfer_object.PlaceOrderDto
 import com.maskjs.korona_zakupy.data.users.UserRepository
 import com.maskjs.korona_zakupy.data.users.api_communication.UserDao
 import com.maskjs.korona_zakupy.data.users.data_transfer_object.LoginUserDto
@@ -12,6 +15,8 @@ import com.maskjs.korona_zakupy.ui.login.LoginActivity
 import com.maskjs.korona_zakupy.ui.login.LoginViewModel
 import com.maskjs.korona_zakupy.ui.main.MainActivity
 import com.maskjs.korona_zakupy.ui.main.MainActivityViewModel
+import com.maskjs.korona_zakupy.ui.new_order.NewOrderActivity
+import com.maskjs.korona_zakupy.ui.new_order.NewOrderViewModel
 import com.maskjs.korona_zakupy.ui.register.RegisterActivity
 import com.maskjs.korona_zakupy.ui.register.part1.RegisterPart1Fragment
 import com.maskjs.korona_zakupy.ui.register.part1.RegisterPart1ViewModel
@@ -33,6 +38,10 @@ abstract class AppModule {
             single(named("loginRepository")) { UserRepository<LoginUserDto>(get()) }
 
             single(named("registerRepository")){UserRepository<RegisterUserDto>(get())}
+
+            single { OrderDao(get())}
+
+            single(named("placeOrderRepository")){OrderRepository<PlaceOrderDto>(get())}
 
             factory<InputTextLayoutModel>(named("plain")) { PlainTextInputTextLayoutModel() }
 
@@ -60,8 +69,9 @@ abstract class AppModule {
                 viewModel { (errorMessages: Map<String,String>) -> RegisterPart3ViewModel(errorMessages,get(named("registerRepository")), get(),get(named("plain")),get(named("plain")),get(named("plain"))) }
             }
 
-            scope<RegisterPart1Fragment>{
-
+            scope<NewOrderActivity>{
+                viewModel { (initialText : String, onProductClickListener: NewOrderViewModel.OnProductClickListener? ) -> NewOrderViewModel(initialText, onProductClickListener, get(
+                    named("placeOrderRepository")))}
             }
         }
     }

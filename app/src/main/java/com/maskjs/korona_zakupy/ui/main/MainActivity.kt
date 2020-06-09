@@ -1,18 +1,12 @@
 package com.maskjs.korona_zakupy.ui.main
 
-import android.content.Context
 import android.os.Bundle
-import android.util.AttributeSet
-import android.util.Log
-import android.view.View
 import androidx.databinding.DataBindingUtil
 import com.maskjs.korona_zakupy.R
 import com.maskjs.korona_zakupy.databinding.ActivityMainBinding
 import com.maskjs.korona_zakupy.ui.base.BaseActivity
 import org.koin.android.scope.lifecycleScope
 import org.koin.android.viewmodel.scope.viewModel
-
-
 
 class MainActivity : BaseActivity() {
     private val mainActivityViewModel : MainActivityViewModel by lifecycleScope.viewModel(this)

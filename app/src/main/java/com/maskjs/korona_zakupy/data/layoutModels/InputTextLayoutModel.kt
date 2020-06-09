@@ -4,7 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import com.maskjs.korona_zakupy.data.layoutModels.interfaces.IInputTextLayoutModel
 
 abstract class InputTextLayoutModel : IInputTextLayoutModel {
-     val textContent = MutableLiveData<String>()
+    val textContent = MutableLiveData<String>()
     val errorContent = MutableLiveData<String?>()
 
     override fun validate(errorsMessages: Map<String,String>, extraParameter:String){

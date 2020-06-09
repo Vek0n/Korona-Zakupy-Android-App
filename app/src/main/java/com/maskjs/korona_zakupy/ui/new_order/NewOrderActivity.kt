@@ -1,30 +1,25 @@
 package com.maskjs.korona_zakupy.ui.new_order
 
-import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Bundle
-import android.preference.PreferenceManager
 import android.view.MenuItem
 import android.widget.Toast
-import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
 import com.maskjs.korona_zakupy.R
 import com.maskjs.korona_zakupy.data.orders.data_transfer_object.ProductDto
 import com.maskjs.korona_zakupy.databinding.ActivityNewOrderBinding
 import com.maskjs.korona_zakupy.ui.base.UserBaseActivity
-import com.maskjs.korona_zakupy.utils.NewOrderViewModelFactory
 import com.maskjs.korona_zakupy.ui.new_order.add_product_dialog.AddProductDialogFragment
-import com.maskjs.korona_zakupy.ui.person_in_quarantine.PersonInQuarantineActivity
 import kotlinx.coroutines.*
+import org.koin.android.scope.lifecycleScope
+import org.koin.android.viewmodel.scope.viewModel
+import org.koin.core.parameter.parametersOf
 import java.lang.Exception
 
 class NewOrderActivity : UserBaseActivity(), NewOrderViewModel.OnProductClickListener,
 AddProductDialogFragment.OnAddProductClickListener, AddProductDialogFragment.OnEditProductClickListener{
     private lateinit var layoutDataBinding: ActivityNewOrderBinding
-    private val newOrderViewModel : NewOrderViewModel by viewModels(){
-        NewOrderViewModelFactory("Add Product",this)
-    } //resources.getString(R.string.text_view_add_new_product) -> EXCEPTION
-
+    private val newOrderViewModel : NewOrderViewModel by lifecycleScope.viewModel(this){ parametersOf(resources.getString(R.string.text_view_add_new_product), this)}
+     //resources.getString(R.string.text_view_add_new_product) -> EXCEPTION
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 

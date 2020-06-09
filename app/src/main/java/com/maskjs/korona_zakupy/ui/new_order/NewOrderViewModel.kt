@@ -7,9 +7,9 @@ import com.maskjs.korona_zakupy.data.orders.data_transfer_object.PlaceOrderDto
 import com.maskjs.korona_zakupy.data.orders.data_transfer_object.ProductDto
 import okhttp3.OkHttpClient
 
-class NewOrderViewModel(initialText: String,onProductClickListener: OnProductClickListener?): ViewModel() {
-
-    private val orderRepository = OrderRepository<PlaceOrderDto>(orderDao = OrderDao(OkHttpClient()))
+class NewOrderViewModel(initialText: String,
+                        onProductClickListener: OnProductClickListener?,
+                        private val orderRepository: OrderRepository<PlaceOrderDto>): ViewModel() {
     private var products : MutableList<ProductDto> = mutableListOf(
         ProductDto(
             initialText,

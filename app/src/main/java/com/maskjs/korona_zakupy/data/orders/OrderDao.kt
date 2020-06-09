@@ -19,7 +19,6 @@ class OrderDao(private val client: OkHttpClient) : IDataAccessObject{
     suspend fun placeOrder(orderString: String,token: String): String
         = APIPostRequestAuth(orderString,"http://korona-zakupy.hostingasp.pl/api/orders/add",token,client)
 
-
     suspend fun acceptOrder(orderId:Long, userId:String,token: String):String
         = APIPostRequestAuth("","http://korona-zakupy.hostingasp.pl/api/orders/accept/$orderId/$userId",token, client)
 
