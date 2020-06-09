@@ -1,34 +1,32 @@
 package com.maskjs.korona_zakupy.ui.register.part3
 
 import android.content.Context
-import android.content.SharedPreferences
 import android.os.Bundle
-import android.preference.PreferenceManager
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.addCallback
-import androidx.core.content.edit
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.maskjs.korona_zakupy.R
 import com.maskjs.korona_zakupy.databinding.FragmentRegisterPart3Binding
 import com.maskjs.korona_zakupy.ui.base.BaseFragment
 import com.maskjs.korona_zakupy.ui.register.IRegisterNavigation
 import kotlinx.coroutines.*
+import org.koin.android.scope.lifecycleScope
+import org.koin.android.viewmodel.scope.getViewModel
+import org.koin.core.parameter.parametersOf
 
 class RegisterPart3Fragment : BaseFragment() {
-
     private var registerNavigation: IRegisterNavigation? = null
-    private val registerViewModel: RegisterPartThreeViewModel by viewModels()
-    private lateinit var uiDataBinding: FragmentRegisterPart3Binding
-    private lateinit var errorMessages: Map<String,String>
+
+    private lateinit var registerViewModel: RegisterPart3ViewModel
+
+    private lateinit var layoutDataBinding: FragmentRegisterPart3Binding
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-
+        registerViewModel = requireActivity().lifecycleScope.getViewModel<RegisterPart3ViewModel>(requireActivity()){ parametersOf(errorMessages)}
         registerNavigation = (context as? IRegisterNavigation)
 
         if(registerNavigation == null)
@@ -51,17 +49,14 @@ class RegisterPart3Fragment : BaseFragment() {
         observeUiElements()
         setUiListener()
 
-        return uiDataBinding.root
+        return layoutDataBinding.root
     }
 
     private fun initialize(inflater: LayoutInflater, container: ViewGroup?){
-        errorMessages = mapOf(
-            Pair("emptyError",getString(R.string.global_empty_field_error))
-        )
-        uiDataBinding = DataBindingUtil.inflate(inflater,
+        layoutDataBinding = DataBindingUtil.inflate(inflater,
             R.layout.fragment_register_part3,container,false)
-        uiDataBinding.lifecycleOwner = this@RegisterPart3Fragment
-        uiDataBinding.registerViewModel = registerViewModel
+        layoutDataBinding.lifecycleOwner = this@RegisterPart3Fragment
+        layoutDataBinding.registerViewModel = registerViewModel
     }
     private fun observeUiElements(){
         observeFirstName()
@@ -72,21 +67,21 @@ class RegisterPart3Fragment : BaseFragment() {
     private fun observeFirstName(){
         registerViewModel.firstNameInputLayoutModel.textContent.observe(viewLifecycleOwner,
             Observer {
-                registerViewModel.validateFirstName(errorMessages)
+                registerViewModel.validateFirstName()
         })
     }
 
     private fun observeLastName(){
        registerViewModel.lastNameInputLayoutModel.textContent.observe(viewLifecycleOwner,
            Observer {
-            registerViewModel.validateLastName(errorMessages)
+            registerViewModel.validateLastName()
        })
     }
 
     private fun observeAddress(){
         registerViewModel.addressInputTextLayoutModel.textContent.observe(viewLifecycleOwner,
             Observer {
-                registerViewModel.validateAddress(errorMessages)
+                registerViewModel.validateAddress()
             })
     }
 
@@ -96,13 +91,13 @@ class RegisterPart3Fragment : BaseFragment() {
     }
 
     private fun setOnToLoginActivityListener(){
-        uiDataBinding.textViewToLogin.setOnClickListener {
+        layoutDataBinding.textViewToLogin.setOnClickListener {
             registerNavigation?.goToLoginActivityInRegFragment()
         }
     }
     private fun setOnFabListener(){
-        uiDataBinding.floatingActionButton.setOnClickListener {
-            if(registerViewModel.checkValidation(errorMessages)){
+        layoutDataBinding.floatingActionButton.setOnClickListener {
+            if(registerViewModel.checkValidation()){
                 registerViewModel.save()
 
                 CoroutineScope(Dispatchers.IO).launch {

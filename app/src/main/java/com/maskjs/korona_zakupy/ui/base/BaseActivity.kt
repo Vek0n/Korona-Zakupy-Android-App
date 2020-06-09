@@ -15,16 +15,27 @@ import com.maskjs.korona_zakupy.ui.volunteer.VolunteerActivity
 
 abstract class BaseActivity : AppCompatActivity() {
     protected lateinit var sharedPreferences : SharedPreferences
+    protected lateinit var errorMessages : Map<String,String>
     private lateinit var sharedPreferencesEditor: SharedPreferences.Editor
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setSharedPreferences()
+        setErrorMessages()
     }
 
     private fun setSharedPreferences(){
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
         sharedPreferencesEditor = sharedPreferences.edit()
+    }
+
+    private fun setErrorMessages(){
+        errorMessages = mapOf(
+            Pair("emptyError",getString(R.string.global_empty_field_error)),
+            Pair("userNameIsAlreadyTaken",getString(R.string.reg_error_is_already_taken)),
+            Pair("errorRegexMessage",getString(R.string.reg_error_password_regex)),
+            Pair("notMatchError",getString(R.string.reg_error_password_match))
+        )
     }
 
 

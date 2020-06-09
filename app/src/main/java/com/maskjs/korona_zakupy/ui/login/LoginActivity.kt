@@ -1,26 +1,27 @@
 package com.maskjs.korona_zakupy.ui.login
 
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.preference.PreferenceManager
-import androidx.activity.viewModels
+import android.util.Log
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import com.maskjs.korona_zakupy.R
 import com.maskjs.korona_zakupy.databinding.ActivityLoginBinding
 import com.maskjs.korona_zakupy.ui.base.BaseActivity
-
 import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import org.koin.android.scope.lifecycleScope
+import org.koin.android.viewmodel.scope.viewModel
+import org.koin.core.parameter.parametersOf
 import kotlin.Exception
 
 class LoginActivity : BaseActivity() {
-    private val loginViewModel : LoginViewModel by viewModels()
+    private val loginViewModel : LoginViewModel by lifecycleScope.viewModel(this){ parametersOf(errorMessages)}
+
     private lateinit var uiDataBinding: ActivityLoginBinding
-    private lateinit var errorMessages: Map<String,String>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,15 +34,9 @@ class LoginActivity : BaseActivity() {
     }
 
     private fun initialize(){
-        errorMessages = mapOf(
-            Pair("emptyError",getString(R.string.global_empty_field_error)),
-            Pair("userNameIsAlreadyTaken",getString(R.string.reg_error_is_already_taken)),
-            Pair("errorRegexMessage",getString(R.string.reg_error_password_regex)),
-            Pair("notMatchError",getString(R.string.reg_error_password_match))
-        )
+
         setContentView(R.layout.activity_login)
         setSupportActionBar(toolbar)
-        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
         uiDataBinding = DataBindingUtil.setContentView(this, R.layout.activity_login)
         uiDataBinding.loginViewModel = loginViewModel
         uiDataBinding.lifecycleOwner = this
@@ -54,13 +49,13 @@ class LoginActivity : BaseActivity() {
 
     private fun observeEmail(){
         loginViewModel.emailInputTextLayoutModel.textContent.observe(this, Observer {
-            loginViewModel.validateEmail(errorMessages)
+            loginViewModel.validateEmail()
         })
     }
 
     private fun observePassword(){
-        loginViewModel.passwordInputTextLayoutModel.textContent.observe(this, Observer {
-            loginViewModel.validatePassword(errorMessages)
+        loginViewModel.passwordTextInputLayoutModel.textContent.observe(this, Observer {
+            loginViewModel.validatePassword()
         })
     }
 
@@ -84,8 +79,7 @@ class LoginActivity : BaseActivity() {
             }
         }
     }
-
-    private fun checkUiValidation() =  loginViewModel.checkValidation(errorMessages)
+    private fun checkUiValidation() =  loginViewModel.checkValidation()
 
     private suspend fun login(){
         try {

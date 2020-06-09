@@ -7,26 +7,27 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.addCallback
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.maskjs.korona_zakupy.R
 import com.maskjs.korona_zakupy.databinding.FragmentRegisterPart2Binding
 import com.maskjs.korona_zakupy.ui.base.BaseFragment
 import com.maskjs.korona_zakupy.ui.register.IRegisterNavigation
+import org.koin.android.scope.lifecycleScope
+import org.koin.android.viewmodel.scope.getViewModel
+import org.koin.core.parameter.parametersOf
 
 class RegisterPart2Fragment : BaseFragment() {
-
     private var registerNavigation: IRegisterNavigation? = null
-    private val registerViewModel: RegisterPartTwoViewModel by viewModels()
-    private lateinit var uiDataBinding: FragmentRegisterPart2Binding
-    private lateinit var errorsText: Map<String,String>
+
+    private lateinit var registerViewModel: RegisterPart2ViewModel
+
+    private lateinit var layoutDataBinding: FragmentRegisterPart2Binding
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
+        registerViewModel = requireActivity().lifecycleScope.getViewModel<RegisterPart2ViewModel>(requireActivity()){ parametersOf(errorMessages)}
 
         registerNavigation = context as? IRegisterNavigation
-
         if(registerNavigation == null)
             throw ClassCastException("Error!")
     }
@@ -45,20 +46,14 @@ class RegisterPart2Fragment : BaseFragment() {
         observeUiElements()
         setUiListener()
 
-        return uiDataBinding.root
+        return layoutDataBinding.root
     }
 
     private fun initialize(inflater: LayoutInflater,container: ViewGroup?){
-        errorsText = mapOf(
-            Pair("emptyError",getString(R.string.global_empty_field_error)),
-            Pair("isAlreadyTaken",getString(R.string.reg_error_is_already_taken)),
-            Pair("errorRegexMessage",getString(R.string.reg_error_password_regex)),
-            Pair("notMatchError",getString(R.string.reg_error_password_match))
-        )
-        uiDataBinding = DataBindingUtil.inflate(inflater,
+        layoutDataBinding = DataBindingUtil.inflate(inflater,
             R.layout.fragment_register_part2,container,false)
-        uiDataBinding.lifecycleOwner = this@RegisterPart2Fragment
-        uiDataBinding.registerViewModel = registerViewModel
+        layoutDataBinding.lifecycleOwner = this@RegisterPart2Fragment
+        layoutDataBinding.registerViewModel = registerViewModel
     }
 
     private fun observeUiElements(){
@@ -70,39 +65,39 @@ class RegisterPart2Fragment : BaseFragment() {
 
     private fun observeUserName(){
         registerViewModel.userNameInputTextLayoutModel.textContent.observe(viewLifecycleOwner, Observer {
-           registerViewModel.validateUserName(errorsText)
+           registerViewModel.validateUserName()
         })
     }
 
     private  fun observeEmail(){
         registerViewModel.emailInputTextLayoutModel.textContent.observe(viewLifecycleOwner, Observer {
-            registerViewModel.validateEmail(errorsText)
+            registerViewModel.validateEmail()
         })
     }
 
     private  fun observePassword(){
         registerViewModel.passwordInputTextLayoutModel.textContent.observe(viewLifecycleOwner, Observer {
-            registerViewModel.validatePassword(errorsText)
+            registerViewModel.validatePassword()
         })
     }
 
     private  fun observeConfirmPassword(){
         registerViewModel.confirmPasswordInputTextLayoutModel.textContent.observe(viewLifecycleOwner, Observer {
-            registerViewModel.validateConfirmPassword(errorsText)
+            registerViewModel.validateConfirmPassword()
         })
     }
 
     private  fun setUiListener(){
-        uiDataBinding.textViewToLogin.setOnClickListener {
+        layoutDataBinding.textViewToLogin.setOnClickListener {
             registerNavigation?.goToLoginActivityInRegFragment()
         }
 
-        uiDataBinding.fabReg1.setOnClickListener {
+        layoutDataBinding.fabReg1.setOnClickListener {
             checkValidation()
         }
     }
     private fun checkValidation(){
-        if(registerViewModel.checkValidation(errorsText)) {
+        if(registerViewModel.checkValidation()) {
             registerViewModel.save()
             registerNavigation?.goToReg3Fragment()
         }

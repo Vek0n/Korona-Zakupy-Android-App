@@ -1,30 +1,28 @@
 package com.maskjs.korona_zakupy.ui.register.part1
 
 import android.content.Context
-import android.content.SharedPreferences
 import android.os.Bundle
-import android.preference.PreferenceManager
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.edit
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.activityViewModels
 
 import com.maskjs.korona_zakupy.R
 import com.maskjs.korona_zakupy.databinding.FragmentRegisterPart1Binding
 import com.maskjs.korona_zakupy.ui.base.BaseFragment
 import com.maskjs.korona_zakupy.ui.register.IRegisterNavigation
-
+import org.koin.android.scope.lifecycleScope
+import org.koin.android.viewmodel.scope.getViewModel
 
 class RegisterPart1Fragment : BaseFragment() {
     private var registerNavigation: IRegisterNavigation? = null
-    private val registerViewModel: RegisterPartOneViewModel by activityViewModels()
-    private lateinit var uiDataBinding: FragmentRegisterPart1Binding
+    private lateinit var registerViewModel: RegisterPart1ViewModel
+    private lateinit var layoutDataBinding: FragmentRegisterPart1Binding
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
+
+        registerViewModel = requireActivity().lifecycleScope.getViewModel<RegisterPart1ViewModel>(requireActivity())
 
         registerNavigation = (context as? IRegisterNavigation)
 
@@ -37,26 +35,27 @@ class RegisterPart1Fragment : BaseFragment() {
         savedInstanceState: Bundle?
     ): View? {
         initialize(inflater,container)
+
         setUiListener()
 
-        return uiDataBinding.root
+        return layoutDataBinding.root
     }
 
     private fun initialize(inflater: LayoutInflater,container: ViewGroup?){
-        uiDataBinding = DataBindingUtil.inflate(inflater,
+        layoutDataBinding = DataBindingUtil.inflate(inflater,
             R.layout.fragment_register_part1,container,false)
-        uiDataBinding.lifecycleOwner = this@RegisterPart1Fragment
-        uiDataBinding.registerViewModel = registerViewModel
+        layoutDataBinding.lifecycleOwner = this@RegisterPart1Fragment
+        layoutDataBinding.registerViewModel = registerViewModel
     }
 
     private fun setUiListener(){
-        uiDataBinding.buttonVolunteer.setOnClickListener(){
+        layoutDataBinding.buttonVolunteer.setOnClickListener(){
             registerViewModel.roleName = getString(R.string.global_volunteer_role)
             saveRoleName(registerViewModel.roleName)
             registerNavigation?.goToReg2Fragment()
         }
 
-        uiDataBinding.buttonPersonInQuarantine.setOnClickListener(){
+        layoutDataBinding.buttonPersonInQuarantine.setOnClickListener(){
             registerViewModel.roleName = getString(R.string.global_person_in_quarantine_role)
             saveRoleName(registerViewModel.roleName)
             registerNavigation?.goToReg2Fragment()

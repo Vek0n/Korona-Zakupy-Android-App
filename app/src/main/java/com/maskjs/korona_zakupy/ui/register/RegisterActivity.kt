@@ -5,15 +5,16 @@ import androidx.activity.viewModels
 import com.maskjs.korona_zakupy.R
 import com.maskjs.korona_zakupy.ui.base.BaseActivity
 import com.maskjs.korona_zakupy.ui.register.part1.RegisterPart1Fragment
-import com.maskjs.korona_zakupy.ui.register.part1.RegisterPartOneViewModel
+import com.maskjs.korona_zakupy.ui.register.part1.RegisterPart1ViewModel
 import com.maskjs.korona_zakupy.ui.register.part2.RegisterPart2Fragment
 import com.maskjs.korona_zakupy.ui.register.part3.RegisterPart3Fragment
 
 import kotlinx.android.synthetic.main.activity_register_part.*
+import org.koin.android.scope.lifecycleScope
+import org.koin.android.viewmodel.scope.viewModel
 
 class RegisterActivity :BaseActivity(),
     IRegisterNavigation {
-
     private val fragmentManager = supportFragmentManager
     private val regFragment1 =
         RegisterPart1Fragment()
@@ -21,9 +22,6 @@ class RegisterActivity :BaseActivity(),
         RegisterPart2Fragment()
     private val regFragment3 =
         RegisterPart3Fragment()
-
-    val registerViewModel: RegisterPartOneViewModel by viewModels()
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,7 +55,7 @@ class RegisterActivity :BaseActivity(),
     }
 
     override fun goToUserActivityInRegFragment() {
-        goToUserActivity(registerViewModel.roleName)
+        goToUserActivity(getUserRole()?: "error")
     }
 }
 

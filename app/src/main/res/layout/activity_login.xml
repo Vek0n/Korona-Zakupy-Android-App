@@ -73,7 +73,8 @@
                         android:layout_height="wrap_content"
                         android:hint="@string/reg_hint_email"
                         android:inputType="textEmailAddress"
-                        android:text="@={loginViewModel.emailInputTextLayoutModel.textContent}" />
+                        android:text="@={loginViewModel.emailInputTextLayoutModel.textContent}"
+                        android:textColor="@color/primaryTextColor" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -88,7 +89,7 @@
                     app:errorTextColor="#F44336"
                     app:errorEnabled="true"
                     app:hintEnabled="true"
-                    app:errorText="@{loginViewModel.passwordInputTextLayoutModel.errorContent}">
+                    app:errorText="@{loginViewModel.passwordTextInputLayoutModel.errorContent}">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/password_edit_text"
@@ -96,7 +97,8 @@
                         android:layout_height="wrap_content"
                         android:hint="@string/reg_hint_password"
                         android:inputType="textPassword"
-                        android:text="@={loginViewModel.passwordInputTextLayoutModel.textContent}" />
+                        android:text="@={loginViewModel.passwordTextInputLayoutModel.textContent}"
+                        android:textColor="@color/primaryTextColor" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <LinearLayout

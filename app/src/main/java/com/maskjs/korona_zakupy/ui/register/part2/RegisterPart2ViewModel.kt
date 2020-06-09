@@ -12,25 +12,18 @@ import com.maskjs.korona_zakupy.data.layoutModels.PlainTextInputTextLayoutModel
 import kotlinx.coroutines.*
 import okhttp3.OkHttpClient
 
-class RegisterPartTwoViewModel:  ViewModel() {
-
-    val userNameInputTextLayoutModel: InputTextLayoutModel =
-        PlainTextInputTextLayoutModel()
-    val emailInputTextLayoutModel: InputTextLayoutModel =
-        PlainTextInputTextLayoutModel()
-    val passwordInputTextLayoutModel: InputTextLayoutModel =
-        PasswordTextInputLayoutModel()
-    val confirmPasswordInputTextLayoutModel: InputTextLayoutModel =
-        ConfirmPasswordTextInputLayoutModel()
+class RegisterPart2ViewModel(private val errorMessages: Map<String, String>,
+                             private val userRepository :UserRepository<RegisterUserDto>,
+                             private val registerUserDto: RegisterUserDto,
+                             val userNameInputTextLayoutModel : InputTextLayoutModel,
+                             val emailInputTextLayoutModel: InputTextLayoutModel,
+                             val passwordInputTextLayoutModel: InputTextLayoutModel,
+                             val confirmPasswordInputTextLayoutModel: InputTextLayoutModel
+):  ViewModel() {
     private lateinit var isUserNameAlreadyTaken: String
     private lateinit var isEmailAlreadyTaken: String
-    private val userRepository = UserRepository<RegisterUserDto>(userDao = UserDao(
-        client = OkHttpClient()
-    )
-    )
-    private val registerUserDto = SharedRegisterDto
 
-    fun validateUserName(errorMessages: Map<String,String>){
+    fun validateUserName(){
         CoroutineScope(Dispatchers.IO).launch {
             checkIsUserNameAlreadyTaken()
             withContext(Dispatchers.Main) {
@@ -45,7 +38,7 @@ class RegisterPartTwoViewModel:  ViewModel() {
     }
 
 
-    fun validateEmail(errorMessages: Map<String, String>){
+    fun validateEmail(){
         CoroutineScope(Dispatchers.IO).launch {
             checkIsEmailNameAlreadyTaken()
             withContext(Dispatchers.Main) {
@@ -59,15 +52,15 @@ class RegisterPartTwoViewModel:  ViewModel() {
         isEmailAlreadyTaken = userRepository.getValidation("email",emailInputTextLayoutModel.textContent.value?:"emailDefault")
     }
 
-    fun validatePassword(errorMessages: Map<String, String>){
+    fun validatePassword(){
         passwordInputTextLayoutModel.validate(errorMessages)
     }
 
-    fun validateConfirmPassword(errorMessages: Map<String, String>){
+    fun validateConfirmPassword(){
         confirmPasswordInputTextLayoutModel.validate(errorMessages,passwordInputTextLayoutModel.textContent.value?:"")
     }
 
-     fun checkValidation(errorMessages: Map<String, String>): Boolean{
+     fun checkValidation(): Boolean{
         userNameInputTextLayoutModel.validate(errorMessages)
         emailInputTextLayoutModel.validate(errorMessages)
         passwordInputTextLayoutModel.validate(errorMessages)
@@ -90,9 +83,9 @@ class RegisterPartTwoViewModel:  ViewModel() {
     }
 
     fun save(){
-       registerUserDto.registerUserDto.username = userNameInputTextLayoutModel.textContent.value!!
-       registerUserDto.registerUserDto.email = emailInputTextLayoutModel.textContent.value!!
-       registerUserDto.registerUserDto.password = passwordInputTextLayoutModel.textContent.value!!
-       registerUserDto.registerUserDto.confirmPassword = confirmPasswordInputTextLayoutModel.textContent.value!!
+        registerUserDto.username = userNameInputTextLayoutModel.textContent.value!!
+        registerUserDto.email = emailInputTextLayoutModel.textContent.value!!
+        registerUserDto.password = passwordInputTextLayoutModel.textContent.value!!
+        registerUserDto.confirmPassword = confirmPasswordInputTextLayoutModel.textContent.value!!
     }
 }

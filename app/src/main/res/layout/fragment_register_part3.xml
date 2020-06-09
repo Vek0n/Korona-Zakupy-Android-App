@@ -6,7 +6,7 @@
     <data>
         <variable
             name="registerViewModel"
-            type="com.maskjs.korona_zakupy.ui.register.part3.RegisterPartThreeViewModel" />
+            type="com.maskjs.korona_zakupy.ui.register.part3.RegisterPart3ViewModel" />
     </data>
 
     <LinearLayout
