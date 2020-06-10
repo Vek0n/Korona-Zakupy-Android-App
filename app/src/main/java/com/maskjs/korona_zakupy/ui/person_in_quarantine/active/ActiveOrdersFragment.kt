@@ -21,6 +21,8 @@ import com.maskjs.korona_zakupy.utils.LoadingSpinner
 import com.maskjs.korona_zakupy.ui.person_in_quarantine.QuarantineOrdersListAdapter
 import kotlinx.android.synthetic.main.quarantine_active_order_details_popup.view.*
 import kotlinx.coroutines.*
+import org.koin.android.scope.lifecycleScope
+import org.koin.android.viewmodel.scope.getViewModel
 
 class ActiveOrdersFragment :BaseFragment() {
 
@@ -36,6 +38,8 @@ class ActiveOrdersFragment :BaseFragment() {
         super.onAttach(context)
 
         onAddOrderButtonClickListener =  (context as? OnAddOrderButtonClickListener)
+
+        activeOrdersViewModel = requireActivity().lifecycleScope.getViewModel<ActiveOrdersViewModel>(requireActivity())
     }
 
     override fun onCreateView(
@@ -48,8 +52,6 @@ class ActiveOrdersFragment :BaseFragment() {
             onBackPress?.leaveApp()
         }
 
-        activeOrdersViewModel =
-            ViewModelProviders.of(this).get(ActiveOrdersViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_active_orders_quarantine, container, false)
         val context = requireContext()
 

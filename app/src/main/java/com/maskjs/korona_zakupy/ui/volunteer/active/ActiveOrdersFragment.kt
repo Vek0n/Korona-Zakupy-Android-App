@@ -9,24 +9,35 @@ import android.widget.*
 import androidx.activity.addCallback
 import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.ViewModelProviders
+//import androidx.lifecycle.lifecycleScope
 import com.maskjs.korona_zakupy.R
 import com.maskjs.korona_zakupy.data.orders.data_transfer_object.GetOrderDto
 import com.maskjs.korona_zakupy.ui.base.BaseFragment
+import com.maskjs.korona_zakupy.ui.register.part2.RegisterPart2ViewModel
 import com.maskjs.korona_zakupy.utils.LoadingSpinner
 import com.maskjs.korona_zakupy.ui.volunteer.VolunteerOrdersListAdapter
 import kotlinx.android.synthetic.main.active_order_details_popup.view.*
 import kotlinx.coroutines.*
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
+import org.koin.android.scope.lifecycleScope
+import org.koin.android.viewmodel.scope.getViewModel
+import org.koin.core.parameter.parametersOf
 import kotlin.Exception
 
 class ActiveOrdersFragment : BaseFragment() {
 
     private lateinit var activeOrdersViewModel: ActiveOrdersViewModel
-    private  lateinit var listView: ListView
+    private lateinit var listView: ListView
     private lateinit var progressBar: ProgressBar
     private lateinit var adapterOrders: VolunteerOrdersListAdapter
     private lateinit var nothingsHere: TextView
+
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        activeOrdersViewModel = requireActivity().lifecycleScope.getViewModel<ActiveOrdersViewModel>(requireActivity())
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -36,9 +47,6 @@ class ActiveOrdersFragment : BaseFragment() {
         val callback = requireActivity().onBackPressedDispatcher.addCallback(this) {
             onBackPress?.leaveApp()
         }
-
-        activeOrdersViewModel =
-            ViewModelProviders.of(this).get(ActiveOrdersViewModel::class.java)
 
         val context = requireContext()
         val root = inflater.inflate(R.layout.fragment_active_orders, container, false)

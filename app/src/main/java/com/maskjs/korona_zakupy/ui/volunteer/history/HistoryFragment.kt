@@ -16,9 +16,12 @@ import com.maskjs.korona_zakupy.data.orders.data_transfer_object.GetOrderDto
 import com.maskjs.korona_zakupy.ui.base.BaseFragment
 import com.maskjs.korona_zakupy.utils.LoadingSpinner
 import com.maskjs.korona_zakupy.ui.volunteer.VolunteerOrdersListAdapter
+import com.maskjs.korona_zakupy.ui.volunteer.available.AvailableOrdersViewModel
 import kotlinx.android.synthetic.main.history_order_details_popup_volunteer.view.*
 import kotlinx.android.synthetic.main.rating_popup.view.*
 import kotlinx.coroutines.*
+import org.koin.android.scope.lifecycleScope
+import org.koin.android.viewmodel.scope.getViewModel
 
 
 class HistoryFragment : BaseFragment() {
@@ -30,6 +33,12 @@ class HistoryFragment : BaseFragment() {
     private lateinit var ratingBar: RatingBar
     private lateinit var nothingsHere: TextView
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        historyViewModel =
+            requireActivity().lifecycleScope.getViewModel<HistoryViewModel>(requireActivity())
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -39,8 +48,7 @@ class HistoryFragment : BaseFragment() {
             onBackPress?.leaveApp()
         }
 
-        historyViewModel =
-            ViewModelProviders.of(this).get(HistoryViewModel::class.java)
+
         val root = inflater.inflate(R.layout.fragment_history, container, false)
         val context = requireContext()
 

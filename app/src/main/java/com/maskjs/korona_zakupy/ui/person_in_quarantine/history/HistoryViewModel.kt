@@ -9,10 +9,13 @@ import com.maskjs.korona_zakupy.data.users.api_communication.UserDao
 import com.maskjs.korona_zakupy.data.users.UserRepository
 import okhttp3.OkHttpClient
 
-class HistoryViewModel : ViewModel() {
+class HistoryViewModel(
+    private val getOrderRepository: OrderRepository<GetOrderDto>,
+    private val rateUserRepository: UserRepository<Any>
+) : ViewModel() {
 
     suspend fun getHistoryOrdersFromRepository(userId: String, token: String): ArrayList<GetOrderDto>{
-        val allOrders = OrderRepository<GetOrderDto>(OrderDao(OkHttpClient()))
+        val allOrders = getOrderRepository
             .getAllOrdersOfUser(userId, token)
 
         val historyOrders = arrayListOf<LinkedTreeMap<*, *>>()
@@ -25,10 +28,6 @@ class HistoryViewModel : ViewModel() {
     }
 
     suspend fun sendReview(userId: String, rating: Double, token: String)
-        = UserRepository<Any>(
-        UserDao(
-            OkHttpClient()
-        )
-    ).rateUser(userId, rating, token)
+        = rateUserRepository.rateUser(userId, rating, token)
 
 }

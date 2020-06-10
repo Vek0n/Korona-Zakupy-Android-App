@@ -7,10 +7,13 @@ import com.maskjs.korona_zakupy.data.orders.OrderDao
 import com.maskjs.korona_zakupy.data.orders.OrderRepository
 import okhttp3.OkHttpClient
 
-class ActiveOrdersViewModel : ViewModel() {
+class ActiveOrdersViewModel(
+    private val getOrderRepository: OrderRepository<GetOrderDto>,
+    private val editOrderRepository: OrderRepository<Any>
+) : ViewModel() {
 
     suspend fun getActiveOrdersFromRepository(userId: String, token: String): ArrayList<GetOrderDto>{
-        val allOrders = OrderRepository<GetOrderDto>(OrderDao(OkHttpClient()))
+        val allOrders = getOrderRepository
             .getAllOrdersOfUser(userId, token)
         val activeOrders = arrayListOf<LinkedTreeMap<*, *>>()
 
@@ -23,12 +26,12 @@ class ActiveOrdersViewModel : ViewModel() {
     }
 
     suspend fun completeOrder(userId: String, orderId: Long, token: String): String{
-        return OrderRepository<Any>(OrderDao(OkHttpClient()))
+        return editOrderRepository
             .confirmOrder(userId, orderId, token)
     }
 
     suspend fun deleteOrder(orderId: Long, token: String): String{
-        return OrderRepository<Any>(OrderDao(OkHttpClient()))
+        return editOrderRepository
             .deleteOrder(orderId, token)
     }
 }

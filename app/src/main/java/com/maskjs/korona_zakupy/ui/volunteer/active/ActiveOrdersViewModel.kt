@@ -8,11 +8,13 @@ import com.maskjs.korona_zakupy.data.orders.OrderRepository
 import okhttp3.OkHttpClient
 
 
-class ActiveOrdersViewModel : ViewModel() {
+class ActiveOrdersViewModel(
+    private val getOrderRepository: OrderRepository<GetOrderDto>,
+    private val editOrderRepository: OrderRepository<Any>
+) : ViewModel() {
 
     suspend fun getActiveOrdersFromRepository(userId: String, token: String): ArrayList<GetOrderDto>{
-        val allOrders = OrderRepository<GetOrderDto>(OrderDao(OkHttpClient()))
-            .getAllOrdersOfUser(userId, token)
+        val allOrders = getOrderRepository.getAllOrdersOfUser(userId, token)
         val activeOrders = arrayListOf<LinkedTreeMap<*, *>>()
 
         for (i in 0 until allOrders.size){
@@ -24,12 +26,12 @@ class ActiveOrdersViewModel : ViewModel() {
     }
 
     suspend fun unAcceptOrder(userId: String, orderId: Long, token: String): String{
-        return OrderRepository<Any>(OrderDao(OkHttpClient()))
+        return editOrderRepository
             .unAcceptOrder(userId, orderId, token)
     }
 
     suspend fun completeOrder(userId: String, orderId: Long, token: String): String{
-        return OrderRepository<Any>(OrderDao(OkHttpClient()))
+        return editOrderRepository
             .confirmOrder(userId, orderId, token)
     }
 

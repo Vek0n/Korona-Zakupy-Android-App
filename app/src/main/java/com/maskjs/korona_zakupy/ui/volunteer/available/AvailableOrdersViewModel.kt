@@ -6,16 +6,19 @@ import com.maskjs.korona_zakupy.data.orders.OrderDao
 import com.maskjs.korona_zakupy.data.orders.OrderRepository
 import okhttp3.OkHttpClient
 
-class AvailableOrdersViewModel : ViewModel() {
+class AvailableOrdersViewModel(
+    private val getOrderRepository: OrderRepository<GetOrderDto>,
+    private val editOrderRepository: OrderRepository<Any>
+) : ViewModel() {
 
 
     suspend fun getAvailableOrdersFromRepository(token: String): ArrayList<GetOrderDto>{
-        return OrderRepository<GetOrderDto>(OrderDao(OkHttpClient()))
+        return getOrderRepository
             .getActiveOrders(token)
     }
 
     suspend fun acceptOrder(userId:String, orderId: Long, token: String): String{
-        return OrderRepository<Any>(OrderDao(OkHttpClient()))
+        return editOrderRepository
             .acceptOrder(userId, orderId, token)
     }
 }

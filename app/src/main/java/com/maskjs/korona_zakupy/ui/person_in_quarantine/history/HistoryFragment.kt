@@ -18,6 +18,8 @@ import com.maskjs.korona_zakupy.ui.person_in_quarantine.QuarantineOrdersListAdap
 import kotlinx.android.synthetic.main.quarantine_history_order_details_popup.view.*
 import kotlinx.android.synthetic.main.rating_popup.view.*
 import kotlinx.coroutines.*
+import org.koin.android.scope.lifecycleScope
+import org.koin.android.viewmodel.scope.getViewModel
 
 class HistoryFragment : BaseFragment() {
 
@@ -27,6 +29,12 @@ class HistoryFragment : BaseFragment() {
     private lateinit var adapterQuarantineOrders: QuarantineOrdersListAdapter
     private lateinit var ratingBar: RatingBar
     private lateinit var nothingsHere: TextView
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        historyViewModel =
+            requireActivity().lifecycleScope.getViewModel<HistoryViewModel>(requireActivity())
+    }
 
 
     override fun onCreateView(
@@ -39,8 +47,6 @@ class HistoryFragment : BaseFragment() {
             onBackPress?.leaveApp()
         }
 
-        historyViewModel =
-            ViewModelProviders.of(this).get(HistoryViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_history, container, false)
 
         val context = requireContext()

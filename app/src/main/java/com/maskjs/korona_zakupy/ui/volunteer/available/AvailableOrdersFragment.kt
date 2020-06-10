@@ -15,9 +15,12 @@ import com.maskjs.korona_zakupy.data.orders.data_transfer_object.GetOrderDto
 import com.maskjs.korona_zakupy.ui.base.BaseFragment
 import com.maskjs.korona_zakupy.utils.LoadingSpinner
 import com.maskjs.korona_zakupy.ui.volunteer.VolunteerOrdersListAdapter
+import com.maskjs.korona_zakupy.ui.volunteer.active.ActiveOrdersViewModel
 import kotlinx.android.synthetic.main.available_order_details_popup.view.*
 import kotlinx.android.synthetic.main.available_order_details_popup.view.cancel_button
 import kotlinx.coroutines.*
+import org.koin.android.scope.lifecycleScope
+import org.koin.android.viewmodel.scope.getViewModel
 import kotlin.Exception
 
 class AvailableOrdersFragment : BaseFragment() {
@@ -27,6 +30,13 @@ class AvailableOrdersFragment : BaseFragment() {
     private lateinit var progressBar: ProgressBar
     private lateinit var adapterOrders: VolunteerOrdersListAdapter
     private lateinit var nothingsHere: TextView
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        availableOrdersViewModel =
+            requireActivity().lifecycleScope.getViewModel<AvailableOrdersViewModel>(requireActivity())
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -36,8 +46,10 @@ class AvailableOrdersFragment : BaseFragment() {
             onBackPress?.leaveApp()
         }
 
-        availableOrdersViewModel =
-            ViewModelProviders.of(this).get(AvailableOrdersViewModel::class.java)
+//        availableOrdersViewModel =
+//            ViewModelProviders.of(this).get(AvailableOrdersViewModel::class.java)
+
+
         val root = inflater.inflate(R.layout.fragment_available_orders, container, false)
         val context = requireContext()
 
