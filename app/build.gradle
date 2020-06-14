@@ -84,6 +84,7 @@ dependencies {
     implementation "org.koin:koin-android:2.1.5"
     implementation "org.koin:koin-android-scope:2.1.5"
     implementation "org.koin:koin-android-viewmodel:2.1.5"
+    
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'

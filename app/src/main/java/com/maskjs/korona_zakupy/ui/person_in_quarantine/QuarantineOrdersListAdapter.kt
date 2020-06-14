@@ -48,9 +48,13 @@ class QuarantineOrdersListAdapter(private val context: Context,
         else getUserInfo(order)?.get("firstName") as String?
     }
 
-//    private fun getRating(order: LinkedTreeMap<*, *>): Double?{
-//        return getUserInfo(order)?.get("rating") as Double?
-//    }
+    fun getRating(position: Int): Double?{
+        val order = getItem(position) as LinkedTreeMap<*, *>
+        val userInfo = getUserInfo(order)
+
+        return if (userInfo == null) null
+        else getUserInfo(order)?.get("rating") as Double?
+    }
 
     private fun getOrderStatus(order: LinkedTreeMap<*, *>): String?{
         return order["orderStatus"] as String?
@@ -68,10 +72,6 @@ class QuarantineOrdersListAdapter(private val context: Context,
         val formatter = SimpleDateFormat("dd.MM.yyyy HH:mm")
         return formatter.format(parser.parse(date))
     }
-
-//    private fun getPhotoDirectory(order: LinkedTreeMap<*, *>, role: String): String?{
-//        return getUserInfo(order)?.get("photoDirectory") as String?
-//    }
 
     private fun getTypeOfOrderAvatar(order: LinkedTreeMap<*, *>): Int {
         val typeOfOrder = order["orderType"] as String
@@ -114,6 +114,8 @@ class QuarantineOrdersListAdapter(private val context: Context,
             holder.dateText = view.findViewById(R.id.dateTextView) as TextView
             holder.status = view.findViewById(R.id.statusTextView) as TextView
             holder.imageThumbnailUrl = view.findViewById(R.id.avatarListQuarantine) as ImageView
+//            holder.rating = view.findViewById(R.id.quarantineHistoryRating) as TextView
+
             view.tag = holder
         } else {
             view = convertView
@@ -123,11 +125,13 @@ class QuarantineOrdersListAdapter(private val context: Context,
         val dateTextView = holder.dateText
         val statusTextView = holder.status
         val thumbnailImageView = holder.imageThumbnailUrl
+//        val ratingTextView = holder.rating
 
         val order = getItem(position) as LinkedTreeMap<*, *>
 
         dateTextView?.text = getOrderDate(position)
         statusTextView?.text = getOrderStatus(order)
+//        ratingTextView?.text = getRating(order).toString()
 
         statusTextView?.setText(LABEL_NAME_PERSON_IN_QUARANTINE[getOrderStatus(order)] ?: R.string.invalid_status)
 
@@ -136,7 +140,6 @@ class QuarantineOrdersListAdapter(private val context: Context,
 
         Picasso.get()
             .load(getTypeOfOrderAvatar(order))
-//            .load(R.drawable.groceries_avatar) //DEBUG
             .into(thumbnailImageView)
 
         return view

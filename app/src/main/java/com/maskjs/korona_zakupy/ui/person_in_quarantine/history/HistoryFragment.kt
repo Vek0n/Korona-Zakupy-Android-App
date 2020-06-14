@@ -146,6 +146,11 @@ class HistoryFragment : BaseFragment() {
         val productsListView = dialogView.productsQuarantineHistoryLV
         val acceptedByTextView = dialogView.acceptedByQuarantineHistoryTV
         val dateTextView = dialogView.dateQuarantineHistoryTV
+        val ratingTextView = dialogView.quarantineHistoryRating
+
+
+        ratingTextView.text = adapterQuarantineOrders
+            .getRating(position).toString()
 
         acceptedByTextView.text = adapterQuarantineOrders
             .getFirstName(position)

@@ -76,11 +76,6 @@ class ActiveOrdersFragment : BaseFragment() {
             }
             LoadingSpinner().hideLoadingDialog(progressBar)
         }
-//        }catch (ex: Exception){
-//            val data = arrayListOf<GetOrderDto>()
-//            adapterOrders = VolunteerOrdersListAdapter(context, data)
-//            listView.adapter = adapterOrders
-//        }
 
         listView.setOnItemClickListener { _, _, position, _ ->
             showActiveOrderDetailDialog(position, userId,token)

@@ -20,6 +20,7 @@ import com.maskjs.korona_zakupy.ui.base.BaseFragment
 import com.maskjs.korona_zakupy.utils.LoadingSpinner
 import com.maskjs.korona_zakupy.ui.person_in_quarantine.QuarantineOrdersListAdapter
 import kotlinx.android.synthetic.main.quarantine_active_order_details_popup.view.*
+import kotlinx.android.synthetic.main.quarantine_history_order_details_popup.view.*
 import kotlinx.coroutines.*
 import org.koin.android.scope.lifecycleScope
 import org.koin.android.viewmodel.scope.getViewModel
@@ -124,12 +125,24 @@ class ActiveOrdersFragment :BaseFragment() {
         val productsListView = dialogView.productsQuarantineActiveLV
         val acceptedByTextView = dialogView.acceptedByQuarantineActiveTV
         val dateTextView = dialogView.dateQuarantineActiveTV
+        val ratingTextView = dialogView.quarantineActiveRating
+        val ratingStar = dialogView.imageView8
+
+        val rating = adapterQuarantineOrders
+            .getRating(position)
+
+        if (rating != null) {
+            ratingTextView.visibility = View.VISIBLE
+            ratingStar.visibility = View.VISIBLE
+            ratingTextView.text = rating.toString()
+        }
 
         acceptedByTextView.text = adapterQuarantineOrders
             .getFirstName(position)
 
         dateTextView.text = adapterQuarantineOrders
             .getOrderDate(position)
+
 
         val productsAdapter = ArrayAdapter(
             context,
