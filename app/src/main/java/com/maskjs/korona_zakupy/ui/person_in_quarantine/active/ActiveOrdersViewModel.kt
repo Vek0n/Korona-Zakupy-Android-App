@@ -3,9 +3,7 @@ package com.maskjs.korona_zakupy.ui.person_in_quarantine.active
 import androidx.lifecycle.ViewModel
 import com.google.gson.internal.LinkedTreeMap
 import com.maskjs.korona_zakupy.data.orders.data_transfer_object.GetOrderDto
-import com.maskjs.korona_zakupy.data.orders.OrderDao
 import com.maskjs.korona_zakupy.data.orders.OrderRepository
-import okhttp3.OkHttpClient
 
 class ActiveOrdersViewModel(
     private val getOrderRepository: OrderRepository<GetOrderDto>,

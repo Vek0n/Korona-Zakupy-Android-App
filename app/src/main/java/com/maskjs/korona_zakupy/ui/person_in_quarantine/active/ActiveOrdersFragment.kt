@@ -1,31 +1,30 @@
 package com.maskjs.korona_zakupy.ui.person_in_quarantine.active
 
-import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
 import android.widget.ListView
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.activity.addCallback
-import androidx.lifecycle.ViewModelProviders
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.maskjs.korona_zakupy.R
 import com.maskjs.korona_zakupy.data.orders.data_transfer_object.GetOrderDto
 import com.maskjs.korona_zakupy.ui.base.BaseFragment
 import com.maskjs.korona_zakupy.utils.LoadingSpinner
 import com.maskjs.korona_zakupy.ui.person_in_quarantine.QuarantineOrdersListAdapter
+import com.maskjs.korona_zakupy.utils.FragmentInitializeHelper
+import com.maskjs.korona_zakupy.utils.Interfaces.IDataFragmentHelper
 import kotlinx.android.synthetic.main.quarantine_active_order_details_popup.view.*
-import kotlinx.android.synthetic.main.quarantine_history_order_details_popup.view.*
 import kotlinx.coroutines.*
 import org.koin.android.scope.lifecycleScope
 import org.koin.android.viewmodel.scope.getViewModel
 
-class ActiveOrdersFragment :BaseFragment() {
+class ActiveOrdersFragment :BaseFragment(),
+    IDataFragmentHelper {
 
     private lateinit var activeOrdersViewModel: ActiveOrdersViewModel
     private lateinit var listView: ListView
@@ -37,9 +36,7 @@ class ActiveOrdersFragment :BaseFragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-
         onAddOrderButtonClickListener =  (context as? OnAddOrderButtonClickListener)
-
         activeOrdersViewModel = requireActivity().lifecycleScope.getViewModel<ActiveOrdersViewModel>(requireActivity())
     }
 
@@ -49,17 +46,36 @@ class ActiveOrdersFragment :BaseFragment() {
         savedInstanceState: Bundle?
     ): View? {
 
+        val (root, userId, token, context ) = initialize(inflater, container)
+
+        setItemClickListeners(userId, token)
+
+        CoroutineScope(Dispatchers.IO).launch {
+            LoadingSpinner().showLoadingDialog(progressBar)
+
+            populateListView(userId, token, context)
+
+            LoadingSpinner().hideLoadingDialog(progressBar)
+        }
+
+
+        return root
+    }
+
+    override fun initialize(
+        inflater: LayoutInflater,
+        container: ViewGroup?
+    ): FragmentInitializeHelper{
         val callback = requireActivity().onBackPressedDispatcher.addCallback(this) {
             onBackPress?.leaveApp()
         }
-
         val root = inflater.inflate(R.layout.fragment_active_orders_quarantine, container, false)
-        val context = requireContext()
 
         val addNewOrderButton = root.findViewById(R.id.addNewOrderButton) as FloatingActionButton
         addNewOrderButton.setOnClickListener {
             showChooseOrderTypeDialog()
         }
+        val context = requireContext()
 
         val userId = getUserId()?: ""
         val token = getUserToken()?: ""
@@ -68,37 +84,45 @@ class ActiveOrdersFragment :BaseFragment() {
         progressBar = root.findViewById(R.id.pBar) as ProgressBar
         nothingHereTV = root.findViewById(R.id.nothingHereActiveQuarantine) as TextView
 
-        CoroutineScope(Dispatchers.IO).launch {
-            LoadingSpinner().showLoadingDialog(progressBar)
-            supervisorScope {
-                try {
-                    val data = activeOrdersViewModel.getActiveOrdersFromRepository(userId, token)
-                    setListViewAdapterOnMainThread(data, context)
-                    if (data.size == 0){
-                        withContext(Dispatchers.Main){
-                            nothingHereTV.visibility = View.VISIBLE
-                        }
-                    }
-                }catch (ex: Exception){
-                    val data = arrayListOf<GetOrderDto>()
-                    setListViewAdapterOnMainThread(data, context)
-                }
-            }
-            LoadingSpinner().hideLoadingDialog(progressBar)
-        }
+        return FragmentInitializeHelper(root, userId, token, context)
+    }
 
-
+    override fun setItemClickListeners(userId: String, token: String){
         listView.setOnItemClickListener { _, _, position, _ ->
-            showActiveOrderDetailDialog(position,userId, token)
+            showOrderDetailsDialog(position,userId, token)
         }
-        return root
+    }
+
+    override suspend fun populateListView(userId: String, token: String, context: Context){
+        supervisorScope {
+            try {
+                val data = getDataFromRepository(userId, token)
+                setListViewAdapterOnMainThread(data, context)
+                handleNullData(data)
+            }catch (ex: Exception){
+                val data = arrayListOf<GetOrderDto>()
+                setListViewAdapterOnMainThread(data, context)
+            }
+        }
+    }
+
+    override suspend fun getDataFromRepository(userId: String, token: String): ArrayList<GetOrderDto>
+            = activeOrdersViewModel.getActiveOrdersFromRepository(userId, token)
+
+
+    override suspend fun handleNullData(data: ArrayList<GetOrderDto>){
+        if (data.size == 0){
+            withContext(Dispatchers.Main){
+                nothingHereTV.visibility = View.VISIBLE
+            }
+        }
     }
 
     private fun showChooseOrderTypeDialog(){
         onAddOrderButtonClickListener?.showChooseOrderTypeDialog()
     }
 
-    private suspend fun setListViewAdapterOnMainThread(
+    override suspend fun setListViewAdapterOnMainThread(
         input: ArrayList<GetOrderDto>,
         context: Context
     ) {
@@ -112,48 +136,41 @@ class ActiveOrdersFragment :BaseFragment() {
         }
     }
 
-    @SuppressLint("InflateParams")
-    private fun showActiveOrderDetailDialog(position: Int, userId: String, token: String){
-        val dialogView =
-            LayoutInflater.from(context).inflate(R.layout.quarantine_active_order_details_popup, null)
-        val builder = AlertDialog.Builder(context)
-            .setView(dialogView)
-            .setTitle(R.string.order_details)
+    override fun showOrderDetailsDialog(position: Int, userId: String, token: String){
+        val context = requireContext()
 
-        val alertDialog = builder.show()
+        val dialog =
+            ActiveOrderDetailsDialogQuarantine(
+                adapterQuarantineOrders
+            )
 
-        val productsListView = dialogView.productsQuarantineActiveLV
-        val acceptedByTextView = dialogView.acceptedByQuarantineActiveTV
-        val dateTextView = dialogView.dateQuarantineActiveTV
-        val ratingTextView = dialogView.quarantineActiveRating
-        val ratingStar = dialogView.imageView8
+        dialog.initialize(context)
 
-        val rating = adapterQuarantineOrders
-            .getRating(position)
-
-        if (rating != null) {
-            ratingTextView.visibility = View.VISIBLE
-            ratingStar.visibility = View.VISIBLE
-            ratingTextView.text = rating.toString()
-        }
-
-        acceptedByTextView.text = adapterQuarantineOrders
-            .getFirstName(position)
-
-        dateTextView.text = adapterQuarantineOrders
-            .getOrderDate(position)
-
-
-        val productsAdapter = ArrayAdapter(
-            context,
-            android.R.layout.simple_list_item_1,
-            adapterQuarantineOrders
-                .getProducts(position)
+        dialog.setOrderDetails(
+            position,
+            context
         )
-        productsListView.adapter = productsAdapter
 
-        val orderId = adapterQuarantineOrders.getOrderId(position).toLong()
+        val alertDialog = dialog.alertDialog
+        val dialogView = dialog.dialogView
+        val orderId = dialog.orderId
 
+        setDialogClickListeners(
+            alertDialog,
+            dialogView,
+            orderId,
+            token,
+            userId
+        )
+    }
+
+    override fun setDialogClickListeners(
+        alertDialog: AlertDialog,
+        dialogView: View,
+        orderId: Long,
+        token: String,
+        userId: String
+    ){
         alertDialog.setOnDismissListener {
             refreshFragment()
         }
@@ -185,5 +202,4 @@ class ActiveOrdersFragment :BaseFragment() {
     interface OnAddOrderButtonClickListener{
         fun showChooseOrderTypeDialog()
     }
-
 }

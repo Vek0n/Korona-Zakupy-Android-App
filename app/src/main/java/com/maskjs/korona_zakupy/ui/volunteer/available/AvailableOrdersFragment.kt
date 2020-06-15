@@ -1,6 +1,5 @@
 package com.maskjs.korona_zakupy.ui.volunteer.available
 
-import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Context
 import android.os.Bundle
@@ -9,13 +8,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.activity.addCallback
-import androidx.lifecycle.ViewModelProviders
 import com.maskjs.korona_zakupy.R
 import com.maskjs.korona_zakupy.data.orders.data_transfer_object.GetOrderDto
 import com.maskjs.korona_zakupy.ui.base.BaseFragment
 import com.maskjs.korona_zakupy.utils.LoadingSpinner
 import com.maskjs.korona_zakupy.ui.volunteer.VolunteerOrdersListAdapter
-import com.maskjs.korona_zakupy.ui.volunteer.active.ActiveOrdersViewModel
+import com.maskjs.korona_zakupy.utils.FragmentInitializeHelper
+import com.maskjs.korona_zakupy.utils.Interfaces.IDataFragmentHelper
 import kotlinx.android.synthetic.main.available_order_details_popup.view.*
 import kotlinx.android.synthetic.main.available_order_details_popup.view.cancel_button
 import kotlinx.coroutines.*
@@ -23,7 +22,8 @@ import org.koin.android.scope.lifecycleScope
 import org.koin.android.viewmodel.scope.getViewModel
 import kotlin.Exception
 
-class AvailableOrdersFragment : BaseFragment() {
+class AvailableOrdersFragment : BaseFragment(),
+    IDataFragmentHelper {
 
     private lateinit var availableOrdersViewModel: AvailableOrdersViewModel
     private lateinit var listView: ListView
@@ -42,13 +42,28 @@ class AvailableOrdersFragment : BaseFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
+        val (root, userId, token, context)
+                = initialize(inflater, container)
+
+        setItemClickListeners(userId, token)
+
+        CoroutineScope(Dispatchers.IO).launch {
+            LoadingSpinner().showLoadingDialog(progressBar)
+            populateListView(userId, token, context)
+            LoadingSpinner().hideLoadingDialog(progressBar)
+        }
+
+        return root
+    }
+
+    override fun initialize(
+        inflater: LayoutInflater,
+        container: ViewGroup?
+    ): FragmentInitializeHelper {
         val callback = requireActivity().onBackPressedDispatcher.addCallback(this) {
             onBackPress?.leaveApp()
         }
-
-//        availableOrdersViewModel =
-//            ViewModelProviders.of(this).get(AvailableOrdersViewModel::class.java)
-
 
         val root = inflater.inflate(R.layout.fragment_available_orders, container, false)
         val context = requireContext()
@@ -60,33 +75,38 @@ class AvailableOrdersFragment : BaseFragment() {
         progressBar = root.findViewById(R.id.pBar) as ProgressBar
         nothingsHere = root.findViewById(R.id.nothingHereAvailableVolunteer)
 
-        CoroutineScope(Dispatchers.IO).launch {
-            LoadingSpinner().showLoadingDialog(progressBar)
-            supervisorScope {
-                try{
-                    val data = availableOrdersViewModel.getAvailableOrdersFromRepository(token)
-                    setListViewAdapterOnMainThread(context, data)
-                    if (data.size == 0){
-                        withContext(Dispatchers.Main){
-                            nothingsHere.visibility = View.VISIBLE
-                        }
-                    }
-                }catch (ex: Exception){
-                    val data = arrayListOf<GetOrderDto>()
-                    setListViewAdapterOnMainThread(context, data)
-                }
-            }
-            LoadingSpinner().hideLoadingDialog(progressBar)
-        }
-
-        listView.setOnItemClickListener { _, _, position, _ ->
-            showAvailableOrderDetailDialog(position, userId, token)
-        }
-        return root
+        return FragmentInitializeHelper(root, userId, token, context)
     }
 
 
-    private suspend fun setListViewAdapterOnMainThread(context: Context, input: ArrayList<GetOrderDto>) {
+    override suspend fun populateListView(userId: String, token: String, context: Context) {
+        supervisorScope {
+            try{
+                val data = getDataFromRepository(userId, token)
+                setListViewAdapterOnMainThread(data, context)
+                handleNullData(data)
+            }catch (ex: Exception){
+                val data = arrayListOf<GetOrderDto>()
+                setListViewAdapterOnMainThread(data, context)
+            }
+        }
+    }
+
+    override suspend fun getDataFromRepository(userId: String, token: String): ArrayList<GetOrderDto>
+       = availableOrdersViewModel.getAvailableOrdersFromRepository(token)
+
+
+
+    override suspend fun handleNullData(data: ArrayList<GetOrderDto>) {
+        if (data.size == 0){
+            withContext(Dispatchers.Main){
+                nothingsHere.visibility = View.VISIBLE
+            }
+        }
+    }
+
+
+    override suspend fun setListViewAdapterOnMainThread(input: ArrayList<GetOrderDto>, context: Context) {
         withContext(Dispatchers.Main) {
             adapterOrders =
                 VolunteerOrdersListAdapter(
@@ -97,36 +117,47 @@ class AvailableOrdersFragment : BaseFragment() {
         }
     }
 
-    @SuppressLint("InflateParams")
-    private fun showAvailableOrderDetailDialog(position: Int, userId: String, token: String){
-        val dialogView = LayoutInflater.from(context).inflate(R.layout.available_order_details_popup, null)
-        val builder = AlertDialog.Builder(context)
-            .setView(dialogView)
-            .setTitle(R.string.order_details)
+    override fun setItemClickListeners(userId: String, token: String) {
+        listView.setOnItemClickListener { _, _, position, _ ->
+            showOrderDetailsDialog(position, userId, token)
+        }
+    }
 
-        val alertDialog = builder.show()
+    override fun showOrderDetailsDialog(position: Int, userId: String, token: String) {
+        val context = requireContext()
 
-        val productsListView = dialogView.productsVolunteerAvailableLV
-        val addressTextView = dialogView.addressVolunteerAvailableTV
-        val dateTextView = dialogView.dateVolunteerAvailableTV
+        val dialog =
+            AvailableOrderDetailsDialogVolunteer(
+                adapterOrders
+            )
 
-        addressTextView.text = adapterOrders
-            .getAddress(position)
+        dialog.initialize(context)
 
-        dateTextView.text = adapterOrders
-            .getOrderDate(position)
-
-        val productsAdapter = ArrayAdapter(
-            context,
-            android.R.layout.simple_list_item_1,
-            adapterOrders
-                .getProducts(position)
+        dialog.setOrderDetails(
+            position,
+            context
         )
 
-        productsListView.adapter = productsAdapter
+        val alertDialog = dialog.alertDialog
+        val dialogView = dialog.dialogView
+        val orderId = dialog.orderId
 
-        val orderId = adapterOrders.getOrderId(position).toLong()
+        setDialogClickListeners(
+            alertDialog,
+            dialogView,
+            orderId,
+            token,
+            userId
+        )
+    }
 
+    override fun setDialogClickListeners(
+        alertDialog: AlertDialog,
+        dialogView: View,
+        orderId: Long,
+        token: String,
+        userId: String
+    ) {
         alertDialog.setOnDismissListener {
             refreshFragment()
         }
@@ -145,6 +176,7 @@ class AvailableOrdersFragment : BaseFragment() {
             alertDialog.dismiss()
         }
     }
+
 
 
     private fun refreshFragment(){

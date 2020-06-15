@@ -9,19 +9,21 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.activity.addCallback
-import androidx.lifecycle.ViewModelProviders
 import com.maskjs.korona_zakupy.R
 import com.maskjs.korona_zakupy.data.orders.data_transfer_object.GetOrderDto
 import com.maskjs.korona_zakupy.ui.base.BaseFragment
 import com.maskjs.korona_zakupy.utils.LoadingSpinner
 import com.maskjs.korona_zakupy.ui.person_in_quarantine.QuarantineOrdersListAdapter
+import com.maskjs.korona_zakupy.utils.FragmentInitializeHelper
+import com.maskjs.korona_zakupy.utils.Interfaces.IDataFragmentHelper
 import kotlinx.android.synthetic.main.quarantine_history_order_details_popup.view.*
 import kotlinx.android.synthetic.main.rating_popup.view.*
 import kotlinx.coroutines.*
 import org.koin.android.scope.lifecycleScope
 import org.koin.android.viewmodel.scope.getViewModel
 
-class HistoryFragment : BaseFragment() {
+class HistoryFragment : BaseFragment(),
+    IDataFragmentHelper {
 
     private lateinit var historyViewModel: HistoryViewModel
     private lateinit var listView: ListView
@@ -43,14 +45,29 @@ class HistoryFragment : BaseFragment() {
         savedInstanceState: Bundle?
     ): View? {
 
+        val (root, userId, token, context )
+                = initialize(inflater, container)
+
+        setItemClickListeners(token)
+
+        CoroutineScope(Dispatchers.IO).launch {
+            LoadingSpinner().showLoadingDialog(progressBar)
+
+            populateListView(userId, token, context)
+
+            LoadingSpinner().hideLoadingDialog(progressBar)
+        }
+
+        return root
+    }
+
+    override fun initialize(inflater: LayoutInflater, container: ViewGroup?): FragmentInitializeHelper {
         val callback = requireActivity().onBackPressedDispatcher.addCallback(this) {
             onBackPress?.leaveApp()
         }
 
         val root = inflater.inflate(R.layout.fragment_history, container, false)
-
         val context = requireContext()
-
         val userId = getUserId()?: ""
         val token = getUserToken()?: ""
 
@@ -58,34 +75,42 @@ class HistoryFragment : BaseFragment() {
         progressBar = root.findViewById(R.id.pBar) as ProgressBar
         nothingsHere = root.findViewById(R.id.nothingHereHistory) as TextView
 
-        CoroutineScope(Dispatchers.IO).launch {
-            LoadingSpinner().showLoadingDialog(progressBar)
-            supervisorScope {
-                try {
-                    val data = historyViewModel.getHistoryOrdersFromRepository(userId, token)
-                    setListViewAdapterOnMainThread(context, data)
-                    if (data.size == 0){
-                        withContext(Dispatchers.Main){
-                            nothingsHere.visibility = View.VISIBLE
-                        }
-                    }
-                }catch (ex: Exception){
-                    val data = arrayListOf<GetOrderDto>()
-                    setListViewAdapterOnMainThread(context, data)
-                }
-
-            }
-            LoadingSpinner().hideLoadingDialog(progressBar)
-        }
-
-        listView.setOnItemClickListener { _, _, position, _ ->
-            showHistoryOrderDetailDialog(position, token)
-        }
-        return root
+        return FragmentInitializeHelper(root, userId, token, context)
     }
 
+    override fun setItemClickListeners(token: String){
+        listView.setOnItemClickListener { _, _, position, _ ->
+            showOrderDetailsDialog(position, token)
+        }
+    }
 
-    private suspend fun setListViewAdapterOnMainThread(context: Context, input: ArrayList<GetOrderDto>) {
+    override suspend fun populateListView(userId: String, token: String, context: Context){
+        supervisorScope {
+            try {
+                val data = getDataFromRepository(userId, token)
+                handleNullData(data)
+                setListViewAdapterOnMainThread(data, context)
+            }catch (ex: Exception){
+                val data = arrayListOf<GetOrderDto>()
+                setListViewAdapterOnMainThread(data, context)
+            }
+
+        }
+    }
+
+    override suspend fun getDataFromRepository(userId: String, token: String): ArrayList<GetOrderDto>
+            = historyViewModel.getHistoryOrdersFromRepository(userId, token)
+
+
+    override suspend fun handleNullData(data: ArrayList<GetOrderDto>){
+        if (data.size == 0){
+            withContext(Dispatchers.Main){
+                nothingsHere.visibility = View.VISIBLE
+            }
+        }
+    }
+
+    override suspend fun setListViewAdapterOnMainThread(input: ArrayList<GetOrderDto>, context: Context) {
         withContext(Dispatchers.Main) {
             adapterQuarantineOrders =
                 QuarantineOrdersListAdapter(
@@ -95,6 +120,53 @@ class HistoryFragment : BaseFragment() {
             listView.adapter = adapterQuarantineOrders
         }
     }
+
+
+
+
+
+    override fun showOrderDetailsDialog(position: Int, token: String){
+        val context = requireContext()
+
+        val dialog =
+            HistoryOrderDetailsDialogQuarantine(
+                adapterQuarantineOrders
+            )
+
+        dialog.initialize(context)
+
+        dialog.setOrderDetails(
+            position,
+            context
+        )
+
+        val alertDialog = dialog.alertDialog
+        val dialogView = dialog.dialogView
+
+        setDialogClickListeners(
+            alertDialog,
+            dialogView,
+            token,
+            position
+        )
+    }
+
+    override fun setDialogClickListeners(
+        alertDialog: AlertDialog,
+        dialogView: View,
+        token: String,
+        position: Int
+    ){
+        alertDialog.setOnDismissListener {
+            refreshFragment()
+        }
+
+        dialogView.dismiss_button.setOnClickListener {
+            showReviewDialog(position, token)
+            alertDialog.dismiss()
+        }
+    }
+
 
     @SuppressLint("InflateParams")
     private fun showReviewDialog(position: Int, token: String){
@@ -127,53 +199,9 @@ class HistoryFragment : BaseFragment() {
                 Toast.makeText(dialogView.context,
                     getString(R.string.please_review),
                     Toast.LENGTH_SHORT)
-                .show()
+                    .show()
             else
                 alertDialog.dismiss()
-        }
-    }
-
-    @SuppressLint("InflateParams")
-    private fun showHistoryOrderDetailDialog(position: Int, token:String){
-        val dialogView =
-            LayoutInflater.from(context).inflate(R.layout.quarantine_history_order_details_popup, null)
-        val builder = AlertDialog.Builder(context)
-            .setView(dialogView)
-            .setTitle(R.string.order_details)
-
-        val alertDialog = builder.show()
-
-        val productsListView = dialogView.productsQuarantineHistoryLV
-        val acceptedByTextView = dialogView.acceptedByQuarantineHistoryTV
-        val dateTextView = dialogView.dateQuarantineHistoryTV
-        val ratingTextView = dialogView.quarantineHistoryRating
-
-
-        ratingTextView.text = adapterQuarantineOrders
-            .getRating(position).toString()
-
-        acceptedByTextView.text = adapterQuarantineOrders
-            .getFirstName(position)
-
-        dateTextView.text = adapterQuarantineOrders
-            .getOrderDate(position)
-
-        val productsAdapter = ArrayAdapter(
-            context,
-            android.R.layout.simple_list_item_1,
-            adapterQuarantineOrders
-                .getProducts(position)
-        )
-
-        productsListView.adapter = productsAdapter
-
-        alertDialog.setOnDismissListener {
-            refreshFragment()
-        }
-
-        dialogView.dismiss_button.setOnClickListener {
-            showReviewDialog(position, token)
-            alertDialog.dismiss()
         }
     }
 
