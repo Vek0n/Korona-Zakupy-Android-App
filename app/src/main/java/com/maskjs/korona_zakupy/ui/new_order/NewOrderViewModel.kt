@@ -48,7 +48,7 @@ class NewOrderViewModel(initialText: String,
 
     private fun joinQuantityAndUnit(): ArrayList<String>{
         val closedListOfProduct = ArrayList<String>()
-        products.forEach() { p -> if(!p.clickingCanAddNewProduct)closedListOfProduct.add(p.product + " " + p.quantity ) }
+        products.forEach() { p -> if(!p.clickingCanAddNewProduct)closedListOfProduct.add(p.product + " " + p.quantity  + " " + p.unit) }
         return closedListOfProduct
 
     }
