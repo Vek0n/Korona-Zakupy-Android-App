@@ -33,6 +33,36 @@
     <string name="user_token_key"></string>
     <string name="user_role_key"></string>
     <string name="global_menu_logout">Wyloguj się</string>
+    <string-array name="dialog_number_picker_values">
+        <item>1</item>
+        <item>0.25</item>
+        <item>0.5</item>
+        <item>0.75</item>
+        <item>1.5</item>
+        <item>2</item>
+        <item>2.5</item>
+        <item>3</item>
+        <item>3.5</item>
+        <item>4</item>
+        <item>4.5</item>
+        <item>5</item>
+    </string-array>
+    <string-array name="dialog_number_picker_unit">
+        <item>sztuk</item>
+        <item>zgrzewek</item>
+        <item>paczek</item>
+        <item>kartonów</item>
+        <item>butelek</item>
+        <item>puszek</item>
+        <item>g</item>
+        <item>dag</item>
+        <item>kg</item>
+        <item>l</item>
+    </string-array>
+
+
+
+
     <!-- RegistrationActivity -->
     <string name="reg_hint_username">Username</string>
     <string name="reg_hint_password">Hasło</string>
